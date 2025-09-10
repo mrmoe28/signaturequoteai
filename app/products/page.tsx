@@ -153,6 +153,20 @@ export default function ProductsPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.map(product => (
           <Card key={product.id} className="hover:shadow-lg transition-shadow">
+            {/* Product Image */}
+            {(product.primaryImageUrl || (product.images && product.images.length > 0)) && (
+              <div className="aspect-square overflow-hidden rounded-t-lg">
+                <img
+                  src={product.primaryImageUrl || product.images[0]?.localPath}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Hide image on error
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
             <CardHeader>
               <div className="flex items-start justify-between">
                 <CardTitle className="text-lg">{product.name}</CardTitle>
