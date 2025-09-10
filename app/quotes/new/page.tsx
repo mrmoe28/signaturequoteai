@@ -59,7 +59,7 @@ export default function NewQuote() {
       );
       setShowSuccess(`Quantity increased for ${p.name}`);
     } else {
-      const base = { productId: p.id, name: p.name, unitPrice: p.price, quantity: 1 };
+      const base = { productId: p.id, name: p.name, unitPrice: p.price, quantity: 1, imageUrl: p.primaryImageUrl };
       updatedItems = [...items, { ...base, extended: computeExtended(base) }];
       setShowSuccess(`Added ${p.name} to quote`);
     }

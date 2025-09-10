@@ -50,6 +50,7 @@ export type QuoteItem = {
   quantity: number;
   extended: number;
   notes?: string;
+  imageUrl?: string;
 };
 
 export type Customer = {

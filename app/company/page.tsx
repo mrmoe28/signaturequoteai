@@ -6,13 +6,13 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { CompanySettings } from '@/lib/types';
-import { Upload, Save, Building2 } from 'lucide-react';
+import { Save, Building2 } from 'lucide-react';
+import ImageUpload from '@/components/ImageUpload';
 
 export default function CompanySettingsPage() {
   const [settings, setSettings] = useState<CompanySettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCompanySettings();
@@ -24,9 +24,6 @@ export default function CompanySettingsPage() {
       if (response.ok) {
         const data = await response.json();
         setSettings(data);
-        if (data.companyLogo) {
-          setLogoPreview(data.companyLogo);
-        }
       }
     } catch (error) {
       console.error('Failed to fetch company settings:', error);
@@ -59,17 +56,8 @@ export default function CompanySettingsPage() {
     }
   };
 
-  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setLogoPreview(result);
-        setSettings(prev => prev ? { ...prev, companyLogo: result } : null);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleLogoChange = (logoUrl: string | null) => {
+    setSettings(prev => prev ? { ...prev, companyLogo: logoUrl || '' } : null);
   };
 
   const updateSetting = (key: keyof CompanySettings, value: string) => {
@@ -106,38 +94,13 @@ export default function CompanySettingsPage() {
         <CardContent className="space-y-6">
           {/* Company Logo */}
           <div className="space-y-2">
-            <Label htmlFor="logo">Company Logo</Label>
-            <div className="flex items-center gap-4">
-              {logoPreview && (
-                <div className="w-20 h-20 border border-gray-200 rounded-lg overflow-hidden">
-                  <img
-                    src={logoPreview}
-                    alt="Company Logo"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              )}
-              <div>
-                <input
-                  type="file"
-                  id="logo"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="hidden"
-                />
-                <Button
-                  variant="outline"
-                  onClick={() => document.getElementById('logo')?.click()}
-                  className="flex items-center gap-2"
-                >
-                  <Upload className="w-4 h-4" />
-                  {logoPreview ? 'Change Logo' : 'Upload Logo'}
-                </Button>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Recommended: 200x200px, PNG or JPG
-                </p>
-              </div>
-            </div>
+            <Label>Company Logo</Label>
+            <ImageUpload
+              currentImage={settings.companyLogo}
+              onImageChange={handleLogoChange}
+              placeholder="Upload company logo"
+              maxSize={5}
+            />
           </div>
 
           {/* Company Name */}

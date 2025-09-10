@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
+import ImageUpload from '@/components/ImageUpload';
 import { User, Save, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function ProfilePage() {
@@ -18,6 +19,7 @@ export default function ProfilePage() {
     city: 'Anytown',
     state: 'CA',
     zip: '12345',
+    profileImage: '',
   });
   const [saving, setSaving] = useState(false);
 
@@ -49,7 +51,16 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label>Profile Picture</Label>
+            <ImageUpload
+              currentImage={profile.profileImage}
+              onImageChange={(imageUrl) => updateProfile('profileImage', imageUrl || '')}
+              placeholder="Upload a profile picture"
+              maxSize={2}
+            />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
