@@ -9,10 +9,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
+      <body className="bg-background text-foreground min-h-screen">
+        <header className="border-b border-border">
+          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="/" className="font-extrabold tracking-tight" style={{ fontSize: 18 }}>Signature QuoteCrawler</a>
+            <nav className="flex items-center gap-6 text-sm">
+              <a href="/dashboard" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+              <a href="/products" className="text-muted-foreground hover:text-foreground">Products</a>
+              <a href="/quotes/new" className="text-muted-foreground hover:text-foreground">New Quote</a>
+            </nav>
+          </div>
+        </header>
+        <main className="container mx-auto px-6 py-8">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );

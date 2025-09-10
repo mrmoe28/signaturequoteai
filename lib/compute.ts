@@ -1,7 +1,7 @@
 import { QuoteItem } from './types';
 
 export function computeExtended(item: Omit<QuoteItem, 'extended'>): number {
-  return +(item.unitPrice * item.qty).toFixed(2);
+  return +(item.unitPrice * item.quantity).toFixed(2);
 }
 
 export function computeTotals(items: QuoteItem[], opts: { discount?: number; shipping?: number; tax?: number }) {

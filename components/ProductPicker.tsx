@@ -5,6 +5,7 @@ import FreshnessBadge from './FreshnessBadge';
 import { money } from '@/lib/formatting';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
+import { Card, CardContent } from './ui/Card';
 
 interface ProductPickerProps {
   onAdd: (p: Product) => void;
@@ -26,40 +27,42 @@ export default function ProductPicker({ onAdd }: ProductPickerProps) {
   );
 
   return (
-    <div className="grid">
+    <div className="space-y-4">
       <Input 
         placeholder="Search products…" 
         value={q} 
         onChange={e => setQ(e.target.value)} 
+        className="w-full"
       />
-      <div style={{ display: 'grid', gap: 10 }}>
+      <div className="space-y-3 max-h-96 overflow-y-auto">
         {filtered.map(p => (
-          <div 
-            key={p.id} 
-            style={{ 
-              border: '1px solid var(--border)', 
-              borderRadius: 10, 
-              padding: 10, 
-              display: 'grid', 
-              gridTemplateColumns: '1fr auto', 
-              alignItems: 'center' 
-            }}
-          >
-            <div>
-              <div style={{ fontWeight: 600 }}>{p.name}</div>
-              <div style={{ fontSize: 12, color: '#64748b' }}>
-                SKU: {p.sku || '—'} • {p.vendor} • {p.category || '—'}
+          <Card key={p.id} className="hover:shadow-md transition-shadow">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="font-semibold text-foreground">{p.name}</div>
+                  <div className="text-sm text-muted-foreground mt-1">
+                    SKU: {p.sku || '—'} • {p.vendor} • {p.category || '—'}
+                  </div>
+                  <div className="mt-2">
+                    <FreshnessBadge iso={p.lastUpdated} />
+                  </div>
+                </div>
+                <div className="text-right ml-4">
+                  <div className="font-bold text-lg text-foreground">{money(p.price)}</div>
+                  <Button onClick={() => onAdd(p)} size="sm" className="mt-2">
+                    Add
+                  </Button>
+                </div>
               </div>
-              <FreshnessBadge iso={p.lastUpdated} />
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontWeight: 700 }}>{money(p.price)}</div>
-              <Button onClick={() => onAdd(p)} style={{ marginTop: 6 }}>
-                Add
-              </Button>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
+        {filtered.length === 0 && q && (
+          <div className="text-center py-8 text-muted-foreground">
+            No products found matching &ldquo;{q}&rdquo;
+          </div>
+        )}
       </div>
     </div>
   );

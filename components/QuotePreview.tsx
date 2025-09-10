@@ -3,6 +3,7 @@ import CustomerCard from './CustomerCard';
 import QuoteLineItemsTable from './QuoteLineItemsTable';
 import TotalsCard from './TotalsCard';
 import TermsBlock from './TermsBlock';
+import { Card, CardContent } from '@/components/ui/Card';
 import { computeTotals } from '@/lib/compute';
 import { Quote } from '@/lib/types';
 import { DEFAULT_TERMS } from '@/lib/constants';
@@ -19,27 +20,27 @@ export default function QuotePreview({ quote }: QuotePreviewProps) {
   });
   
   return (
-    <div>
-      <QuoteHeader 
-        quoteNumber={quote.number} 
-        createdAt={quote.createdAt} 
-        validUntil={quote.validUntil} 
-        preparedBy={quote.preparedBy} 
-      />
-      <CustomerCard />
-      <div style={{ marginTop: 16 }} />
-      <QuoteLineItemsTable items={quote.items} />
-      <div style={{ marginTop: 16 }} />
-      <TotalsCard
-        subtotal={totals.subtotal}
-        discountPct={quote.discount || 0}
-        discountAmt={totals.subtotal - (totals.subtotal * (1 - (quote.discount || 0) / 100))}
-        shipping={quote.shipping || 0}
-        taxPct={quote.tax || 0}
-        taxAmt={0}
-        total={totals.total}
-      />
-      <TermsBlock text={quote.terms || DEFAULT_TERMS} />
-    </div>
+    <Card className="max-w-4xl mx-auto">
+      <CardContent className="p-8 space-y-6">
+        <QuoteHeader 
+          quoteNumber={quote.number || 'Q-' + Date.now()} 
+          createdAt={quote.createdAt || new Date().toISOString()} 
+          validUntil={quote.validUntil || undefined} 
+          preparedBy={quote.preparedBy || 'Sales Team'} 
+        />
+        <CustomerCard />
+        <QuoteLineItemsTable items={quote.items} />
+        <TotalsCard
+          subtotal={totals.subtotal}
+          discountPct={quote.discount || 0}
+          discountAmt={totals.subtotal - (totals.subtotal * (1 - (quote.discount || 0) / 100))}
+          shipping={quote.shipping || 0}
+          taxPct={quote.tax || 0}
+          taxAmt={0}
+          total={totals.total}
+        />
+        <TermsBlock text={quote.terms || DEFAULT_TERMS} />
+      </CardContent>
+    </Card>
   );
 }

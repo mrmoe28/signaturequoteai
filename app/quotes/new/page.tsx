@@ -7,6 +7,10 @@ import { Quote, QuoteItem, Customer, Product } from '@/lib/types';
 import { computeExtended, computeTotals } from '@/lib/compute';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
+import { Textarea } from '@/components/ui/Textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 
 export default function NewQuote() {
   const [customer, setCustomer] = useState<Customer>({ name: '' });
@@ -22,10 +26,10 @@ export default function NewQuote() {
         i.productId === p.id 
           ? {
               ...i, 
-              qty: i.qty + 1, 
+              quantity: i.quantity + 1, 
               extended: computeExtended({
                 unitPrice: i.unitPrice, 
-                qty: i.qty + 1, 
+                quantity: i.quantity + 1, 
                 productId: i.productId, 
                 name: i.name
               })
@@ -33,7 +37,7 @@ export default function NewQuote() {
           : i
       ));
     } else {
-      const base = { productId: p.id, name: p.name, unitPrice: p.price, qty: 1 };
+      const base = { productId: p.id, name: p.name, unitPrice: p.price, quantity: 1 };
       setItems([...items, { ...base, extended: computeExtended(base) }]);
     }
   };
@@ -44,36 +48,55 @@ export default function NewQuote() {
     {
       title: 'Customer',
       content: (
-        <div className="grid" style={{ maxWidth: 720 }}>
-          <Input 
-            placeholder="Company" 
-            onChange={e => setCustomer({ ...customer, company: e.target.value })} 
-          />
-          <Input 
-            placeholder="Name" 
-            onChange={e => setCustomer({ ...customer, name: e.target.value })} 
-          />
-          <Input 
-            placeholder="Email" 
-            onChange={e => setCustomer({ ...customer, email: e.target.value })} 
-          />
-          <Input 
-            placeholder="Phone" 
-            onChange={e => setCustomer({ ...customer, phone: e.target.value })} 
-          />
-          <textarea 
-            placeholder="Ship To" 
-            onChange={e => setCustomer({ ...customer, shipTo: e.target.value })}
-            style={{
-              border: '1px solid var(--border)',
-              borderRadius: '6px',
-              padding: '8px 12px',
-              fontSize: '14px',
-              minHeight: '80px',
-              resize: 'vertical'
-            }}
-          />
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Customer Information</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 max-w-2xl">
+            <div>
+              <Label htmlFor="company">Company Name</Label>
+              <Input 
+                id="company"
+                placeholder="Acme Corp" 
+                onChange={e => setCustomer({ ...customer, company: e.target.value })} 
+              />
+            </div>
+            <div>
+              <Label htmlFor="name">Contact Name</Label>
+              <Input 
+                id="name"
+                placeholder="John Smith" 
+                onChange={e => setCustomer({ ...customer, name: e.target.value })} 
+              />
+            </div>
+            <div>
+              <Label htmlFor="email">Email Address</Label>
+              <Input 
+                id="email"
+                type="email"
+                placeholder="john@acme.com" 
+                onChange={e => setCustomer({ ...customer, email: e.target.value })} 
+              />
+            </div>
+            <div>
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input 
+                id="phone"
+                placeholder="(555) 123-4567" 
+                onChange={e => setCustomer({ ...customer, phone: e.target.value })} 
+              />
+            </div>
+            <div>
+              <Label htmlFor="shipTo">Shipping Address</Label>
+              <Textarea 
+                id="shipTo"
+                placeholder="Full shipping address including city, state, zip" 
+                onChange={e => setCustomer({ ...customer, shipTo: e.target.value })}
+                rows={3}
+              />
+            </div>
+          </CardContent>
+        </Card>
       )
     },
     {
@@ -100,19 +123,19 @@ export default function NewQuote() {
                   value={i.unitPrice} 
                   onChange={e => {
                     const v = +e.target.value || 0; 
-                    const qty = i.qty; 
-                    const ext = +(v * qty).toFixed(2);
+                    const quantity = i.quantity; 
+                    const ext = +(v * quantity).toFixed(2);
                     setItems(items.map((x, xi) => xi === idx ? { ...x, unitPrice: v, extended: ext } : x));
                   }} 
                 />
                 <Input
                   type="number" 
-                  value={i.qty} 
+                  value={i.quantity} 
                   onChange={e => {
                     const q = +e.target.value || 0; 
                     const up = i.unitPrice;
                     const ext = +(up * q).toFixed(2);
-                    setItems(items.map((x, xi) => xi === idx ? { ...x, qty: q, extended: ext } : x));
+                    setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
                   }} 
                 />
                 <div>${i.extended.toFixed(2)}</div>
@@ -172,7 +195,14 @@ export default function NewQuote() {
               items,
               subtotal: totals.subtotal,
               total: totals.total,
-              terms: undefined
+              terms: undefined,
+              customer: {
+                name: 'Sample Customer',
+                company: 'Acme Corp',
+                email: 'customer@example.com',
+                phone: '(555) 123-4567',
+                shipTo: '123 Main St, City, ST 12345'
+              }
             }}
           />
           <div style={{ display: 'flex', gap: 10 }}>

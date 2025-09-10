@@ -1,10 +1,10 @@
-import { Table, THead, Th, TBody, Tr, Td } from './ui/Table';
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from './ui/Table';
 import PriceTag from './PriceTag';
 
 interface LineItem {
   name: string;
   unitPrice: number;
-  qty: number;
+  quantity: number;
   extended: number;
   notes?: string;
 }
@@ -16,31 +16,33 @@ interface QuoteLineItemsTableProps {
 export default function QuoteLineItemsTable({ items }: QuoteLineItemsTableProps) {
   return (
     <Table>
-      <THead>
-        <Th>Description</Th>
-        <Th>Unit Price</Th>
-        <Th>Qty</Th>
-        <Th>Extended</Th>
-      </THead>
-      <TBody>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="text-left">Description</TableHead>
+          <TableHead className="text-right">Unit Price</TableHead>
+          <TableHead className="text-center">Qty</TableHead>
+          <TableHead className="text-right">Extended</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {items.map((i, idx) => (
-          <Tr key={idx}>
-            <Td>
-              <div style={{ fontWeight: 600 }}>{i.name}</div>
+          <TableRow key={idx}>
+            <TableCell>
+              <div className="font-semibold">{i.name}</div>
               {i.notes && (
-                <div style={{ color: '#64748b', fontSize: 12 }}>{i.notes}</div>
+                <div className="text-xs text-muted-foreground mt-1">{i.notes}</div>
               )}
-            </Td>
-            <Td>
+            </TableCell>
+            <TableCell className="text-right">
               <PriceTag value={i.unitPrice} />
-            </Td>
-            <Td>{i.qty}</Td>
-            <Td>
+            </TableCell>
+            <TableCell className="text-center">{i.quantity}</TableCell>
+            <TableCell className="text-right">
               <PriceTag value={i.extended} />
-            </Td>
-          </Tr>
+            </TableCell>
+          </TableRow>
         ))}
-      </TBody>
+      </TableBody>
     </Table>
   );
 }
