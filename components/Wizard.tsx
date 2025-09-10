@@ -17,27 +17,27 @@ export default function Wizard({ steps }: WizardProps) {
   const back = () => setI(s => Math.max(s - 1, 0));
   
   return (
-    <div className="grid">
-      <div style={{ display: 'flex', gap: 12 }}>
+    <div className="w-full max-w-none">
+      <div className="flex gap-8 mb-8">
         {steps.map((s, idx) => (
           <div 
             key={idx} 
-            style={{ 
-              padding: '6px 10px', 
-              borderBottom: idx === i ? '2px solid #0f766e' : '2px solid transparent', 
-              fontWeight: idx === i ? 700 : 500 
-            }}
+            className={`px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
+              idx === i 
+                ? 'border-b-2 border-primary text-primary font-bold' 
+                : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
+            }`}
           >
             {idx + 1}. {s.title}
           </div>
         ))}
       </div>
-      <div>{steps[i].content}</div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button onClick={back} disabled={i === 0} variant="ghost">
+      <div className="min-h-[60vh]">{steps[i].content}</div>
+      <div className="flex justify-between mt-8 pt-6 border-t">
+        <Button onClick={back} disabled={i === 0} variant="ghost" size="lg">
           Back
         </Button>
-        <Button onClick={next} disabled={i === steps.length - 1}>
+        <Button onClick={next} disabled={i === steps.length - 1} size="lg">
           Next
         </Button>
       </div>

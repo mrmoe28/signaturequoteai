@@ -275,8 +275,8 @@ export default function NewQuote() {
   ];
 
   return (
-    <div className="grid">
-      <h1 style={{ fontSize: 22, fontWeight: 800 }}>New Quote</h1>
+    <div className="w-full max-w-none px-6 py-8">
+      <h1 className="text-3xl font-bold mb-8">New Quote</h1>
       <Wizard steps={steps} />
     </div>
   );
