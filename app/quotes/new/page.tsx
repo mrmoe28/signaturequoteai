@@ -120,11 +120,11 @@ export default function NewQuote() {
                 <div>{i.name}</div>
                 <Input
                   type="number" 
-                  value={i.unitPrice} 
+                  value={i.unitPrice || ''} 
                   onChange={e => {
-                    const v = +e.target.value || 0; 
+                    const v = e.target.value ? +e.target.value : null; 
                     const quantity = i.quantity; 
-                    const ext = +(v * quantity).toFixed(2);
+                    const ext = v ? +(v * quantity).toFixed(2) : 0;
                     setItems(items.map((x, xi) => xi === idx ? { ...x, unitPrice: v, extended: ext } : x));
                   }} 
                 />
@@ -134,7 +134,7 @@ export default function NewQuote() {
                   onChange={e => {
                     const q = +e.target.value || 0; 
                     const up = i.unitPrice;
-                    const ext = +(up * q).toFixed(2);
+                    const ext = up ? +(up * q).toFixed(2) : 0;
                     setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
                   }} 
                 />

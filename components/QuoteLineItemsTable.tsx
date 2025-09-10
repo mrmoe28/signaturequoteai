@@ -3,7 +3,7 @@ import PriceTag from './PriceTag';
 
 interface LineItem {
   name: string;
-  unitPrice: number;
+  unitPrice: number | null;
   quantity: number;
   extended: number;
   notes?: string;

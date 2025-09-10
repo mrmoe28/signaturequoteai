@@ -86,7 +86,7 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         vendor: product.vendor,
         category: product.category,
         unit: product.unit,
-        price: product.price.toString(),
+        price: product.price?.toString() || null,
         currency: product.currency,
         url: product.url,
         primaryImageUrl: product.primaryImageUrl || null,
@@ -97,7 +97,9 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
       .returning();
     
     // Create price snapshot if price changed
-    if (existing.price !== product.price.toString()) {
+    const existingPriceStr = existing.price || null;
+    const newPriceStr = product.price?.toString() || null;
+    if (existingPriceStr !== newPriceStr) {
       await createPriceSnapshot(product.id, product.price);
     }
     
@@ -113,7 +115,7 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         vendor: product.vendor,
         category: product.category,
         unit: product.unit,
-        price: product.price.toString(),
+        price: product.price?.toString() || null,
         currency: product.currency,
         url: product.url,
         primaryImageUrl: product.primaryImageUrl || null,
@@ -129,7 +131,10 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
   }
 }
 
-export async function createPriceSnapshot(productId: string, price: number) {
+export async function createPriceSnapshot(productId: string, price: number | null) {
+  if (price == null) {
+    return null; // Skip creating snapshot for null prices
+  }
   return db
     .insert(priceSnapshots)
     .values({
@@ -190,7 +195,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
           quoteId,
           productId: item.productId,
           name: item.name,
-          unitPrice: item.unitPrice.toString(),
+          unitPrice: item.unitPrice?.toString() || '0',
           quantity: item.quantity.toString(),
           extended: item.extended.toString(),
           notes: item.notes,

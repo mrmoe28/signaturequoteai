@@ -178,6 +178,42 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 2. Update UI to conditionally show "per unit" text only when price exists
 3. This prevents runtime crashes when displaying products without prices
 
+## TypeScript Build Error: Type 'number | null' is not assignable to type 'number'
+
+### Symptom
+- TypeScript compilation error: `Type 'number | null' is not assignable to type 'number'`
+- Error occurs in quotes system when trying to assign product prices to quote items
+- Build fails with type incompatibility errors
+
+### Root Cause
+- Product type was updated to allow `price: number | null` to handle missing prices
+- Quote system types (`QuoteItem.unitPrice`) still expected `number` only
+- Type system inconsistency between product and quote data structures
+
+### Fix
+1. Update `QuoteItem` type in `lib/types.ts`:
+   ```typescript
+   export type QuoteItem = {
+     id?: string;
+     productId: string;
+     name: string;
+     unitPrice: number | null;  // Allow null prices
+     quantity: number;
+     extended: number;
+     notes?: string;
+   };
+   ```
+2. Update `computeExtended` function to handle null prices:
+   ```typescript
+   export function computeExtended(item: Omit<QuoteItem, 'extended'>): number {
+     if (item.unitPrice == null) return 0;
+     return +(item.unitPrice * item.quantity).toFixed(2);
+   }
+   ```
+3. Update UI components (`PriceTag`, `QuoteLineItemsTable`) to handle null values
+4. Update database queries to handle null prices in price snapshots and quote items
+5. This ensures type consistency throughout the application
+
 ### Verification Checklist
 - Products page loads without errors
 - Products with null prices show "Price not available" instead of crashing

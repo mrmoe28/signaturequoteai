@@ -1,6 +1,7 @@
 import { QuoteItem } from './types';
 
 export function computeExtended(item: Omit<QuoteItem, 'extended'>): number {
+  if (item.unitPrice == null) return 0;
   return +(item.unitPrice * item.quantity).toFixed(2);
 }
 

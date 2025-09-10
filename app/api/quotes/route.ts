@@ -62,11 +62,11 @@ export async function POST(request: NextRequest) {
     
     // Validate each item
     for (const item of body.items) {
-      if (!item.productId || !item.name || !item.unitPrice || !item.quantity) {
+      if (!item.productId || !item.name || item.unitPrice == null || !item.quantity) {
         return NextResponse.json(
           {
             success: false,
-            error: 'All quote items must have productId, name, unitPrice, and quantity',
+            error: 'All quote items must have productId, name, unitPrice (can be null), and quantity',
           },
           { status: 400 }
         );
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     
     // Calculate totals if not provided
     const subtotal = body.subtotal || body.items.reduce(
-      (sum: number, item: any) => sum + (item.unitPrice * item.quantity),
+      (sum: number, item: any) => sum + ((item.unitPrice || 0) * item.quantity),
       0
     );
     
@@ -96,9 +96,9 @@ export async function POST(request: NextRequest) {
       items: body.items.map((item: any) => ({
         productId: item.productId,
         name: item.name,
-        unitPrice: parseFloat(item.unitPrice),
+        unitPrice: item.unitPrice ? parseFloat(item.unitPrice) : null,
         quantity: parseFloat(item.quantity),
-        extended: parseFloat(item.unitPrice) * parseFloat(item.quantity),
+        extended: (item.unitPrice ? parseFloat(item.unitPrice) : 0) * parseFloat(item.quantity),
         notes: item.notes,
       })),
       subtotal,

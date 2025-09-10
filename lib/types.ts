@@ -46,7 +46,7 @@ export type QuoteItem = {
   id?: string;
   productId: string;
   name: string;
-  unitPrice: number;
+  unitPrice: number | null;
   quantity: number;
   extended: number;
   notes?: string;
