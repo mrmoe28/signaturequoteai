@@ -1,5 +1,6 @@
 'use client';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Wizard from '@/components/Wizard';
 import ProductPicker from '@/components/ProductPicker';
 import QuotePreview from '@/components/QuotePreview';
@@ -13,7 +14,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { ShoppingCart } from 'lucide-react';
 
-export default function NewQuote() {
+function NewQuoteContent() {
+  const searchParams = useSearchParams();
   const [customer, setCustomer] = useState<Customer>({ name: '' });
   const [items, setItems] = useState<QuoteItem[]>([]);
   const [discount, setDiscount] = useState<number>(0);
@@ -37,6 +39,25 @@ export default function NewQuote() {
     };
     fetchCompanySettings();
   }, []);
+
+  // Load items from localStorage when coming from cart
+  useEffect(() => {
+    const fromCart = searchParams.get('fromCart');
+    if (fromCart === 'true') {
+      const savedItems = localStorage.getItem('quoteItems');
+      if (savedItems) {
+        try {
+          const parsedItems = JSON.parse(savedItems);
+          setItems(parsedItems);
+          // Update addedProducts set to reflect items from cart
+          const productIds = new Set<string>(parsedItems.map((item: QuoteItem) => item.productId));
+          setAddedProducts(productIds);
+        } catch (error) {
+          console.error('Failed to parse saved quote items:', error);
+        }
+      }
+    }
+  }, [searchParams]);
 
   const addProduct = (p: Product) => {
     const existing = items.find(i => i.productId === p.id);
@@ -441,5 +462,13 @@ export default function NewQuote() {
       
       <Wizard steps={steps} />
     </div>
+  );
+}
+
+export default function NewQuote() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <NewQuoteContent />
+    </Suspense>
   );
 }
