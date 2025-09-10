@@ -285,10 +285,103 @@ export default function NewQuote() {
             }}
           />
           <div style={{ display: 'flex', gap: 10 }}>
-            <Button onClick={() => alert('Download PDF (stub)')}>
+            <Button 
+              onClick={async () => {
+                try {
+                  // First save the quote to get an ID
+                  const response = await fetch('/api/quotes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      customer,
+                      items,
+                      discount,
+                      shipping,
+                      tax,
+                      subtotal: totals.subtotal,
+                      total: totals.total,
+                      preparedBy: 'Sales Team',
+                      leadTimeNote: 'Typical lead time 1–2 weeks',
+                    }),
+                  });
+                  
+                  if (response.ok) {
+                    const result = await response.json();
+                    const quoteId = result.data.id;
+                    
+                    // Download PDF
+                    const pdfResponse = await fetch(`/api/quotes/${quoteId}/pdf`);
+                    if (pdfResponse.ok) {
+                      const blob = await pdfResponse.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `quote-${quoteId}.pdf`;
+                      document.body.appendChild(a);
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                      document.body.removeChild(a);
+                    }
+                  }
+                } catch (error) {
+                  console.error('Failed to download PDF:', error);
+                  alert('Failed to download PDF');
+                }
+              }}
+            >
               Download PDF
             </Button>
-            <Button onClick={() => alert('Send Email (stub)')}>
+            <Button 
+              onClick={async () => {
+                if (!customer.email) {
+                  alert('Customer email is required to send quote');
+                  return;
+                }
+                
+                try {
+                  // First save the quote to get an ID
+                  const response = await fetch('/api/quotes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      customer,
+                      items,
+                      discount,
+                      shipping,
+                      tax,
+                      subtotal: totals.subtotal,
+                      total: totals.total,
+                      preparedBy: 'Sales Team',
+                      leadTimeNote: 'Typical lead time 1–2 weeks',
+                    }),
+                  });
+                  
+                  if (response.ok) {
+                    const result = await response.json();
+                    const quoteId = result.data.id;
+                    
+                    // Send email
+                    const emailResponse = await fetch(`/api/quotes/${quoteId}/send`, {
+                      method: 'POST',
+                    });
+                    
+                    if (emailResponse.ok) {
+                      const emailResult = await emailResponse.json();
+                      alert(`Quote sent successfully to ${customer.email}!`);
+                    } else {
+                      const error = await emailResponse.json();
+                      alert(`Failed to send email: ${error.message}`);
+                    }
+                  } else {
+                    const error = await response.json();
+                    alert(`Failed to save quote: ${error.message}`);
+                  }
+                } catch (error) {
+                  console.error('Failed to send quote:', error);
+                  alert('Failed to send quote');
+                }
+              }}
+            >
               Send Quote
             </Button>
           </div>
