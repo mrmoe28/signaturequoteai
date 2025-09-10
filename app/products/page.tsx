@@ -211,9 +211,11 @@ export default function ProductsPage() {
                   <div className="text-2xl font-bold text-primary">
                     {money(product.price)}
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    per {product.unit}
-                  </div>
+                  {product.price != null && (
+                    <div className="text-sm text-muted-foreground">
+                      per {product.unit}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-2">

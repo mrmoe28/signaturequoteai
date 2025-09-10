@@ -155,3 +155,31 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 - Only common image types are allowed (jpg/png/webp/avif).
 - Results are downloaded to `public/images/products/...` via the image storage service.
 
+## Runtime Error: Cannot read properties of null (reading 'toLocaleString')
+
+### Symptom
+- Next.js runtime error: `TypeError: Cannot read properties of null (reading 'toLocaleString')`
+- Error occurs in `lib/formatting.ts` when calling `money()` function
+- Products page crashes when displaying products with null prices
+
+### Root Cause
+- The `money()` function expects a number but receives `null` values from crawled product data
+- Signature Solar products may not have prices available, resulting in `null` values
+- Function doesn't handle null/undefined inputs gracefully
+
+### Fix
+1. Update `lib/formatting.ts` to handle null values:
+   ```typescript
+   export const money = (n: number | null | undefined) => {
+     if (n == null) return 'Price not available';
+     return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+   };
+   ```
+2. Update UI to conditionally show "per unit" text only when price exists
+3. This prevents runtime crashes when displaying products without prices
+
+### Verification Checklist
+- Products page loads without errors
+- Products with null prices show "Price not available" instead of crashing
+- Products with valid prices display formatted currency correctly
+
