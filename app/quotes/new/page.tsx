@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { ShoppingCart } from 'lucide-react';
 
 export default function NewQuote() {
   const [customer, setCustomer] = useState<Customer>({ name: '' });
@@ -23,8 +24,10 @@ export default function NewQuote() {
 
   const addProduct = (p: Product) => {
     const existing = items.find(i => i.productId === p.id);
+    let updatedItems;
+    
     if (existing) {
-      setItems(items.map(i => 
+      updatedItems = items.map(i => 
         i.productId === p.id 
           ? {
               ...i, 
@@ -37,19 +40,29 @@ export default function NewQuote() {
               })
             } 
           : i
-      ));
+      );
       setShowSuccess(`Quantity increased for ${p.name}`);
     } else {
       const base = { productId: p.id, name: p.name, unitPrice: p.price, quantity: 1 };
-      setItems([...items, { ...base, extended: computeExtended(base) }]);
+      updatedItems = [...items, { ...base, extended: computeExtended(base) }];
       setShowSuccess(`Added ${p.name} to quote`);
     }
+    
+    setItems(updatedItems);
+    
+    // Save to localStorage for cart page
+    localStorage.setItem('quoteItems', JSON.stringify(updatedItems));
     
     // Add to added products set for visual feedback
     setAddedProducts(prev => new Set(Array.from(prev).concat(p.id)));
     
     // Clear success message after 3 seconds
     setTimeout(() => setShowSuccess(null), 3000);
+  };
+
+  const updateItems = (newItems: QuoteItem[]) => {
+    setItems(newItems);
+    localStorage.setItem('quoteItems', JSON.stringify(newItems));
   };
 
   const totals = useMemo(() => computeTotals(items, { discount, shipping, tax }), [items, discount, shipping, tax]);
@@ -154,12 +167,12 @@ export default function NewQuote() {
                           id={`qty-${idx}`}
                           type="number" 
                           value={i.quantity} 
-                          onChange={e => {
-                            const q = +e.target.value || 0; 
-                            const up = i.unitPrice;
-                            const ext = up ? +(up * q).toFixed(2) : 0;
-                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
-                          }} 
+                        onChange={e => {
+                          const q = +e.target.value || 0;
+                          const up = i.unitPrice;
+                          const ext = up ? +(up * q).toFixed(2) : 0;
+                          updateItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
+                        }}
                           min="1"
                         />
                       </div>
@@ -173,11 +186,11 @@ export default function NewQuote() {
                         <Button 
                           variant="outline" 
                           size="sm"
-                          onClick={() => {
-                            const newQty = Math.max(1, i.quantity - 1);
-                            const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
-                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
-                          }}
+                        onClick={() => {
+                          const newQty = Math.max(1, i.quantity - 1);
+                          const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
+                          updateItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
+                        }}
                           disabled={i.quantity <= 1}
                         >
                           -
@@ -185,18 +198,18 @@ export default function NewQuote() {
                         <Button 
                           variant="outline" 
                           size="sm"
-                          onClick={() => {
-                            const newQty = i.quantity + 1;
-                            const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
-                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
-                          }}
+                        onClick={() => {
+                          const newQty = i.quantity + 1;
+                          const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
+                          updateItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
+                        }}
                         >
                           +
                         </Button>
                         <Button 
                           variant="destructive" 
                           size="sm"
-                          onClick={() => setItems(items.filter((_, xi) => xi !== idx))}
+                          onClick={() => updateItems(items.filter((_, xi) => xi !== idx))}
                         >
                           Remove
                         </Button>
@@ -288,11 +301,23 @@ export default function NewQuote() {
     <div className="w-full max-w-none px-6 py-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">New Quote</h1>
-        {items.length > 0 && (
-          <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium">
-            {items.length} item{items.length !== 1 ? 's' : ''} in quote
-          </div>
-        )}
+        <div className="flex items-center gap-4">
+          {items.length > 0 && (
+            <>
+              <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium">
+                {items.length} item{items.length !== 1 ? 's' : ''} in quote
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => window.location.href = '/cart'}
+                className="flex items-center gap-2"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                View Cart
+              </Button>
+            </>
+          )}
+        </div>
       </div>
       
       {/* Success Toast */}

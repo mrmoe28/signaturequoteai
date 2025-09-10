@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/dashboard" className="text-muted-foreground hover:text-foreground">Dashboard</a>
               <a href="/products" className="text-muted-foreground hover:text-foreground">Products</a>
               <a href="/quotes/new" className="text-muted-foreground hover:text-foreground">New Quote</a>
+              <a href="/cart" className="text-muted-foreground hover:text-foreground">Cart</a>
             </nav>
           </div>
         </header>
