@@ -17,43 +17,63 @@ export default function ProductsPage() {
   const [vendorFilter, setVendorFilter] = useState('all');
 
   useEffect(() => {
-    // Load products from API or static data
-    fetch('/api/catalog')
-      .then(r => r.json())
-      .then(setProducts)
-      .catch(() => {
-        // Fallback sample data
-        setProducts([
-          {
-            id: '1',
-            name: 'Solar Panel 400W Monocrystalline',
-            sku: 'SP-400M',
-            vendor: 'SignatureSolar',
-            category: 'Solar Panels',
-            price: 199.99,
-            currency: 'USD',
-            unit: 'ea',
-            lastUpdated: new Date().toISOString(),
-            url: 'https://example.com/product1',
-            images: [],
-            isActive: true
-          },
-          {
-            id: '2', 
-            name: 'Lithium Battery 100Ah',
-            sku: 'LB-100',
-            vendor: 'SignatureSolar',
-            category: 'Batteries',
-            price: 899.99,
-            currency: 'USD',
-            unit: 'ea',
-            lastUpdated: new Date(Date.now() - 24*60*60*1000).toISOString(),
-            url: 'https://example.com/product2',
-            images: [],
-            isActive: true
+    const fetchProducts = async () => {
+      try {
+        // Try to get real Signature Solar products first
+        const signatureResponse = await fetch('/api/signature-solar');
+        if (signatureResponse.ok) {
+          const signatureData = await signatureResponse.json();
+          if (signatureData.length > 0) {
+            setProducts(signatureData);
+            return;
           }
-        ]);
-      });
+        }
+        
+        // Fallback to catalog API
+        const response = await fetch('/api/catalog');
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          // Fallback sample data
+          setProducts([
+            {
+              id: '1',
+              name: 'Solar Panel 400W Monocrystalline',
+              sku: 'SP-400M',
+              vendor: 'SignatureSolar',
+              category: 'Solar Panels',
+              price: 199.99,
+              currency: 'USD',
+              unit: 'ea',
+              lastUpdated: new Date().toISOString(),
+              url: 'https://example.com/product1',
+              images: [],
+              isActive: true
+            },
+            {
+              id: '2', 
+              name: 'Lithium Battery 100Ah',
+              sku: 'LB-100',
+              vendor: 'SignatureSolar',
+              category: 'Batteries',
+              price: 899.99,
+              currency: 'USD',
+              unit: 'ea',
+              lastUpdated: new Date(Date.now() - 24*60*60*1000).toISOString(),
+              url: 'https://example.com/product2',
+              images: [],
+              isActive: true
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setProducts([]);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const filteredProducts = products.filter(product => {
