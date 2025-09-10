@@ -4,18 +4,22 @@ import path from 'path';
 
 export async function GET() {
   try {
+    // Try to read the signature solar data file
     const dataPath = path.join(process.cwd(), 'public', 'data', 'signature-solar-products.json');
     
-    if (!fs.existsSync(dataPath)) {
-      return NextResponse.json({ error: 'No signature solar data found' }, { status: 404 });
+    if (fs.existsSync(dataPath)) {
+      const data = fs.readFileSync(dataPath, 'utf8');
+      const products = JSON.parse(data);
+      return NextResponse.json(products);
     }
     
-    const data = fs.readFileSync(dataPath, 'utf8');
-    const products = JSON.parse(data);
+    // Fallback: return empty array if file doesn't exist (e.g., on Vercel)
+    console.warn('Signature solar data file not found, returning empty array');
+    return NextResponse.json([]);
     
-    return NextResponse.json(products);
   } catch (error) {
     console.error('Error reading signature solar data:', error);
-    return NextResponse.json({ error: 'Failed to read data' }, { status: 500 });
+    // Return empty array instead of error to prevent client-side crashes
+    return NextResponse.json([]);
   }
 }

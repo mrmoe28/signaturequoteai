@@ -219,3 +219,47 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 - Products with null prices show "Price not available" instead of crashing
 - Products with valid prices display formatted currency correctly
 
+## Vercel Deployment Error: Application error - client-side exception
+
+### Symptom
+- Vercel deployment shows "Application error: a client-side exception has occurred"
+- Error occurs on quotes/new page or other pages that fetch product data
+- Local development works fine but production fails
+
+### Root Cause
+- API endpoints trying to read files that don't exist on Vercel deployment
+- Missing fallback handling when signature-solar data file is not available
+- Client-side components not handling API failures gracefully
+
+### Fix
+1. Update API endpoints to handle missing files gracefully:
+   ```typescript
+   // In app/api/signature-solar/route.ts
+   if (fs.existsSync(dataPath)) {
+     const data = fs.readFileSync(dataPath, 'utf8');
+     const products = JSON.parse(data);
+     return NextResponse.json(products);
+   }
+   // Fallback: return empty array instead of error
+   return NextResponse.json([]);
+   ```
+
+2. Add robust error handling in ProductPicker component:
+   ```typescript
+   // Add loading and error states
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
+   
+   // Handle API failures with fallbacks
+   .catch(err => {
+     console.error('Failed to fetch products:', err);
+     return fetch('/api/catalog').then(r => r.json());
+   })
+   ```
+
+3. Ensure data files are included in deployment:
+   - Verify `public/data/signature-solar-products.json` exists
+   - Files in `public/` directory are automatically deployed to Vercel
+
+4. This prevents client-side crashes when APIs return errors or empty data
+
