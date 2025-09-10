@@ -31,6 +31,36 @@ export type Product = {
   // Image fields
   primaryImageUrl?: string; // Quick access to main image
   images: ProductImage[];
+  
+  // Enhanced product data
+  shortDescription?: string;
+  specifications?: Record<string, string>;
+  features?: string[];
+  dimensions?: string;
+  weight?: string;
+  warranty?: string;
+  powerRating?: string;
+  voltage?: string;
+  efficiency?: string;
+  certifications?: string[];
+  inStock?: boolean;
+  availability?: string;
+  stockQuantity?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  categories?: string[];
+  tags?: string[];
+  reviews?: {
+    averageRating?: number;
+    totalReviews?: number;
+    reviews?: Array<{
+      id: string;
+      rating: number;
+      comment: string;
+      author: string;
+      date: string;
+    }>;
+  };
 };
 
 export type ProductFilter = {

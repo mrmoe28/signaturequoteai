@@ -11,6 +11,29 @@ export const products = pgTable('products', {
   currency: text('currency').default('USD'),
   url: text('url'),
   primaryImageUrl: text('primary_image_url'),
+  
+  // Enhanced product data
+  description: text('description'),
+  shortDescription: text('short_description'),
+  images: text('images'), // JSON array of image URLs
+  specifications: text('specifications'), // JSON object of specs
+  features: text('features'), // JSON array of features
+  dimensions: text('dimensions'),
+  weight: text('weight'),
+  warranty: text('warranty'),
+  powerRating: text('power_rating'),
+  voltage: text('voltage'),
+  efficiency: text('efficiency'),
+  certifications: text('certifications'), // JSON array
+  inStock: text('in_stock').default('true'),
+  availability: text('availability'),
+  stockQuantity: numeric('stock_quantity', { precision: 10, scale: 0 }),
+  metaTitle: text('meta_title'),
+  metaDescription: text('meta_description'),
+  categories: text('categories'), // JSON array
+  tags: text('tags'), // JSON array
+  reviews: text('reviews'), // JSON object with review data
+  
   lastUpdated: timestamp('last_updated').defaultNow(),
   isActive: text('is_active').default('true'),
 }, (table) => ({
@@ -18,6 +41,7 @@ export const products = pgTable('products', {
   categoryIndex: index('products_category_idx').on(table.category),
   vendorIndex: index('products_vendor_idx').on(table.vendor),
   lastUpdatedIndex: index('products_last_updated_idx').on(table.lastUpdated),
+  inStockIndex: index('products_in_stock_idx').on(table.inStock),
 }));
 
 export const priceSnapshots = pgTable('price_snapshots', {

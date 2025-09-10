@@ -15,6 +15,13 @@
       "when": 1757540884132,
       "tag": "0001_dark_mister_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757545484748,
+      "tag": "0002_mighty_magus",
+      "breakpoints": true
     }
   ]
 }

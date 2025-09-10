@@ -91,6 +91,29 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         url: product.url,
         primaryImageUrl: product.primaryImageUrl || null,
         isActive: product.isActive ? 'true' : 'false',
+        
+        // Enhanced product data
+        description: product.description || null,
+        shortDescription: product.shortDescription || null,
+        images: product.images ? JSON.stringify(product.images) : null,
+        specifications: product.specifications ? JSON.stringify(product.specifications) : null,
+        features: product.features ? JSON.stringify(product.features) : null,
+        dimensions: product.dimensions || null,
+        weight: product.weight || null,
+        warranty: product.warranty || null,
+        powerRating: product.powerRating || null,
+        voltage: product.voltage || null,
+        efficiency: product.efficiency || null,
+        certifications: product.certifications ? JSON.stringify(product.certifications) : null,
+        inStock: product.inStock ? 'true' : 'false',
+        availability: product.availability || null,
+        stockQuantity: product.stockQuantity?.toString() || null,
+        metaTitle: product.metaTitle || null,
+        metaDescription: product.metaDescription || null,
+        categories: product.categories ? JSON.stringify(product.categories) : null,
+        tags: product.tags ? JSON.stringify(product.tags) : null,
+        reviews: product.reviews ? JSON.stringify(product.reviews) : null,
+        
         lastUpdated: now,
       })
       .where(eq(products.id, product.id))
@@ -120,6 +143,29 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         url: product.url,
         primaryImageUrl: product.primaryImageUrl || null,
         isActive: product.isActive ? 'true' : 'false',
+        
+        // Enhanced product data
+        description: product.description || null,
+        shortDescription: product.shortDescription || null,
+        images: product.images ? JSON.stringify(product.images) : null,
+        specifications: product.specifications ? JSON.stringify(product.specifications) : null,
+        features: product.features ? JSON.stringify(product.features) : null,
+        dimensions: product.dimensions || null,
+        weight: product.weight || null,
+        warranty: product.warranty || null,
+        powerRating: product.powerRating || null,
+        voltage: product.voltage || null,
+        efficiency: product.efficiency || null,
+        certifications: product.certifications ? JSON.stringify(product.certifications) : null,
+        inStock: product.inStock ? 'true' : 'false',
+        availability: product.availability || null,
+        stockQuantity: product.stockQuantity?.toString() || null,
+        metaTitle: product.metaTitle || null,
+        metaDescription: product.metaDescription || null,
+        categories: product.categories ? JSON.stringify(product.categories) : null,
+        tags: product.tags ? JSON.stringify(product.tags) : null,
+        reviews: product.reviews ? JSON.stringify(product.reviews) : null,
+        
         lastUpdated: now,
       })
       .returning();
