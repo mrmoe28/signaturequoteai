@@ -58,7 +58,7 @@ async function testCrawler() {
     }
 
   } catch (error) {
-    logger.error('❌ Crawler test failed:', error);
+    logger.error({ error: error instanceof Error ? error.message : String(error) }, '❌ Crawler test failed');
   } finally {
     // Clean up
     await crawler.close();
@@ -68,5 +68,8 @@ async function testCrawler() {
 
 // Run the test
 if (require.main === module) {
-  testCrawler().catch(console.error);
+  testCrawler().catch((error) => {
+    console.error('Test failed:', error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  });
 }
