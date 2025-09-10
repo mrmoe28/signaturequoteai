@@ -65,7 +65,7 @@ export async function POST(
 
     logger.info({ 
       quoteId, 
-      emailId: result.emailId,
+      messageId: result.messageId,
       customerEmail: quote.customerEmail 
     }, 'Quote email sent successfully');
 
@@ -73,7 +73,7 @@ export async function POST(
       success: true,
       data: {
         quoteId,
-        emailId: result.emailId,
+        messageId: result.messageId,
         customerEmail: quote.customerEmail,
         hasPdf: !!pdfBuffer,
       },

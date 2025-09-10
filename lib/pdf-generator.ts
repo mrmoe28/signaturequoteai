@@ -448,21 +448,70 @@ function generateQuoteHTML(quote: Quote, companySettings: CompanySettings | null
 }
 
 async function htmlToPDF(html: string): Promise<Buffer> {
-  // This is a simplified PDF generation
-  // In production, you would use puppeteer or a dedicated PDF service
   try {
-    // For now, we'll return a placeholder buffer
-    // In production, you'd use something like:
-    // const puppeteer = require('puppeteer');
-    // const browser = await puppeteer.launch();
-    // const page = await browser.newPage();
-    // await page.setContent(html);
-    // const pdf = await page.pdf({ format: 'A4' });
-    // await browser.close();
-    // return pdf;
+    // Use puppeteer for real PDF generation
+    const puppeteer = require('puppeteer');
     
-    // Placeholder implementation
-    const pdfContent = `%PDF-1.4
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process',
+        '--disable-gpu'
+      ]
+    });
+    
+    const page = await browser.newPage();
+    
+    // Set content and wait for it to load
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    
+    // Generate PDF with proper settings
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '20mm',
+        right: '20mm',
+        bottom: '20mm',
+        left: '20mm'
+      },
+      displayHeaderFooter: false,
+      preferCSSPageSize: true
+    });
+    
+    await browser.close();
+    
+    logger.info('PDF generated successfully using Puppeteer');
+    return pdf;
+    
+  } catch (error) {
+    logger.error({ error }, 'Failed to generate PDF from HTML');
+    
+    // Fallback to a simple text-based PDF if puppeteer fails
+    logger.info('Falling back to simple PDF generation');
+    return generateSimplePDF(html);
+  }
+}
+
+function generateSimplePDF(html: string): Buffer {
+  // Extract text content from HTML for a simple PDF
+  const textContent = html
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .replace(/&nbsp;/g, ' ') // Replace HTML entities
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .trim();
+
+  // Create a simple PDF structure
+  const pdfContent = `%PDF-1.4
 1 0 obj
 <<
 /Type /Catalog
@@ -484,18 +533,27 @@ endobj
 /Parent 2 0 R
 /MediaBox [0 0 612 792]
 /Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+>>
+>>
 >>
 endobj
 
 4 0 obj
 <<
-/Length 44
+/Length ${textContent.length + 100}
 >>
 stream
 BT
 /F1 12 Tf
 72 720 Td
-(Quote PDF - Generated) Tj
+(${textContent.substring(0, 200)}) Tj
 ET
 endstream
 endobj
@@ -506,20 +564,15 @@ xref
 0000000009 00000 n 
 0000000058 00000 n 
 0000000115 00000 n 
-0000000204 00000 n 
+0000000206 00000 n 
 trailer
 <<
 /Size 5
 /Root 1 0 R
 >>
 startxref
-297
+${300 + textContent.length}
 %%EOF`;
 
-    return Buffer.from(pdfContent, 'utf-8');
-    
-  } catch (error) {
-    logger.error({ error }, 'Failed to convert HTML to PDF');
-    throw new Error('PDF generation failed');
-  }
+  return Buffer.from(pdfContent, 'utf-8');
 }
