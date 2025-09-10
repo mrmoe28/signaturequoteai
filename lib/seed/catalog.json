@@ -1,0 +1,50 @@
+[
+  {
+    "id": "eg4-18kpv",
+    "name": "EG4 18kPV Hybrid Inverter",
+    "sku": "EG4-18KPV",
+    "vendor": "SignatureSolar",
+    "category": "Inverters",
+    "unit": "ea",
+    "price": 3299,
+    "currency": "USD",
+    "url": "https://signaturesolar.com/products/eg4-18kpv",
+    "lastUpdated": "2025-09-10T00:00:00.000Z"
+  },
+  {
+    "id": "brightmount-4",
+    "name": "EG4 BrightMount 4-Panel Roof Racking Kit",
+    "sku": "BM-4",
+    "vendor": "SignatureSolar",
+    "category": "Racking",
+    "unit": "pack",
+    "price": 499,
+    "currency": "USD",
+    "url": "https://signaturesolar.com/products/brightmount-4",
+    "lastUpdated": "2025-09-10T00:00:00.000Z"
+  },
+  {
+    "id": "eg4-ll-s-v2-48v-280ah",
+    "name": "EG4 LL-S-V2 48V 280Ah Server Rack Battery",
+    "sku": "LL-S-V2-280",
+    "vendor": "SignatureSolar",
+    "category": "Batteries",
+    "unit": "ea",
+    "price": 1899,
+    "currency": "USD",
+    "url": "https://signaturesolar.com/products/eg4-ll-s-v2-48v-280ah",
+    "lastUpdated": "2025-09-10T00:00:00.000Z"
+  },
+  {
+    "id": "12awg-mc4-extension",
+    "name": "MC4 Extension Cable 12 AWG - 50ft",
+    "sku": "MC4-12-50",
+    "vendor": "SignatureSolar",
+    "category": "Wiring",
+    "unit": "ft",
+    "price": 89,
+    "currency": "USD",
+    "url": "https://signaturesolar.com/products/mc4-extension-12awg-50ft",
+    "lastUpdated": "2025-09-10T00:00:00.000Z"
+  }
+]

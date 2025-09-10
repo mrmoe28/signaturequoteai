@@ -1,0 +1,29 @@
+{
+  "name": "signature-quote-crawler",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.15",
+    "react": "^18",
+    "react-dom": "^18",
+    "@corsaro-creative/super-react": "^0.2.0",
+    "@corsaro-creative/super-design-tokens": "^0.2.0",
+    "zod": "^3.23.8",
+    "date-fns": "^2.30.0",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15"
+  }
+}
