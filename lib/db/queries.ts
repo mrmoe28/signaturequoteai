@@ -188,20 +188,42 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
 
   // Insert quote items
   if (quote.items.length > 0) {
-    await db
-      .insert(quoteItems)
-      .values(
-        quote.items.map(item => ({
-          quoteId,
-          productId: item.productId,
-          name: item.name,
-          unitPrice: item.unitPrice?.toString() || '0',
-          quantity: item.quantity.toString(),
-          extended: item.extended.toString(),
-          notes: item.notes,
-          imageUrl: item.imageUrl,
-        }))
-      );
+    try {
+      await db
+        .insert(quoteItems)
+        .values(
+          quote.items.map(item => ({
+            quoteId,
+            productId: item.productId,
+            name: item.name,
+            unitPrice: item.unitPrice?.toString() || '0',
+            quantity: item.quantity.toString(),
+            extended: item.extended.toString(),
+            notes: item.notes,
+            imageUrl: item.imageUrl,
+          }))
+        );
+    } catch (error) {
+      // If imageUrl column doesn't exist, try without it
+      if (error.message?.includes('image_url')) {
+        console.log('image_url column not found, inserting without imageUrl');
+        await db
+          .insert(quoteItems)
+          .values(
+            quote.items.map(item => ({
+              quoteId,
+              productId: item.productId,
+              name: item.name,
+              unitPrice: item.unitPrice?.toString() || '0',
+              quantity: item.quantity.toString(),
+              extended: item.extended.toString(),
+              notes: item.notes,
+            }))
+          );
+      } else {
+        throw error;
+      }
+    }
   }
 
   return getQuoteById(quoteId);
