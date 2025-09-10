@@ -205,7 +205,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
         );
     } catch (error) {
       // If imageUrl column doesn't exist, try without it
-      if (error.message?.includes('image_url')) {
+      if (error instanceof Error && error.message?.includes('image_url')) {
         console.log('image_url column not found, inserting without imageUrl');
         await db
           .insert(quoteItems)
