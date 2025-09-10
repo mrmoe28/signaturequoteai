@@ -1,7 +1,7 @@
 import { eq, desc, and, isNotNull, gte, like, sql } from 'drizzle-orm';
 import { db } from './index';
-import { products, priceSnapshots, quotes, quoteItems, crawlJobs } from './schema';
-import type { Product, ProductFilter, Quote, CrawlJob } from '../types';
+import { products, priceSnapshots, quotes, quoteItems, crawlJobs, companySettings } from './schema';
+import type { Product, ProductFilter, Quote, CrawlJob, CompanySettings } from '../types';
 import { createLogger } from '../logger';
 
 const logger = createLogger('db-queries');
@@ -346,4 +346,126 @@ export async function getActiveCrawlJob() {
     .limit(1);
 
   return active[0] || null;
+}
+
+// Company Settings Queries
+export async function getCompanySettings(): Promise<CompanySettings | null> {
+  const settings = await db
+    .select()
+    .from(companySettings)
+    .limit(1);
+
+  if (!settings[0]) return null;
+
+  return {
+    id: settings[0].id,
+    companyName: settings[0].companyName,
+    companyLogo: settings[0].companyLogo || undefined,
+    companyAddress: settings[0].companyAddress || undefined,
+    companyCity: settings[0].companyCity || undefined,
+    companyState: settings[0].companyState || undefined,
+    companyZip: settings[0].companyZip || undefined,
+    companyPhone: settings[0].companyPhone || undefined,
+    companyEmail: settings[0].companyEmail || undefined,
+    companyWebsite: settings[0].companyWebsite || undefined,
+    taxId: settings[0].taxId || undefined,
+    defaultTerms: settings[0].defaultTerms || undefined,
+    defaultLeadTime: settings[0].defaultLeadTime || undefined,
+    quotePrefix: settings[0].quotePrefix || 'Q',
+    createdAt: settings[0].createdAt?.toISOString() || new Date().toISOString(),
+    updatedAt: settings[0].updatedAt?.toISOString() || new Date().toISOString(),
+  };
+}
+
+export async function updateCompanySettings(updates: Partial<Omit<CompanySettings, 'id' | 'createdAt' | 'updatedAt'>>): Promise<CompanySettings> {
+  const now = new Date();
+  
+  const updateData: any = {
+    updatedAt: now,
+  };
+
+  if (updates.companyName !== undefined) updateData.companyName = updates.companyName;
+  if (updates.companyLogo !== undefined) updateData.companyLogo = updates.companyLogo;
+  if (updates.companyAddress !== undefined) updateData.companyAddress = updates.companyAddress;
+  if (updates.companyCity !== undefined) updateData.companyCity = updates.companyCity;
+  if (updates.companyState !== undefined) updateData.companyState = updates.companyState;
+  if (updates.companyZip !== undefined) updateData.companyZip = updates.companyZip;
+  if (updates.companyPhone !== undefined) updateData.companyPhone = updates.companyPhone;
+  if (updates.companyEmail !== undefined) updateData.companyEmail = updates.companyEmail;
+  if (updates.companyWebsite !== undefined) updateData.companyWebsite = updates.companyWebsite;
+  if (updates.taxId !== undefined) updateData.taxId = updates.taxId;
+  if (updates.defaultTerms !== undefined) updateData.defaultTerms = updates.defaultTerms;
+  if (updates.defaultLeadTime !== undefined) updateData.defaultLeadTime = updates.defaultLeadTime;
+  if (updates.quotePrefix !== undefined) updateData.quotePrefix = updates.quotePrefix;
+
+  // First, try to update existing record
+  const existing = await db.select().from(companySettings).limit(1);
+  
+  if (existing[0]) {
+    const updated = await db
+      .update(companySettings)
+      .set(updateData)
+      .where(eq(companySettings.id, existing[0].id))
+      .returning();
+    
+    return {
+      id: updated[0].id,
+      companyName: updated[0].companyName,
+      companyLogo: updated[0].companyLogo || undefined,
+      companyAddress: updated[0].companyAddress || undefined,
+      companyCity: updated[0].companyCity || undefined,
+      companyState: updated[0].companyState || undefined,
+      companyZip: updated[0].companyZip || undefined,
+      companyPhone: updated[0].companyPhone || undefined,
+      companyEmail: updated[0].companyEmail || undefined,
+      companyWebsite: updated[0].companyWebsite || undefined,
+      taxId: updated[0].taxId || undefined,
+      defaultTerms: updated[0].defaultTerms || undefined,
+      defaultLeadTime: updated[0].defaultLeadTime || undefined,
+      quotePrefix: updated[0].quotePrefix || 'Q',
+      createdAt: updated[0].createdAt?.toISOString() || new Date().toISOString(),
+      updatedAt: updated[0].updatedAt?.toISOString() || new Date().toISOString(),
+    };
+  } else {
+    // Create new record if none exists
+    const created = await db
+      .insert(companySettings)
+      .values({
+        companyName: updates.companyName || 'Signature QuoteCrawler',
+        companyLogo: updates.companyLogo,
+        companyAddress: updates.companyAddress,
+        companyCity: updates.companyCity,
+        companyState: updates.companyState,
+        companyZip: updates.companyZip,
+        companyPhone: updates.companyPhone,
+        companyEmail: updates.companyEmail,
+        companyWebsite: updates.companyWebsite,
+        taxId: updates.taxId,
+        defaultTerms: updates.defaultTerms,
+        defaultLeadTime: updates.defaultLeadTime,
+        quotePrefix: updates.quotePrefix || 'Q',
+        createdAt: now,
+        updatedAt: now,
+      })
+      .returning();
+    
+    return {
+      id: created[0].id,
+      companyName: created[0].companyName,
+      companyLogo: created[0].companyLogo || undefined,
+      companyAddress: created[0].companyAddress || undefined,
+      companyCity: created[0].companyCity || undefined,
+      companyState: created[0].companyState || undefined,
+      companyZip: created[0].companyZip || undefined,
+      companyPhone: created[0].companyPhone || undefined,
+      companyEmail: created[0].companyEmail || undefined,
+      companyWebsite: created[0].companyWebsite || undefined,
+      taxId: created[0].taxId || undefined,
+      defaultTerms: created[0].defaultTerms || undefined,
+      defaultLeadTime: created[0].defaultLeadTime || undefined,
+      quotePrefix: created[0].quotePrefix || 'Q',
+      createdAt: created[0].createdAt?.toISOString() || new Date().toISOString(),
+      updatedAt: created[0].updatedAt?.toISOString() || new Date().toISOString(),
+    };
+  }
 }

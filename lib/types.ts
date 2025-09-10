@@ -79,6 +79,25 @@ export type Quote = {
 
 // Crawler Types
 export type CrawlJobType = 'full' | 'category' | 'product';
+
+export type CompanySettings = {
+  id: string;
+  companyName: string;
+  companyLogo?: string;
+  companyAddress?: string;
+  companyCity?: string;
+  companyState?: string;
+  companyZip?: string;
+  companyPhone?: string;
+  companyEmail?: string;
+  companyWebsite?: string;
+  taxId?: string;
+  defaultTerms?: string;
+  defaultLeadTime?: string;
+  quotePrefix: string;
+  createdAt: string;
+  updatedAt: string;
+};
 export type CrawlJobStatus = 'pending' | 'running' | 'completed' | 'failed';
 
 export type CrawlJob = {

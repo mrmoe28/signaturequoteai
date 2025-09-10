@@ -85,3 +85,24 @@ export const crawlJobs = pgTable('crawl_jobs', {
   statusIndex: index('crawl_jobs_status_idx').on(table.status),
   startedAtIndex: index('crawl_jobs_started_at_idx').on(table.startedAt),
 }));
+
+export const companySettings = pgTable('company_settings', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  companyName: text('company_name').notNull(),
+  companyLogo: text('company_logo'),
+  companyAddress: text('company_address'),
+  companyCity: text('company_city'),
+  companyState: text('company_state'),
+  companyZip: text('company_zip'),
+  companyPhone: text('company_phone'),
+  companyEmail: text('company_email'),
+  companyWebsite: text('company_website'),
+  taxId: text('tax_id'),
+  defaultTerms: text('default_terms'),
+  defaultLeadTime: text('default_lead_time'),
+  quotePrefix: text('quote_prefix').default('Q'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+}, (table) => ({
+  companyNameIndex: index('company_settings_name_idx').on(table.companyName),
+}));

@@ -1,6 +1,7 @@
 import { createLogger } from './logger';
-import { Quote } from './types';
+import { Quote, CompanySettings } from './types';
 import { money } from './formatting';
+import { getCompanySettings } from './db/queries';
 
 // Database quote type (from queries)
 type DatabaseQuote = {
@@ -47,9 +48,12 @@ export async function generateQuotePDF(quote: Quote | DatabaseQuote): Promise<Bu
     // Convert database quote to standard quote format
     const normalizedQuote = normalizeQuote(quote);
     
+    // Get company settings
+    const companySettings = await getCompanySettings();
+    
     // For now, we'll use a simple HTML-to-PDF approach
     // In production, you might want to use @react-pdf/renderer or puppeteer
-    const html = generateQuoteHTML(normalizedQuote);
+    const html = generateQuoteHTML(normalizedQuote, companySettings);
     
     // Convert HTML to PDF using a simple approach
     // This is a placeholder - in production you'd use puppeteer or similar
@@ -98,7 +102,7 @@ function normalizeQuote(quote: Quote | DatabaseQuote): Quote {
   };
 }
 
-function generateQuoteHTML(quote: Quote): string {
+function generateQuoteHTML(quote: Quote, companySettings: CompanySettings | null): string {
   const validUntilText = quote.validUntil 
     ? new Date(quote.validUntil).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -143,6 +147,20 @@ function generateQuoteHTML(quote: Quote): string {
         .tagline {
           color: #6b7280;
           font-size: 14px;
+        }
+        .logo-container {
+          margin-bottom: 10px;
+        }
+        .company-logo {
+          max-height: 60px;
+          max-width: 200px;
+          object-fit: contain;
+        }
+        .company-info {
+          margin-top: 10px;
+          font-size: 12px;
+          color: #6b7280;
+          line-height: 1.4;
         }
         .quote-title {
           font-size: 32px;
@@ -273,8 +291,22 @@ function generateQuoteHTML(quote: Quote): string {
     </head>
     <body>
       <div class="header">
-        <div class="logo">Signature QuoteCrawler</div>
+        ${companySettings?.companyLogo ? `
+          <div class="logo-container">
+            <img src="${companySettings.companyLogo}" alt="${companySettings.companyName}" class="company-logo" />
+          </div>
+        ` : ''}
+        <div class="logo">${companySettings?.companyName || 'Signature QuoteCrawler'}</div>
         <div class="tagline">Professional Solar Equipment Solutions</div>
+        ${companySettings?.companyAddress || companySettings?.companyPhone || companySettings?.companyEmail ? `
+          <div class="company-info">
+            ${companySettings?.companyAddress ? `<div>${companySettings.companyAddress}</div>` : ''}
+            ${companySettings?.companyCity && companySettings?.companyState && companySettings?.companyZip ? 
+              `<div>${companySettings.companyCity}, ${companySettings.companyState} ${companySettings.companyZip}</div>` : ''}
+            ${companySettings?.companyPhone ? `<div>${companySettings.companyPhone}</div>` : ''}
+            ${companySettings?.companyEmail ? `<div>${companySettings.companyEmail}</div>` : ''}
+          </div>
+        ` : ''}
       </div>
 
       <h1 class="quote-title">QUOTE ${quote.number || quote.id}</h1>

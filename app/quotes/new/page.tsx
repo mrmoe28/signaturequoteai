@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Wizard from '@/components/Wizard';
 import ProductPicker from '@/components/ProductPicker';
 import QuotePreview from '@/components/QuotePreview';
@@ -21,6 +21,22 @@ export default function NewQuote() {
   const [tax, setTax] = useState<number>(0);
   const [addedProducts, setAddedProducts] = useState<Set<string>>(new Set());
   const [showSuccess, setShowSuccess] = useState<string | null>(null);
+  const [companySettings, setCompanySettings] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchCompanySettings = async () => {
+      try {
+        const response = await fetch('/api/company');
+        if (response.ok) {
+          const data = await response.json();
+          setCompanySettings(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch company settings:', error);
+      }
+    };
+    fetchCompanySettings();
+  }, []);
 
   const addProduct = (p: Product) => {
     const existing = items.find(i => i.productId === p.id);
@@ -300,8 +316,8 @@ export default function NewQuote() {
                       tax,
                       subtotal: totals.subtotal,
                       total: totals.total,
-                      preparedBy: 'Sales Team',
-                      leadTimeNote: 'Typical lead time 1–2 weeks',
+                      preparedBy: companySettings?.preparedBy || 'Sales Team',
+                      leadTimeNote: companySettings?.defaultLeadTime || 'Typical lead time 1–2 weeks',
                     }),
                   });
                   
@@ -351,8 +367,8 @@ export default function NewQuote() {
                       tax,
                       subtotal: totals.subtotal,
                       total: totals.total,
-                      preparedBy: 'Sales Team',
-                      leadTimeNote: 'Typical lead time 1–2 weeks',
+                      preparedBy: companySettings?.preparedBy || 'Sales Team',
+                      leadTimeNote: companySettings?.defaultLeadTime || 'Typical lead time 1–2 weeks',
                     }),
                   });
                   
