@@ -136,3 +136,22 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 - No new Cron Job appears under Project → Settings → Cron Jobs.
 - Hitting `GET /api/cron/daily?secret=...` returns success in non-production, or use `POST` with `Authorization: Bearer <VERCEL_CRON_SECRET>`.
 
+## Image extraction returns no images
+
+### Symptom
+- Product pages sometimes have no extractable image URLs; crawler stores none.
+
+### Fix
+- A fallback web image search is integrated via Bing Image Search.
+- Set env vars locally or in Vercel:
+  ```
+  BING_IMAGE_SEARCH_KEY=your_azure_key
+  # optional, default provided
+  BING_IMAGE_SEARCH_ENDPOINT=https://api.bing.microsoft.com/v7.0/images/search
+  ```
+- The crawler will query `"<product name> <sku?> Signature Solar"` and use the first valid results.
+
+### Notes
+- Only common image types are allowed (jpg/png/webp/avif).
+- Results are downloaded to `public/images/products/...` via the image storage service.
+

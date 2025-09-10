@@ -3,6 +3,18 @@ import type { z } from 'zod';
 // Product Types
 export type Vendor = 'SignatureSolar';
 
+export type ProductImage = {
+  id: string;
+  url: string; // Original source URL
+  localPath: string; // Local storage path/URL
+  alt?: string;
+  isPrimary: boolean;
+  width?: number;
+  height?: number;
+  fileSize?: number;
+  mimeType?: string;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -15,6 +27,9 @@ export type Product = {
   url?: string;
   lastUpdated: string; // ISO string
   isActive?: boolean;
+  // Image fields
+  primaryImageUrl?: string; // Quick access to main image
+  images: ProductImage[];
 };
 
 export type ProductFilter = {

@@ -10,6 +10,7 @@ export const products = pgTable('products', {
   price: numeric('price', { precision: 12, scale: 2 }),
   currency: text('currency').default('USD'),
   url: text('url'),
+  primaryImageUrl: text('primary_image_url'),
   lastUpdated: timestamp('last_updated').defaultNow(),
   isActive: text('is_active').default('true'),
 }, (table) => ({

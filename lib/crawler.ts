@@ -2,11 +2,14 @@ import { chromium, Browser, Page } from 'playwright';
 import * as cheerio from 'cheerio';
 import { createLogger, logOperation } from './logger';
 import { robotsChecker } from './robots-checker';
+import { imageStorage } from './image-storage';
+import { imageSearch } from './image-search';
 import type { 
   Product, 
   CrawlResult, 
   CategoryCrawlResult, 
-  CrawlerConfig 
+  CrawlerConfig,
+  ProductImage 
 } from './types';
 
 const logger = createLogger('crawler');
@@ -97,6 +100,8 @@ export class SignatureSolarCrawler {
       url: url,
       lastUpdated: new Date().toISOString(),
       isActive: price > 0,
+      images: [], // Will be populated by image extraction
+      primaryImageUrl: undefined, // Will be set after images are processed
     };
   }
 
@@ -111,6 +116,113 @@ export class SignatureSolarCrawler {
       return 'pack';
     }
     return 'ea';
+  }
+
+  private async extractProductImages(page: Page, baseUrl: string): Promise<string[]> {
+    return logOperation(logger, 'extract_product_images', async () => {
+      // Extract image URLs using multiple strategies
+      const imageUrls = await page.evaluate((baseUrl) => {
+        const urls: string[] = [];
+        
+        // Strategy 1: Product gallery images
+        const gallerySelectors = [
+          '.product-gallery img[src]',
+          '.product-images img[src]', 
+          '.product-image img[src]',
+          '.woocommerce-product-gallery img[src]',
+          '.product-photos img[src]',
+          '.main-image img[src]',
+          '.product-slider img[src]'
+        ];
+        
+        for (const selector of gallerySelectors) {
+          const images = document.querySelectorAll(selector);
+          images.forEach(img => {
+            const src = (img as HTMLImageElement).src;
+            if (src && !urls.includes(src)) {
+              urls.push(src);
+            }
+          });
+        }
+        
+        // Strategy 2: Structured data images
+        try {
+          const jsonLd = document.querySelector('script[type="application/ld+json"]');
+          if (jsonLd) {
+            const data = JSON.parse(jsonLd.textContent || '');
+            if (data['@type'] === 'Product') {
+              const images = data.image || [];
+              const imageArray = Array.isArray(images) ? images : [images];
+              imageArray.forEach((img: any) => {
+                const src = typeof img === 'string' ? img : img?.url;
+                if (src && !urls.includes(src)) {
+                  urls.push(src);
+                }
+              });
+            }
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+        
+        // Strategy 3: Meta property images
+        const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content');
+        if (ogImage && !urls.includes(ogImage)) {
+          urls.push(ogImage);
+        }
+        
+        // Strategy 4: Generic product images (last resort)
+        if (urls.length === 0) {
+          const fallbackSelectors = [
+            'img[alt*="product"]',
+            'img[alt*="Product"]',
+            'img[src*="product"]',
+            'img[class*="product"]',
+            '.content img[src]'
+          ];
+          
+          for (const selector of fallbackSelectors) {
+            const images = document.querySelectorAll(selector);
+            images.forEach(img => {
+              const src = (img as HTMLImageElement).src;
+              const alt = (img as HTMLImageElement).alt || '';
+              // Only include if it looks like a product image
+              if (src && (alt.toLowerCase().includes('product') || src.includes('product'))) {
+                if (!urls.includes(src)) {
+                  urls.push(src);
+                }
+              }
+            });
+            if (urls.length > 0) break; // Stop at first successful strategy
+          }
+        }
+        
+        // Filter and normalize URLs
+        return urls
+          .filter(url => {
+            // Filter out obvious non-product images
+            const lowercaseUrl = url.toLowerCase();
+            return !lowercaseUrl.includes('logo') && 
+                   !lowercaseUrl.includes('icon') &&
+                   !lowercaseUrl.includes('badge') &&
+                   !lowercaseUrl.includes('banner') &&
+                   !lowercaseUrl.includes('social') &&
+                   lowercaseUrl.match(/\.(jpg|jpeg|png|webp|avif)(\?|$)/i);
+          })
+          .map(url => {
+            // Normalize relative URLs
+            if (url.startsWith('//')) {
+              return `https:${url}`;
+            } else if (url.startsWith('/')) {
+              return `${baseUrl}${url}`;
+            }
+            return url;
+          })
+          .slice(0, 5); // Limit to 5 images max
+      }, baseUrl);
+      
+      return imageUrls;
+    });
   }
 
   async crawlCategory(categoryUrl: string): Promise<CategoryCrawlResult> {
@@ -343,6 +455,52 @@ export class SignatureSolarCrawler {
       }
 
       const product = this.normalizeProduct(productData, productUrl);
+
+      // Extract and download product images
+      try {
+        let imageUrls = await this.extractProductImages(page, this.baseUrl);
+        
+        // Fallback: If none found on page, use Bing Image Search based on product name and vendor
+        if (imageUrls.length === 0 && imageSearch.isConfigured()) {
+          const query = `${product.name} ${product.sku ? product.sku : ''} Signature Solar`.trim();
+          logger.info({ query }, 'No images found on page, using web image search');
+          const fallbackUrls = await imageSearch.searchProductImages(query, { count: 3 });
+          imageUrls = fallbackUrls;
+        }
+
+        if (imageUrls.length > 0) {
+          logger.debug({ 
+            productId: product.id, 
+            imageCount: imageUrls.length 
+          }, 'Found product images');
+          
+          // Initialize image storage if not already done
+          await imageStorage.initialize();
+          
+          // Download and store images
+          const images = await imageStorage.downloadProductImages(
+            product.id,
+            imageUrls,
+            product.name
+          );
+          
+          // Update product with image data
+          product.images = images;
+          product.primaryImageUrl = images.find(img => img.isPrimary)?.localPath;
+          
+          logger.debug({ 
+            productId: product.id, 
+            savedImages: images.length,
+            primaryImage: product.primaryImageUrl
+          }, 'Product images processed');
+        }
+      } catch (error) {
+        logger.warn({ 
+          productId: product.id,
+          error: error instanceof Error ? error.message : String(error)
+        }, 'Failed to process product images');
+        // Continue without images - don't fail the entire product crawl
+      }
 
       await this.delay();
 

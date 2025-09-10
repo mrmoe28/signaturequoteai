@@ -89,6 +89,7 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         price: product.price.toString(),
         currency: product.currency,
         url: product.url,
+        primaryImageUrl: product.primaryImageUrl || null,
         isActive: product.isActive ? 'true' : 'false',
         lastUpdated: now,
       })
@@ -115,6 +116,7 @@ export async function upsertProduct(product: Omit<Product, 'lastUpdated'>) {
         price: product.price.toString(),
         currency: product.currency,
         url: product.url,
+        primaryImageUrl: product.primaryImageUrl || null,
         isActive: product.isActive ? 'true' : 'false',
         lastUpdated: now,
       })
