@@ -102,49 +102,111 @@ export default function NewQuote() {
     {
       title: 'Items',
       content: (
-        <div className="grid">
+        <div className="space-y-6">
           <ProductPicker onAdd={addProduct} />
-          <div>
-            {items.map((i, idx) => (
-              <div 
-                key={idx} 
-                style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '2fr repeat(3, 1fr) auto', 
-                  gap: 8, 
-                  alignItems: 'center', 
-                  borderBottom: '1px solid var(--border)', 
-                  padding: '8px 0' 
-                }}
-              >
-                <div>{i.name}</div>
-                <Input
-                  type="number" 
-                  value={i.unitPrice || ''} 
-                  onChange={e => {
-                    const v = e.target.value ? +e.target.value : null; 
-                    const quantity = i.quantity; 
-                    const ext = v ? +(v * quantity).toFixed(2) : 0;
-                    setItems(items.map((x, xi) => xi === idx ? { ...x, unitPrice: v, extended: ext } : x));
-                  }} 
-                />
-                <Input
-                  type="number" 
-                  value={i.quantity} 
-                  onChange={e => {
-                    const q = +e.target.value || 0; 
-                    const up = i.unitPrice;
-                    const ext = up ? +(up * q).toFixed(2) : 0;
-                    setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
-                  }} 
-                />
-                <div>${i.extended.toFixed(2)}</div>
-                <Button onClick={() => setItems(items.filter((_, xi) => xi !== idx))}>
-                  Remove
-                </Button>
-              </div>
-            ))}
-          </div>
+          
+          {items.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Quote Items ({items.length})</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {items.map((i, idx) => (
+                    <div 
+                      key={idx} 
+                      className="grid grid-cols-12 gap-4 items-center p-4 border border-border rounded-lg bg-muted/20"
+                    >
+                      <div className="col-span-4">
+                        <div className="font-medium">{i.name}</div>
+                        <div className="text-sm text-muted-foreground">Product ID: {i.productId}</div>
+                      </div>
+                      
+                      <div className="col-span-2">
+                        <Label htmlFor={`price-${idx}`} className="text-xs">Unit Price</Label>
+                        <Input
+                          id={`price-${idx}`}
+                          type="number" 
+                          value={i.unitPrice || ''} 
+                          onChange={e => {
+                            const v = e.target.value ? +e.target.value : null; 
+                            const quantity = i.quantity; 
+                            const ext = v ? +(v * quantity).toFixed(2) : 0;
+                            setItems(items.map((x, xi) => xi === idx ? { ...x, unitPrice: v, extended: ext } : x));
+                          }} 
+                          placeholder="0.00"
+                        />
+                      </div>
+                      
+                      <div className="col-span-2">
+                        <Label htmlFor={`qty-${idx}`} className="text-xs">Quantity</Label>
+                        <Input
+                          id={`qty-${idx}`}
+                          type="number" 
+                          value={i.quantity} 
+                          onChange={e => {
+                            const q = +e.target.value || 0; 
+                            const up = i.unitPrice;
+                            const ext = up ? +(up * q).toFixed(2) : 0;
+                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: q, extended: ext } : x));
+                          }} 
+                          min="1"
+                        />
+                      </div>
+                      
+                      <div className="col-span-2 text-right">
+                        <div className="text-sm text-muted-foreground">Extended</div>
+                        <div className="font-bold text-lg">${i.extended.toFixed(2)}</div>
+                      </div>
+                      
+                      <div className="col-span-2 flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            const newQty = Math.max(1, i.quantity - 1);
+                            const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
+                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
+                          }}
+                          disabled={i.quantity <= 1}
+                        >
+                          -
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            const newQty = i.quantity + 1;
+                            const ext = i.unitPrice ? +(i.unitPrice * newQty).toFixed(2) : 0;
+                            setItems(items.map((x, xi) => xi === idx ? { ...x, quantity: newQty, extended: ext } : x));
+                          }}
+                        >
+                          +
+                        </Button>
+                        <Button 
+                          variant="destructive" 
+                          size="sm"
+                          onClick={() => setItems(items.filter((_, xi) => xi !== idx))}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+          
+          {items.length === 0 && (
+            <Card>
+              <CardContent className="text-center py-8">
+                <div className="text-muted-foreground">
+                  No items added yet. Search and add products above.
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       )
     },

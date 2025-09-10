@@ -16,8 +16,14 @@ export default function ProductPicker({ onAdd }: ProductPickerProps) {
   const [data, setData] = useState<Product[]>([]);
   
   useEffect(() => { 
-    fetch('/api/catalog')
+    fetch('/api/signature-solar')
       .then(r => r.json())
+      .then(setData)
+      .catch(err => {
+        console.error('Failed to fetch products:', err);
+        // Fallback to catalog if signature-solar fails
+        return fetch('/api/catalog').then(r => r.json());
+      })
       .then(setData); 
   }, []);
   
