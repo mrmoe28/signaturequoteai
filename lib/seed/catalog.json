@@ -9,7 +9,9 @@
     "price": 3299,
     "currency": "USD",
     "url": "https://signaturesolar.com/products/eg4-18kpv",
-    "lastUpdated": "2025-09-10T00:00:00.000Z"
+    "lastUpdated": "2025-09-10T00:00:00.000Z",
+    "images": [],
+    "isActive": true
   },
   {
     "id": "brightmount-4",
@@ -21,7 +23,9 @@
     "price": 499,
     "currency": "USD",
     "url": "https://signaturesolar.com/products/brightmount-4",
-    "lastUpdated": "2025-09-10T00:00:00.000Z"
+    "lastUpdated": "2025-09-10T00:00:00.000Z",
+    "images": [],
+    "isActive": true
   },
   {
     "id": "eg4-ll-s-v2-48v-280ah",
@@ -33,7 +37,9 @@
     "price": 1899,
     "currency": "USD",
     "url": "https://signaturesolar.com/products/eg4-ll-s-v2-48v-280ah",
-    "lastUpdated": "2025-09-10T00:00:00.000Z"
+    "lastUpdated": "2025-09-10T00:00:00.000Z",
+    "images": [],
+    "isActive": true
   },
   {
     "id": "12awg-mc4-extension",
@@ -45,6 +51,8 @@
     "price": 89,
     "currency": "USD",
     "url": "https://signaturesolar.com/products/mc4-extension-12awg-50ft",
-    "lastUpdated": "2025-09-10T00:00:00.000Z"
+    "lastUpdated": "2025-09-10T00:00:00.000Z",
+    "images": [],
+    "isActive": true
   }
 ]

@@ -34,7 +34,9 @@ export default function ProductsPage() {
             currency: 'USD',
             unit: 'ea',
             lastUpdated: new Date().toISOString(),
-            url: 'https://example.com/product1'
+            url: 'https://example.com/product1',
+            images: [],
+            isActive: true
           },
           {
             id: '2', 
@@ -46,7 +48,9 @@ export default function ProductsPage() {
             currency: 'USD',
             unit: 'ea',
             lastUpdated: new Date(Date.now() - 24*60*60*1000).toISOString(),
-            url: 'https://example.com/product2'
+            url: 'https://example.com/product2',
+            images: [],
+            isActive: true
           }
         ]);
       });
