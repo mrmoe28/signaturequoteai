@@ -89,34 +89,35 @@ export default function ProductsPage() {
   const vendors = Array.from(new Set(products.map(p => p.vendor)));
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Product Catalog</h1>
-        <p className="text-muted-foreground">
+    <div className="container mx-auto px-4 py-4 md:py-8">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">Product Catalog</h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           Browse our current inventory with live pricing from Signature Solar
         </p>
       </div>
 
       {/* Filters */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Search & Filters</CardTitle>
+      <Card className="mb-4 md:mb-6">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="text-lg md:text-xl">Search & Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <Label htmlFor="search">Search Products</Label>
+              <Label htmlFor="search" className="text-sm font-medium">Search Products</Label>
               <Input
                 id="search"
                 placeholder="Search by name or SKU..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                className="mt-1"
               />
             </div>
             <div>
-              <Label htmlFor="category">Category</Label>
+              <Label htmlFor="category" className="text-sm font-medium">Category</Label>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger id="category">
+                <SelectTrigger id="category" className="mt-1">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -128,9 +129,9 @@ export default function ProductsPage() {
               </Select>
             </div>
             <div>
-              <Label htmlFor="vendor">Vendor</Label>
+              <Label htmlFor="vendor" className="text-sm font-medium">Vendor</Label>
               <Select value={vendorFilter} onValueChange={setVendorFilter}>
-                <SelectTrigger id="vendor">
+                <SelectTrigger id="vendor" className="mt-1">
                   <SelectValue placeholder="All Vendors" />
                 </SelectTrigger>
                 <SelectContent>
@@ -144,6 +145,7 @@ export default function ProductsPage() {
             <div className="flex items-end">
               <Button 
                 variant="outline" 
+                className="w-full md:w-auto h-10"
                 onClick={() => {
                   setSearchQuery('');
                   setCategoryFilter('all');
@@ -158,19 +160,21 @@ export default function ProductsPage() {
       </Card>
 
       {/* Results Summary */}
-      <div className="mb-6">
-        <Badge variant="secondary" className="text-sm">
-          {filteredProducts.length} products found
-        </Badge>
-        {searchQuery && (
-          <Badge variant="outline" className="ml-2">
-            Searching: &ldquo;{searchQuery}&rdquo;
+      <div className="mb-4 md:mb-6">
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary" className="text-xs md:text-sm">
+            {filteredProducts.length} products found
           </Badge>
-        )}
+          {searchQuery && (
+            <Badge variant="outline" className="text-xs md:text-sm">
+              Searching: &ldquo;{searchQuery}&rdquo;
+            </Badge>
+          )}
+        </div>
       </div>
 
       {/* Product Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {filteredProducts.map(product => (
           <Card key={product.id} className="hover:shadow-lg transition-shadow">
             {/* Product Image */}
@@ -187,42 +191,42 @@ export default function ProductsPage() {
                 />
               </div>
             )}
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <CardTitle className="text-lg">{product.name}</CardTitle>
-                <Badge variant="outline">{product.vendor}</Badge>
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between gap-2">
+                <CardTitle className="text-base md:text-lg leading-tight">{product.name}</CardTitle>
+                <Badge variant="outline" className="text-xs shrink-0">{product.vendor}</Badge>
               </div>
               {product.sku && (
-                <div className="text-sm text-muted-foreground">
+                <div className="text-xs md:text-sm text-muted-foreground">
                   SKU: {product.sku}
                 </div>
               )}
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <div className="space-y-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   {product.category && (
-                    <Badge variant="secondary">{product.category}</Badge>
+                    <Badge variant="secondary" className="text-xs">{product.category}</Badge>
                   )}
                   <FreshnessBadge iso={product.lastUpdated} />
                 </div>
                 
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-primary">
+                  <div className="text-lg md:text-2xl font-bold text-primary">
                     {money(product.price)}
                   </div>
                   {product.price != null && (
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-xs md:text-sm text-muted-foreground">
                       per {product.unit}
                     </div>
                   )}
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
+                  <Button variant="outline" size="sm" className="flex-1 h-9 md:h-8 text-xs md:text-sm">
                     View Details
                   </Button>
-                  <Button size="sm" className="flex-1">
+                  <Button size="sm" className="flex-1 h-9 md:h-8 text-xs md:text-sm">
                     Add to Quote
                   </Button>
                 </div>
@@ -247,10 +251,10 @@ export default function ProductsPage() {
 
       {filteredProducts.length === 0 && (
         <Card>
-          <CardContent className="text-center py-12">
+          <CardContent className="text-center py-8 md:py-12">
             <div className="text-muted-foreground">
-              <p className="text-lg mb-2">No products found</p>
-              <p>Try adjusting your search or filters</p>
+              <p className="text-base md:text-lg mb-2">No products found</p>
+              <p className="text-sm md:text-base">Try adjusting your search or filters</p>
             </div>
           </CardContent>
         </Card>
