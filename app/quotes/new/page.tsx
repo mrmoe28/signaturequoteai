@@ -258,13 +258,7 @@ export default function NewQuote() {
               subtotal: totals.subtotal,
               total: totals.total,
               terms: undefined,
-              customer: {
-                name: 'Sample Customer',
-                company: 'Acme Corp',
-                email: 'customer@example.com',
-                phone: '(555) 123-4567',
-                shipTo: '123 Main St, City, ST 12345'
-              }
+              customer
             }}
           />
           <div style={{ display: 'flex', gap: 10 }}>
