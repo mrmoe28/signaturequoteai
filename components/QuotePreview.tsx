@@ -28,7 +28,13 @@ export default function QuotePreview({ quote }: QuotePreviewProps) {
           validUntil={quote.validUntil || undefined} 
           preparedBy={quote.preparedBy || 'Sales Team'} 
         />
-        <CustomerCard />
+        <CustomerCard 
+          company={quote.customer.company}
+          name={quote.customer.name}
+          email={quote.customer.email}
+          phone={quote.customer.phone}
+          shipTo={quote.customer.shipTo}
+        />
         <QuoteLineItemsTable items={quote.items} />
         <TotalsCard
           subtotal={totals.subtotal}
