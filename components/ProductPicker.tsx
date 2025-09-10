@@ -9,9 +9,10 @@ import { Card, CardContent } from './ui/Card';
 
 interface ProductPickerProps {
   onAdd: (p: Product) => void;
+  addedProducts?: Set<string>;
 }
 
-export default function ProductPicker({ onAdd }: ProductPickerProps) {
+export default function ProductPicker({ onAdd, addedProducts = new Set() }: ProductPickerProps) {
   const [q, setQ] = useState('');
   const [data, setData] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -153,8 +154,13 @@ export default function ProductPicker({ onAdd }: ProductPickerProps) {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <div className="font-bold text-2xl text-foreground mb-3">{money(p.price)}</div>
-                      <Button onClick={() => onAdd(p)} size="lg" className="px-6">
-                        Add to Quote
+                      <Button 
+                        onClick={() => onAdd(p)} 
+                        size="lg" 
+                        className="px-6"
+                        variant={addedProducts.has(p.id) ? "secondary" : "default"}
+                      >
+                        {addedProducts.has(p.id) ? "✓ Added" : "Add to Quote"}
                       </Button>
                     </div>
                   </div>

@@ -18,6 +18,8 @@ export default function NewQuote() {
   const [discount, setDiscount] = useState<number>(0);
   const [shipping, setShipping] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
+  const [addedProducts, setAddedProducts] = useState<Set<string>>(new Set());
+  const [showSuccess, setShowSuccess] = useState<string | null>(null);
 
   const addProduct = (p: Product) => {
     const existing = items.find(i => i.productId === p.id);
@@ -36,10 +38,18 @@ export default function NewQuote() {
             } 
           : i
       ));
+      setShowSuccess(`Quantity increased for ${p.name}`);
     } else {
       const base = { productId: p.id, name: p.name, unitPrice: p.price, quantity: 1 };
       setItems([...items, { ...base, extended: computeExtended(base) }]);
+      setShowSuccess(`Added ${p.name} to quote`);
     }
+    
+    // Add to added products set for visual feedback
+    setAddedProducts(prev => new Set(Array.from(prev).concat(p.id)));
+    
+    // Clear success message after 3 seconds
+    setTimeout(() => setShowSuccess(null), 3000);
   };
 
   const totals = useMemo(() => computeTotals(items, { discount, shipping, tax }), [items, discount, shipping, tax]);
@@ -103,7 +113,7 @@ export default function NewQuote() {
       title: 'Items',
       content: (
         <div className="space-y-6">
-          <ProductPicker onAdd={addProduct} />
+          <ProductPicker onAdd={addProduct} addedProducts={addedProducts} />
           
           {items.length > 0 && (
             <Card>
@@ -276,7 +286,25 @@ export default function NewQuote() {
 
   return (
     <div className="w-full max-w-none px-6 py-8">
-      <h1 className="text-3xl font-bold mb-8">New Quote</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">New Quote</h1>
+        {items.length > 0 && (
+          <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium">
+            {items.length} item{items.length !== 1 ? 's' : ''} in quote
+          </div>
+        )}
+      </div>
+      
+      {/* Success Toast */}
+      {showSuccess && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-in slide-in-from-right duration-300">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">✓</span>
+            <span className="font-medium">{showSuccess}</span>
+          </div>
+        </div>
+      )}
+      
       <Wizard steps={steps} />
     </div>
   );
