@@ -100,6 +100,7 @@ export async function POST(request: NextRequest) {
         quantity: parseFloat(item.quantity),
         extended: (item.unitPrice ? parseFloat(item.unitPrice) : 0) * parseFloat(item.quantity),
         notes: item.notes,
+        imageUrl: item.imageUrl,
       })),
       subtotal,
       total,
