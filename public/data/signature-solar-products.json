@@ -5,15 +5,16 @@
     "sku": "SS-1",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 2125,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/solis-s6-7-6kw-single-phase-high-voltage-hybrid-inverter/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10339/11720/Solis_S6_7.6kW_Single_Phase_High_Voltage_Energy_Storage_Hybrid_Inverter_S6-EH1P7.6K-H-US_1__57871.1755797237.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10339/11720/Solis_S6_7.6kW_Single_Phase_High_Voltage_Energy_Storage_Hybrid_Inverter_S6-EH1P7.6K-H-US_1__57871.1755797237.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.311Z"
   },
   {
     "id": "ss-2",
@@ -21,15 +22,16 @@
     "sku": "SS-2",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 7699,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-pp26-standby-generator-26-24kw-bundle-200-amp-standard-sed-transfer-switch-symphony-choice-power-management/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10303/11702/2624kW_Bundle_LPNG_-_PP26_Standby_Generator_200_amp_Standard_SED_Transfer_Switch_Symphony_Choice_Power_Management__29088.1755551660.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10303/11702/2624kW_Bundle_LPNG_-_PP26_Standby_Generator_200_amp_Standard_SED_Transfer_Switch_Symphony_Choice_Power_Management__29088.1755551660.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.311Z"
   },
   {
     "id": "ss-3",
@@ -37,15 +39,16 @@
     "sku": "SS-3",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 6899,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-22kw-generator-bundle-pp22-200a",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10302/11694/_2222kW_Bundle_LPNG_-_PP22_Standby_Generator_Dual_200A_Split_400S_Symphony_II_SED_Power_Management_Transfer_Switch__54675.1755532494.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10302/11694/_2222kW_Bundle_LPNG_-_PP22_Standby_Generator_Dual_200A_Split_400S_Symphony_II_SED_Power_Management_Transfer_Switch__54675.1755532494.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.311Z"
   },
   {
     "id": "ss-4",
@@ -53,15 +56,16 @@
     "sku": "SS-4",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 8106,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-22kw-standby-generator-bundle-pp22",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10301/11683/_2222kW_Bundle_LPNG_-_PP22_Standby_Generator_Dual_200A_Split_400S_Symphony_II_SED_Power_Management_Transfer_Switch__75793.1755526454.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10301/11683/_2222kW_Bundle_LPNG_-_PP22_Standby_Generator_Dual_200A_Split_400S_Symphony_II_SED_Power_Management_Transfer_Switch__75793.1755526454.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.311Z"
   },
   {
     "id": "ss-5",
@@ -69,15 +73,16 @@
     "sku": "SS-5",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 6622,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-18kw-standby-generator-bundle-pp18",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10300/11668/1818kW_Bundle_LPNG_-_PP18_Standby_Generator_200_amp_Standard_SED_Transfer_Switch_Symphony_Choice_Power_Management__05759.1755278304.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10300/11668/1818kW_Bundle_LPNG_-_PP18_Standby_Generator_200_amp_Standard_SED_Transfer_Switch_Symphony_Choice_Power_Management__05759.1755278304.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-6",
@@ -85,15 +90,16 @@
     "sku": "SS-6",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 5329,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-11-5kw-standby-generator-bundle-pp13",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10299/11652/13KW_Bundle_LPNG_-_PP13_Standby_Generator_100_amp_16_-_circuit_Transfer_Switch__81980.1755264373.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10299/11652/13KW_Bundle_LPNG_-_PP13_Standby_Generator_100_amp_16_-_circuit_Transfer_Switch__81980.1755264373.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-7",
@@ -101,15 +107,16 @@
     "sku": "SS-7",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 5215,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/briggs-stratton-pp13-standby-generator-13-11-5kw-bundle-100-amp-16-circuit-transfer-switch/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10298/11692/13KW_Bundle_LPNG_-_PP13_Standby_Generator_100_amp_16_-_circuit_Transfer_Switch_3__01409.1755529540.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10298/11692/13KW_Bundle_LPNG_-_PP13_Standby_Generator_100_amp_16_-_circuit_Transfer_Switch_3__01409.1755529540.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-8",
@@ -117,15 +124,16 @@
     "sku": "SS-8",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 599,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/emporia-pro-level-2-ev-charger-black-hardwire-j1772/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10285/11611/Emporia_Pro_Level_2_EV_Charger_Black_Hardwire_J1772_2__05369.1754948304.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10285/11611/Emporia_Pro_Level_2_EV_Charger_Black_Hardwire_J1772_2__05369.1754948304.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-9",
@@ -133,15 +141,16 @@
     "sku": "SS-9",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 599,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/emporia-pro-level-2-ev-charger-white-hardwire-j1772/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10284/11608/Emporia_Pro_Level_2_EV_Charger_White_Hardwire_J1772__13884.1754947355.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10284/11608/Emporia_Pro_Level_2_EV_Charger_White_Hardwire_J1772__13884.1754947355.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-10",
@@ -149,15 +158,16 @@
     "sku": "SS-10",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 1399,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/anker-solix-bp3000-expansion-battery",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10273/11595/Anker_SOLIX_BP3000_Expansion_Battery__62491.1754587595.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10273/11595/Anker_SOLIX_BP3000_Expansion_Battery__62491.1754587595.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-11",
@@ -165,15 +175,16 @@
     "sku": "SS-11",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 5997.11,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/eg4-flexboss21-inverter-v-1-1-48v-split-phase-21kw-pv-input-eg4-gridboss-mid-v3-1-bndl-e00019-3-1/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10257/11554/FlexGrid_Bundle_2___54730__87710.1754333578.jpg?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10257/11554/FlexGrid_Bundle_2___54730__87710.1754333578.jpg?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-12",
@@ -181,15 +192,16 @@
     "sku": "SS-12",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 200.89,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/gridboss-breaker-kit-90a/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10256/11568/EG4_Breaker_Box___19799.1754413109.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10256/11568/EG4_Breaker_Box___19799.1754413109.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-13",
@@ -197,15 +209,16 @@
     "sku": "SS-13",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 1798.11,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/eg4gridbossmid",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10255/11557/EG4_GridBOSS_MID_1__72162.1754343293.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10255/11557/EG4_GridBOSS_MID_1__72162.1754343293.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.579Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-14",
@@ -215,13 +228,14 @@
     "category": "Solar Equipment",
     "price": 13278.09,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/off-grid-essential-solar-power-kit/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10250/11567/KIT-E0020__10061.1754498385.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10250/11567/KIT-E0020__10061.1754498385.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-15",
@@ -229,15 +243,16 @@
     "sku": "SS-15",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 2900,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/abb-reliahome-smart-panel-outdoor-hem2/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10245/11527/ReliaHome_Smart_Panel-Indoor_3__59596.1753996992.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10245/11527/ReliaHome_Smart_Panel-Indoor_3__59596.1753996992.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-16",
@@ -245,15 +260,16 @@
     "sku": "SS-16",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 2650,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/abb-reliahome-smart-panel-indoor-hem2/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10244/11521/ReliaHome_Smart_Panel-Indoor_4__30550.1753994235.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10244/11521/ReliaHome_Smart_Panel-Indoor_4__30550.1753994235.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-17",
@@ -261,15 +277,16 @@
     "sku": "SS-17",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 1790,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/bigbattery-48v-husky-2-inv-lithium-battery/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10241/11515/BigBattery_48V_HUSKY_2_Inverter_Version_1__20884.1753989559.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10241/11515/BigBattery_48V_HUSKY_2_Inverter_Version_1__20884.1753989559.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.312Z"
   },
   {
     "id": "ss-18",
@@ -279,13 +296,14 @@
     "category": "Solar Equipment",
     "price": 7030.8,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/seg-yukon-pallet-of-630w-solar-panels-grade-b-36-panels/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10240/11504/SEG_630W_Solar_Panel_3__90733.1753912725.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10240/11504/SEG_630W_Solar_Panel_3__90733.1753912725.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.313Z"
   },
   {
     "id": "ss-19",
@@ -293,15 +311,16 @@
     "sku": "SS-19",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 113.1,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/ure-peach-390w-solar-panel/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10239/11503/URE_PEACH_D7K390H8A_1__47641.1756903893.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10239/11503/URE_PEACH_D7K390H8A_1__47641.1756903893.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.313Z"
   },
   {
     "id": "ss-20",
@@ -309,14 +328,15 @@
     "sku": "SS-20",
     "vendor": "SignatureSolar",
     "category": "Solar Equipment",
-    "price": null,
+    "price": 1899,
     "currency": "USD",
-    "url": null,
+    "url": "https://signaturesolar.com/anker-solix-f3000-portable-power-station-3072wh-3600w-a1782111/",
     "primaryImageUrl": "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10237/11494/Anker_Solix_F3000_Portable_Power_Station_1__84640.1753891573.png?c=1",
     "images": [
       "https://cdn11.bigcommerce.com/s-bi8c0htqsn/images/stencil/270x270/products/10237/11494/Anker_Solix_F3000_Portable_Power_Station_1__84640.1753891573.png?c=1"
     ],
+    "description": null,
     "isActive": true,
-    "lastUpdated": "2025-09-10T17:11:46.580Z"
+    "lastUpdated": "2025-09-10T17:26:01.313Z"
   }
 ]

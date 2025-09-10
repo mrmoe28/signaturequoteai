@@ -223,7 +223,12 @@ export default function ProductsPage() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 h-9 md:h-8 text-xs md:text-sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 h-9 md:h-8 text-xs md:text-sm"
+                    onClick={() => window.location.href = `/products/${product.id}`}
+                  >
                     View Details
                   </Button>
                   <Button size="sm" className="flex-1 h-9 md:h-8 text-xs md:text-sm">

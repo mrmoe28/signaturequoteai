@@ -22,11 +22,12 @@ export type Product = {
   vendor: Vendor;
   category?: string;
   unit: 'ea' | 'ft' | 'pack';
-  price: number;
+  price: number | null;
   currency: 'USD';
   url?: string;
   lastUpdated: string; // ISO string
   isActive?: boolean;
+  description?: string;
   // Image fields
   primaryImageUrl?: string; // Quick access to main image
   images: ProductImage[];

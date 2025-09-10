@@ -87,17 +87,89 @@ async function crawlSignatureSolar() {
           const imgElement = element.querySelector('img');
           const imageUrl = imgElement ? imgElement.src || imgElement.getAttribute('data-src') : null;
           
-          // Try to find price
-          const priceElement = element.querySelector('.price, .product-price, [data-testid*="price"]');
-          const priceText = priceElement ? priceElement.textContent.trim() : null;
+          // Try to find price with multiple selectors
+          const priceSelectors = [
+            '.price',
+            '.product-price', 
+            '[data-testid*="price"]',
+            '.price-current',
+            '.price-now',
+            '.sale-price',
+            '.regular-price',
+            '.price-value',
+            '.price-amount',
+            '.price .sr-only',
+            '.price .visually-hidden'
+          ];
+          
+          let priceElement = null;
+          let priceText = null;
+          
+          for (const selector of priceSelectors) {
+            priceElement = element.querySelector(selector);
+            if (priceElement) {
+              priceText = priceElement.textContent.trim();
+              // Remove currency symbols and clean up
+              priceText = priceText.replace(/[$,\s]/g, '');
+              if (priceText && !isNaN(parseFloat(priceText))) {
+                break;
+              }
+            }
+          }
+
+          // Fallback: scan card text for first $price pattern
+          if (!priceText) {
+            const cardText = (element.innerText || '').replace(/\s+/g, ' ').trim();
+            const priceMatch = cardText.match(/\$\s*[0-9][0-9,]*(?:\.[0-9]{2})?/);
+            if (priceMatch) {
+              priceText = priceMatch[0].replace(/[$,\s]/g, '');
+            }
+          }
           
           // Try to find SKU
           const skuElement = element.querySelector('.sku, .product-sku, [data-testid*="sku"]');
           const sku = skuElement ? skuElement.textContent.trim() : null;
           
-          // Try to find product link
-          const linkElement = element.querySelector('a[href*="/products/"]');
-          const productUrl = linkElement ? linkElement.href : null;
+          // Try to find product link with multiple selectors
+          const linkSelectors = [
+            'a[href*="/products/"]',
+            'a[href*="/product/"]',
+            'a[href*="signaturesolar.com"]',
+            'a[href*=".html"]',
+            'a[href*=".htm"]'
+          ];
+          
+          let linkElement = null;
+          let productUrl = null;
+          
+          for (const selector of linkSelectors) {
+            linkElement = element.querySelector(selector);
+            if (linkElement) {
+              productUrl = linkElement.href;
+              if (productUrl && productUrl.includes('signaturesolar.com')) {
+                console.log(`Found product URL: ${productUrl}`);
+                break;
+              }
+            }
+          }
+          
+          // Also try to find link in parent elements
+          if (!productUrl) {
+            let parent = element.parentElement;
+            while (parent && parent !== document.body) {
+              const parentLink = parent.querySelector('a[href*="signaturesolar.com"]');
+              if (parentLink) {
+                productUrl = parentLink.href;
+                console.log(`Found product URL in parent: ${productUrl}`);
+                break;
+              }
+              parent = parent.parentElement;
+            }
+          }
+          
+          // Try to find product description
+          const descriptionElement = element.querySelector('.product-description, .product-summary, .product-details, .description');
+          const description = descriptionElement ? descriptionElement.textContent.trim().substring(0, 200) : null;
           
           if (name && imageUrl) {
             results.push({
@@ -106,11 +178,12 @@ async function crawlSignatureSolar() {
               sku: sku || `SS-${index + 1}`,
               vendor: 'SignatureSolar',
               category: 'Solar Equipment',
-              price: priceText ? parseFloat(priceText.replace(/[^0-9.]/g, '')) : null,
+              price: priceText ? parseFloat(priceText) : null,
               currency: 'USD',
               url: productUrl,
               primaryImageUrl: imageUrl,
               images: [imageUrl],
+              description: description,
               isActive: true,
               lastUpdated: new Date().toISOString()
             });
