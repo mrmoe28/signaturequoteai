@@ -106,3 +106,33 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 - Only UI/catalog needed → run locally without DB or open the Vercel URL.
 - Need `/api/products` or `/api/quotes` → set `DATABASE_URL` locally or in Vercel env.
 
+
+## Vercel build fails: Cron Jobs plan limit exceeded
+
+### Symptom
+- Vercel deployment fails with error:
+  - `Error: Your plan allows your team to create up to 2 Cron Jobs. Your team currently has 2, and this project is attempting to create 1 more, exceeding your team's limit.`
+
+### Root Cause
+- `vercel.json` declared a scheduled Cron for `"/api/cron/daily"`, which causes Vercel to provision a managed Cron Job. The team plan already has 2 Cron Jobs, so creating another fails the build.
+
+### Fix
+1. Remove the scheduled cron from `vercel.json` so Vercel stops provisioning a new job:
+   ```json
+   {
+     "$schema": "https://openapi.vercel.sh/vercel.json",
+     "crons": []
+   }
+   ```
+2. Redeploy. The API route at `app/api/cron/daily/route.ts` still exists and can be triggered manually or via an external scheduler.
+
+### Alternative (if you need a schedule)
+- Use one of:
+  - Upgrade your Vercel plan to allow more Cron Jobs.
+  - Trigger the endpoint via an external scheduler (GitHub Actions, GitLab CI, cron-job.org, Zapier, etc.) using a `Bearer` token in the `Authorization` header with `VERCEL_CRON_SECRET`.
+
+### Verification Checklist
+- Build succeeds on Vercel.
+- No new Cron Job appears under Project → Settings → Cron Jobs.
+- Hitting `GET /api/cron/daily?secret=...` returns success in non-production, or use `POST` with `Authorization: Bearer <VERCEL_CRON_SECRET>`.
+
