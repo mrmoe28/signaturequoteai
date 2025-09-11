@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createQuote, getQuotes } from '@/lib/db/queries';
+import { createQuote, getAllQuotes } from '@/lib/db/raw-queries';
 import { createLogger } from '@/lib/logger';
 import type { Quote } from '@/lib/types';
 
@@ -7,18 +7,13 @@ const logger = createLogger('api-quotes');
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    logger.info('Fetching quotes');
     
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50); // Max 50 quotes per page
-    
-    logger.info({ page, limit }, 'Fetching quotes');
-    
-    const result = await getQuotes(page, limit);
+    const quotes = await getAllQuotes();
     
     return NextResponse.json({
       success: true,
-      data: result,
+      data: quotes,
     });
     
   } catch (error) {
@@ -85,39 +80,34 @@ export async function POST(request: NextRequest) {
     
     const total = body.total || (subtotal - discount + shipping + tax);
     
-    const quoteData: Omit<Quote, 'id' | 'createdAt'> = {
-      number: body.number,
-      validUntil: body.validUntil,
+    const quoteData = {
+      customer: {
+        name: body.customer.name,
+        email: body.customer.email,
+        phone: body.customer.phone,
+        company: body.customer.company,
+        shipTo: body.customer.shipTo,
+      },
+      items: body.items.map((item: any) => ({
+        productId: item.productId,
+        name: item.name,
+        unitPrice: parseFloat(item.unitPrice),
+        quantity: parseFloat(item.quantity),
+        notes: item.notes,
+        imageUrl: item.imageUrl,
+      })),
       preparedBy: body.preparedBy,
       leadTimeNote: body.leadTimeNote,
       discount,
       shipping,
       tax,
-      items: body.items.map((item: any) => ({
-        productId: item.productId,
-        name: item.name,
-        unitPrice: item.unitPrice ? parseFloat(item.unitPrice) : null,
-        quantity: parseFloat(item.quantity),
-        extended: (item.unitPrice ? parseFloat(item.unitPrice) : 0) * parseFloat(item.quantity),
-        notes: item.notes,
-        imageUrl: item.imageUrl,
-      })),
-      subtotal,
-      total,
       terms: body.terms,
-      customer: {
-        company: body.customer.company,
-        name: body.customer.name,
-        email: body.customer.email,
-        phone: body.customer.phone,
-        shipTo: body.customer.shipTo,
-      },
+      validUntil: body.validUntil,
     };
     
     logger.info({ 
       customerName: quoteData.customer.name,
       itemCount: quoteData.items.length,
-      total: quoteData.total 
     }, 'Creating quote');
     
     const quote = await createQuote(quoteData);

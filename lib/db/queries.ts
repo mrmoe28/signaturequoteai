@@ -234,42 +234,20 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
 
   // Insert quote items
   if (quote.items.length > 0) {
-    try {
-      await db
-        .insert(quoteItems)
-        .values(
-          quote.items.map(item => ({
-            quoteId,
-            productId: item.productId,
-            name: item.name,
-            unitPrice: item.unitPrice?.toString() || '0',
-            quantity: item.quantity.toString(),
-            extended: item.extended.toString(),
-            notes: item.notes || null,
-          }))
-        );
-    } catch (error) {
-      // If imageUrl column doesn't exist, try without it
-      if (error instanceof Error && (error.message?.includes('image_url') || error.message?.includes('imageUrl'))) {
-        console.log('image_url column not found, inserting without imageUrl');
-        await db
-          .insert(quoteItems)
-          .values(
-            quote.items.map(item => ({
-              quoteId,
-              productId: item.productId,
-              name: item.name,
-              unitPrice: item.unitPrice?.toString() || '0',
-              quantity: item.quantity.toString(),
-              extended: item.extended.toString(),
-              notes: item.notes,
-            }))
-          );
-      } else {
-        console.error('Quote items insertion error:', error);
-        throw error;
-      }
-    }
+    await db
+      .insert(quoteItems)
+      .values(
+        quote.items.map(item => ({
+          quoteId,
+          productId: item.productId,
+          name: item.name,
+          unitPrice: item.unitPrice?.toString() || '0',
+          quantity: item.quantity.toString(),
+          extended: item.extended.toString(),
+          notes: item.notes || undefined,
+          imageUrl: item.imageUrl || undefined,
+        }))
+      );
   }
 
   return getQuoteById(quoteId);
@@ -297,6 +275,7 @@ export async function getQuoteById(id: string) {
       unitPrice: parseFloat(item.unitPrice),
       quantity: parseFloat(item.quantity),
       extended: parseFloat(item.extended),
+      imageUrl: item.imageUrl || undefined,
     })),
     customer: {
       company: quote[0].customerCompany || undefined,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createLogger } from '@/lib/logger';
-import { getQuoteById } from '@/lib/db/queries';
+import { getQuoteById } from '@/lib/db/raw-queries';
 
 const logger = createLogger('api-quotes-detail');
 

@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, numeric, uuid, index } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, numeric, uuid, index, foreignKey } from 'drizzle-orm/pg-core';
 
 export const products = pgTable('products', {
   id: text('id').primaryKey(),
@@ -79,19 +79,30 @@ export const quotes = pgTable('quotes', {
   customerEmailIndex: index('quotes_customer_email_idx').on(table.customerEmail),
 }));
 
-export const quoteItems = pgTable('quote_items', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  quoteId: uuid('quote_id').references(() => quotes.id).notNull(),
-  productId: text('product_id').references(() => products.id).notNull(),
-  name: text('name').notNull(),
-  unitPrice: numeric('unit_price', { precision: 12, scale: 2 }).notNull(),
-  quantity: numeric('quantity', { precision: 10, scale: 2 }).notNull(),
-  extended: numeric('extended', { precision: 12, scale: 2 }).notNull(),
-  notes: text('notes'),
-}, (table) => ({
-  quoteIdIndex: index('quote_items_quote_id_idx').on(table.quoteId),
-  productIdIndex: index('quote_items_product_id_idx').on(table.productId),
-}));
+export const quoteItems = pgTable("quote_items", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	quoteId: uuid("quote_id").notNull(),
+	productId: text("product_id").notNull(),
+	name: text().notNull(),
+	unitPrice: numeric("unit_price", { precision: 12, scale:  2 }).notNull(),
+	quantity: numeric({ precision: 10, scale:  2 }).notNull(),
+	extended: numeric({ precision: 12, scale:  2 }).notNull(),
+	notes: text(),
+	imageUrl: text("image_url"),
+}, (table) => [
+	index("quote_items_product_id_idx").using("btree", table.productId.asc().nullsLast().op("text_ops")),
+	index("quote_items_quote_id_idx").using("btree", table.quoteId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.quoteId],
+			foreignColumns: [quotes.id],
+			name: "quote_items_quote_id_quotes_id_fk"
+		}),
+	foreignKey({
+			columns: [table.productId],
+			foreignColumns: [products.id],
+			name: "quote_items_product_id_products_id_fk"
+		}),
+]);
 
 export const crawlJobs = pgTable('crawl_jobs', {
   id: uuid('id').defaultRandom().primaryKey(),
