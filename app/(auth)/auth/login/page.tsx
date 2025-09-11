@@ -17,19 +17,12 @@ export default function Login() {
     setError('');
     
     try {
-      const result = await signIn('google', {
-        redirect: false,
+      // For OAuth providers like Google, we need to allow the redirect
+      await signIn('google', {
         callbackUrl: '/dashboard'
       });
-      
-      if (result?.error) {
-        setError('Failed to sign in with Google');
-      } else if (result?.ok) {
-        router.push('/dashboard');
-      }
     } catch (error) {
       setError('An error occurred during sign in');
-    } finally {
       setLoading(false);
     }
   };

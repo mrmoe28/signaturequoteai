@@ -48,7 +48,7 @@ export const {
     verificationTokensTable: verificationTokens,
   }),
   session: {
-    strategy: 'jwt',
+    strategy: 'database',
   },
   pages: {
     signIn: '/auth/login',
@@ -104,24 +104,14 @@ export const {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role
-        token.stripeCustomerId = user.stripeCustomerId
-        token.subscriptionStatus = user.subscriptionStatus
-        token.quotesUsed = user.quotesUsed
-        token.quotesLimit = user.quotesLimit
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (session?.user) {
-        session.user.id = token.sub!
-        session.user.role = token.role as string
-        session.user.stripeCustomerId = token.stripeCustomerId as string
-        session.user.subscriptionStatus = token.subscriptionStatus as string
-        session.user.quotesUsed = token.quotesUsed as number
-        session.user.quotesLimit = token.quotesLimit as number
+    async session({ session, user }) {
+      if (session?.user && user) {
+        session.user.id = user.id
+        session.user.role = user.role as string
+        session.user.stripeCustomerId = user.stripeCustomerId as string
+        session.user.subscriptionStatus = user.subscriptionStatus as string
+        session.user.quotesUsed = Number(user.quotesUsed)
+        session.user.quotesLimit = Number(user.quotesLimit)
       }
       return session
     },

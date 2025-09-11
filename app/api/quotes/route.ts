@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createQuote, getAllQuotes } from '@/lib/db/raw-queries';
 import { createLogger } from '@/lib/logger';
+import { getCurrentUser, checkQuoteLimit, incrementQuoteUsage } from '@/lib/auth';
 import type { Quote } from '@/lib/types';
 
 const logger = createLogger('api-quotes');
@@ -32,6 +33,38 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check authentication and paywall
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Authentication required',
+          requiresAuth: true,
+        },
+        { status: 401 }
+      );
+    }
+
+    // Check quote limit for paywall
+    const { canCreate, quotesUsed, quotesLimit } = await checkQuoteLimit(user.id);
+    
+    if (!canCreate) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Quote limit reached',
+          paywall: {
+            quotesUsed,
+            quotesLimit,
+            message: `You've used ${quotesUsed} of ${quotesLimit} free quotes. Upgrade to Pro for unlimited quotes.`,
+            upgradeUrl: '/pricing',
+          },
+        },
+        { status: 402 } // Payment Required
+      );
+    }
+
     const body = await request.json();
     
     // Validate required fields
@@ -81,6 +114,7 @@ export async function POST(request: NextRequest) {
     const total = body.total || (subtotal - discount + shipping + tax);
     
     const quoteData = {
+      userId: user.id, // Add user ID to associate quote with user
       customer: {
         name: body.customer.name,
         email: body.customer.email,
@@ -106,16 +140,30 @@ export async function POST(request: NextRequest) {
     };
     
     logger.info({ 
+      userId: user.id,
       customerName: quoteData.customer.name,
       itemCount: quoteData.items.length,
     }, 'Creating quote');
     
     const quote = await createQuote(quoteData);
     
+    // Increment quote usage count for paywall
+    await incrementQuoteUsage(user.id);
+    
+    logger.info({
+      userId: user.id,
+      quoteId: quote.id,
+      quotesUsed: quotesUsed + 1,
+    }, 'Quote created and usage incremented');
+    
     return NextResponse.json({
       success: true,
       data: quote,
       message: 'Quote created successfully',
+      usage: {
+        quotesUsed: quotesUsed + 1,
+        quotesLimit: quotesLimit === -1 ? 'unlimited' : quotesLimit,
+      },
     });
     
   } catch (error) {

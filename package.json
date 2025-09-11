@@ -41,10 +41,10 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@react-pdf/renderer": "^4.3.0",
     "@sparticuz/chromium": "^138.0.2",
+    "@stripe/stripe-js": "^7.9.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/bcryptjs": "^2.4.6",
     "@types/cheerio": "^0.22.35",
-    
     "autoprefixer": "^10.4.21",
     "bcryptjs": "^3.0.2",
     "cheerio": "^1.1.2",
@@ -70,6 +70,7 @@
     "react": "^18",
     "react-dom": "^18",
     "resend": "^6.0.3",
+    "stripe": "^18.5.0",
     "tailwind-merge": "^3.3.1",
     "uuid": "^13.0.0",
     "zod": "^3.23.8"
