@@ -1,9 +1,9 @@
-import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
 import { createLogger } from './logger';
 
-const logger = createLogger('simple-email-service');
+const logger = createLogger('oauth2-email-service');
 
-export interface SimpleEmailData {
+export interface OAuth2EmailData {
   quoteId: string;
   quoteNumber?: string | null;
   customerName: string;
@@ -14,15 +14,15 @@ export interface SimpleEmailData {
   pdfBuffer?: Buffer;
 }
 
-export async function sendQuoteEmailSimple(data: SimpleEmailData) {
+export async function sendQuoteEmailOAuth2(data: OAuth2EmailData) {
   try {
     if (!data.customerEmail) {
       throw new Error('Customer email is required');
     }
 
-    // Check if we have SMTP credentials
-    if (!process.env.GOOGLE_APP_PASSWORD) {
-      console.log(`SMTP not configured - simulating quote email send for quote ${data.quoteId} to ${data.customerEmail}`);
+    // Check if we have OAuth2 credentials
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_REFRESH_TOKEN) {
+      console.log(`OAuth2 not configured - simulating quote email send for quote ${data.quoteId} to ${data.customerEmail}`);
       
       // Simulate email sending delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -34,21 +34,24 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
       return {
         success: true,
         messageId,
-        message: 'Quote email simulated (SMTP not configured - add GOOGLE_APP_PASSWORD to .env.local)',
+        message: 'Quote email simulated (OAuth2 not configured - see docs/OAUTH2_SETUP.md)',
       };
     }
 
-    // Use real SMTP with Gmail App Password
-    console.log(`Sending real quote email for quote ${data.quoteId} to ${data.customerEmail}`);
+    // Use OAuth2 with Gmail API
+    console.log(`Sending real quote email via OAuth2 for quote ${data.quoteId} to ${data.customerEmail}`);
 
-    // Create transporter using Gmail SMTP
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GOOGLE_CLIENT_EMAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-      },
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      'urn:ietf:wg:oauth:2.0:oob' // For installed applications
+    );
+
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
+
+    const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
     const validUntilText = data.validUntil 
       ? new Date(data.validUntil).toLocaleDateString('en-US', {
@@ -58,38 +61,91 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
         })
       : '30 days from receipt';
 
-    const mailOptions = {
-      from: `"Signature QuoteCrawler" <${process.env.GOOGLE_CLIENT_EMAIL}>`,
+    // Create email message
+    const message = createEmailMessage({
       to: data.customerEmail,
       subject: `Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment`,
       html: generateQuoteEmailHTML(data, validUntilText),
       text: generateQuoteEmailText(data, validUntilText),
-      attachments: data.pdfBuffer ? [
-        {
-          filename: `quote-${data.quoteNumber || data.quoteId}.pdf`,
-          content: data.pdfBuffer,
-          contentType: 'application/pdf',
-        }
-      ] : [],
-    };
+      pdfBuffer: data.pdfBuffer,
+      quoteNumber: data.quoteNumber || data.quoteId,
+    });
 
-    const result = await transporter.sendMail(mailOptions);
+    const result = await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: {
+        raw: message,
+      },
+    });
 
-    console.log(`Quote email sent successfully via SMTP. Message ID: ${result.messageId}`);
+    console.log(`Quote email sent successfully via OAuth2. Message ID: ${result.data.id}`);
 
     return {
       success: true,
-      messageId: result.messageId,
-      message: 'Quote sent successfully via Gmail SMTP',
+      messageId: result.data.id,
+      message: 'Quote sent successfully via Gmail OAuth2',
     };
 
   } catch (error) {
-    console.error(`Error sending quote email for ${data.quoteId}:`, error);
+    console.error(`Error sending quote email via OAuth2 for ${data.quoteId}:`, error);
     throw error;
   }
 }
 
-function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): string {
+function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }: {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  pdfBuffer?: Buffer;
+  quoteNumber: string;
+}): string {
+  const boundary = '----=_Part_' + Math.random().toString(36).substr(2, 9);
+  
+  let message = [
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${boundary}"`,
+    '',
+    `--${boundary}`,
+    'Content-Type: multipart/alternative; boundary="' + boundary + '_alt"',
+    '',
+    `--${boundary}_alt`,
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    text,
+    '',
+    `--${boundary}_alt`,
+    'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    html,
+    '',
+    `--${boundary}_alt--`,
+  ];
+
+  // Add PDF attachment if provided
+  if (pdfBuffer) {
+    const pdfBase64 = pdfBuffer.toString('base64');
+    message.push(
+      '',
+      `--${boundary}`,
+      'Content-Type: application/pdf; name="quote-' + quoteNumber + '.pdf"',
+      'Content-Disposition: attachment; filename="quote-' + quoteNumber + '.pdf"',
+      'Content-Transfer-Encoding: base64',
+      '',
+      pdfBase64,
+    );
+  }
+
+  message.push(`--${boundary}--`);
+
+  return Buffer.from(message.join('\n')).toString('base64url');
+}
+
+function generateQuoteEmailHTML(data: OAuth2EmailData, validUntilText: string): string {
   return `
     <!DOCTYPE html>
     <html>
@@ -256,7 +312,7 @@ function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): 
   `;
 }
 
-function generateQuoteEmailText(data: SimpleEmailData, validUntilText: string): string {
+function generateQuoteEmailText(data: OAuth2EmailData, validUntilText: string): string {
   return `
 Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment
 
