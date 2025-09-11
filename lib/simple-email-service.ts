@@ -53,7 +53,6 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
         message: 'Quote email simulated (configure GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY to enable Gmail API send)',
       };
     }
-
   } catch (error) {
     console.error(`Error sending quote email for ${data.quoteId}:`, error);
     throw error;
