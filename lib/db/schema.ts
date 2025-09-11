@@ -1,4 +1,68 @@
-import { pgTable, text, timestamp, numeric, uuid, index, foreignKey } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, numeric, uuid, index, foreignKey, boolean } from 'drizzle-orm/pg-core';
+
+// Authentication tables
+export const users = pgTable('users', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  email: text('email').notNull().unique(),
+  name: text('name'),
+  emailVerified: timestamp('email_verified'),
+  image: text('image'),
+  password: text('password'), // For credentials provider
+  role: text('role').default('user').notNull(), // 'user' | 'admin'
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  
+  // Stripe integration fields
+  stripeCustomerId: text('stripe_customer_id').unique(),
+  subscriptionStatus: text('subscription_status').default('inactive'), // 'active' | 'inactive' | 'past_due' | 'canceled'
+  subscriptionId: text('subscription_id'),
+  currentPeriodStart: timestamp('current_period_start'),
+  currentPeriodEnd: timestamp('current_period_end'),
+  
+  // Usage tracking for paywall
+  quotesUsed: numeric('quotes_used', { precision: 10, scale: 0 }).default('0'),
+  quotesLimit: numeric('quotes_limit', { precision: 10, scale: 0 }).default('3'), // Free tier limit
+}, (table) => ({
+  emailIndex: index('users_email_idx').on(table.email),
+  stripeCustomerIdIndex: index('users_stripe_customer_id_idx').on(table.stripeCustomerId),
+  subscriptionStatusIndex: index('users_subscription_status_idx').on(table.subscriptionStatus),
+}));
+
+export const accounts = pgTable('accounts', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(),
+  provider: text('provider').notNull(),
+  providerAccountId: text('provider_account_id').notNull(),
+  refresh_token: text('refresh_token'),
+  access_token: text('access_token'),
+  expires_at: numeric('expires_at', { precision: 10, scale: 0 }),
+  token_type: text('token_type'),
+  scope: text('scope'),
+  id_token: text('id_token'),
+  session_state: text('session_state'),
+}, (table) => ({
+  userIdIndex: index('accounts_user_id_idx').on(table.userId),
+  providerIndex: index('accounts_provider_idx').on(table.provider, table.providerAccountId),
+}));
+
+export const sessions = pgTable('sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  sessionToken: text('session_token').notNull().unique(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  expires: timestamp('expires').notNull(),
+}, (table) => ({
+  sessionTokenIndex: index('sessions_session_token_idx').on(table.sessionToken),
+  userIdIndex: index('sessions_user_id_idx').on(table.userId),
+}));
+
+export const verificationTokens = pgTable('verification_tokens', {
+  identifier: text('identifier').notNull(),
+  token: text('token').notNull(),
+  expires: timestamp('expires').notNull(),
+}, (table) => ({
+  identifierTokenIndex: index('verification_tokens_identifier_token_idx').on(table.identifier, table.token),
+}));
 
 export const products = pgTable('products', {
   id: text('id').primaryKey(),
@@ -57,6 +121,7 @@ export const priceSnapshots = pgTable('price_snapshots', {
 
 export const quotes = pgTable('quotes', {
   id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
   number: text('number'),
   createdAt: timestamp('created_at').defaultNow(),
   validUntil: timestamp('valid_until'),
@@ -74,6 +139,7 @@ export const quotes = pgTable('quotes', {
   customerPhone: text('customer_phone'),
   customerShipTo: text('customer_ship_to'),
 }, (table) => ({
+  userIdIndex: index('quotes_user_id_idx').on(table.userId),
   numberIndex: index('quotes_number_idx').on(table.number),
   createdAtIndex: index('quotes_created_at_idx').on(table.createdAt),
   customerEmailIndex: index('quotes_customer_email_idx').on(table.customerEmail),

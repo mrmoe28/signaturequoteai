@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { User, Settings, Building2, LogOut, ChevronDown } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
+import { User, Settings, Building2, LogOut, ChevronDown, CreditCard } from 'lucide-react';
 import { Button } from './ui/Button';
 import Link from 'next/link';
 
