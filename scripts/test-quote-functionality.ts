@@ -2,7 +2,7 @@ import { db } from '../lib/db/index';
 import { quotes } from '../lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { generateQuotePDF } from '../lib/pdf-generator';
-import { sendQuoteEmailGmail } from '../lib/gmail-service';
+import { sendQuoteEmail } from '../lib/email';
 
 async function testQuoteFunctionality() {
   try {
@@ -24,7 +24,45 @@ async function testQuoteFunctionality() {
     // Test PDF generation
     console.log('\n📄 Testing PDF generation...');
     try {
-      const pdfBuffer = await generateQuotePDF(testQuote);
+      // Convert the database quote to the expected DatabaseQuote format
+      const quoteForPDF = {
+        id: testQuote.id,
+        number: testQuote.number,
+        createdAt: testQuote.createdAt,
+        validUntil: testQuote.validUntil,
+        preparedBy: testQuote.preparedBy,
+        leadTimeNote: testQuote.leadTimeNote,
+        discount: testQuote.discount,
+        shipping: testQuote.shipping,
+        tax: testQuote.tax,
+        subtotal: testQuote.subtotal,
+        total: testQuote.total,
+        terms: testQuote.terms,
+        customerCompany: testQuote.customerCompany,
+        customerName: testQuote.customerName,
+        customerEmail: testQuote.customerEmail,
+        customerPhone: testQuote.customerPhone,
+        customerShipTo: testQuote.customerShipTo,
+        customer: {
+          company: testQuote.customerCompany || undefined,
+          name: testQuote.customerName,
+          email: testQuote.customerEmail || undefined,
+          phone: testQuote.customerPhone || undefined,
+          shipTo: testQuote.customerShipTo || undefined,
+        },
+        items: [] as Array<{
+          id: string;
+          quoteId: string;
+          productId: string;
+          name: string;
+          unitPrice: number;
+          quantity: number;
+          extended: number;
+          notes: string | null;
+        }>
+      };
+      
+      const pdfBuffer = await generateQuotePDF(quoteForPDF);
       console.log('✅ PDF generated successfully, size:', pdfBuffer.length, 'bytes');
     } catch (error) {
       console.log('❌ PDF generation failed:', error instanceof Error ? error.message : 'Unknown error');
@@ -44,7 +82,7 @@ async function testQuoteFunctionality() {
           validUntil: testQuote.validUntil?.toISOString(),
         };
         
-        const result = await sendQuoteEmailGmail(emailData);
+        const result = await sendQuoteEmail(emailData);
         console.log('✅ Email sent successfully:', result.messageId);
       } catch (error) {
         console.log('❌ Email sending failed:', error instanceof Error ? error.message : 'Unknown error');
