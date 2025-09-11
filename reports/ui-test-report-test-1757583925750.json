@@ -1,0 +1,396 @@
+{
+  "projectName": "Signature QuoteCrawler",
+  "testRunId": "test-1757583925750",
+  "timestamp": "2025-09-11T09:45:25.750Z",
+  "pages": [
+    {
+      "url": "http://localhost:3001/",
+      "route": "/",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:29.465Z"
+    },
+    {
+      "url": "http://localhost:3001/dashboard",
+      "route": "/dashboard",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/dashboard"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:30.392Z"
+    },
+    {
+      "url": "http://localhost:3001/products",
+      "route": "/products",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/products"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:34.520Z"
+    },
+    {
+      "url": "http://localhost:3001/quotes/new",
+      "route": "/quotes/new",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/quotes/new"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:38.769Z"
+    },
+    {
+      "url": "http://localhost:3001/cart",
+      "route": "/cart",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/cart"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:40.277Z"
+    },
+    {
+      "url": "http://localhost:3001/profile",
+      "route": "/profile",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/profile"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:41.674Z"
+    },
+    {
+      "url": "http://localhost:3001/settings",
+      "route": "/settings",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/settings"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:43.143Z"
+    },
+    {
+      "url": "http://localhost:3001/company",
+      "route": "/company",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/company"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:44.462Z"
+    },
+    {
+      "url": "http://localhost:3001/auth/login",
+      "route": "/auth/login",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/auth/login"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:45.456Z"
+    },
+    {
+      "url": "http://localhost:3001/auth/register",
+      "route": "/auth/register",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/auth/register"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:46.776Z"
+    },
+    {
+      "url": "http://localhost:3001/auth/reset",
+      "route": "/auth/reset",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3001/auth/reset"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: ReferenceError: getEventListeners is not defined\n    at eval (eval at evaluate (:291:30), <anonymous>:1:217)\n    at Array.forEach (<anonymous>)\n    at eval (eval at evaluate (:291:30), <anonymous>:1:113)\n    at UtilityScript.evaluate (<anonymous>:293:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at UITestAgent.testInteractiveElements (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:289:47)\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:235:41)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:45:47.735Z"
+    }
+  ],
+  "summary": {
+    "totalPages": 11,
+    "totalIssues": 11,
+    "criticalIssues": 11,
+    "highIssues": 0,
+    "mediumIssues": 0,
+    "lowIssues": 0,
+    "autoFixableIssues": 0
+  },
+  "recommendations": [
+    "🚨 Address critical issues immediately - these likely prevent core functionality",
+    "🐛 Fix console errors to improve stability and debugging",
+    "✅ Set up automated UI testing in your CI/CD pipeline",
+    "📊 Run this test suite regularly to catch regressions early"
+  ]
+}

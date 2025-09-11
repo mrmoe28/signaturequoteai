@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Test Report - Signature QuoteCrawler</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid #e1e5e9; padding-bottom: 20px; margin-bottom: 30px; }
+        .title { font-size: 2.5rem; font-weight: bold; color: #1a202c; margin: 0 0 10px 0; }
+        .subtitle { color: #718096; font-size: 1.1rem; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .metric { background: #f7fafc; border-radius: 8px; padding: 20px; text-align: center; border-left: 4px solid #3182ce; }
+        .metric-value { font-size: 2rem; font-weight: bold; color: #2d3748; }
+        .metric-label { color: #4a5568; font-size: 0.9rem; margin-top: 5px; }
+        .critical { border-left-color: #e53e3e; }
+        .high { border-left-color: #dd6b20; }
+        .medium { border-left-color: #d69e2e; }
+        .low { border-left-color: #38a169; }
+        .section { margin-bottom: 40px; }
+        .section-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; color: #2d3748; }
+        .recommendations { background: #edf2f7; border-radius: 8px; padding: 20px; }
+        .recommendation { margin: 10px 0; padding: 10px; background: white; border-radius: 4px; border-left: 3px solid #3182ce; }
+        .page-report { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+        .page-header { background: #f7fafc; padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .page-title { font-weight: bold; color: #2d3748; }
+        .page-url { color: #718096; font-size: 0.9rem; }
+        .issues { padding: 15px; }
+        .issue { border-left: 4px solid #cbd5e0; padding: 15px; margin-bottom: 15px; background: #f9f9f9; border-radius: 4px; }
+        .issue.critical { border-left-color: #e53e3e; background: #fed7d7; }
+        .issue.high { border-left-color: #dd6b20; background: #feebc8; }
+        .issue.medium { border-left-color: #d69e2e; background: #faf089; }
+        .issue.low { border-left-color: #38a169; background: #c6f6d5; }
+        .issue-type { font-size: 0.8rem; text-transform: uppercase; font-weight: bold; color: #4a5568; }
+        .issue-description { font-weight: bold; margin: 5px 0; }
+        .issue-details { font-size: 0.9rem; color: #4a5568; margin: 5px 0; }
+        .issue-fix { background: white; padding: 10px; border-radius: 4px; margin-top: 10px; font-family: monospace; font-size: 0.85rem; }
+        .no-issues { text-align: center; padding: 40px; color: #38a169; font-weight: bold; }
+        .console-errors { background: #fed7d7; border-radius: 4px; padding: 10px; margin: 10px 0; }
+        .error-item { font-family: monospace; font-size: 0.8rem; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Signature QuoteCrawler - UI Test Report</h1>
+            <p class="subtitle">Generated on 9/11/2025, 5:41:27 AM</p>
+            <p class="subtitle">Test Run ID: test-1757583687714</p>
+        </div>
+
+        <div class="summary">
+            <div class="metric">
+                <div class="metric-value">11</div>
+                <div class="metric-label">Pages Tested</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">11</div>
+                <div class="metric-label">Total Issues</div>
+            </div>
+            <div class="metric critical">
+                <div class="metric-value">11</div>
+                <div class="metric-label">Critical Issues</div>
+            </div>
+            <div class="metric high">
+                <div class="metric-value">0</div>
+                <div class="metric-label">High Priority</div>
+            </div>
+            <div class="metric medium">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Medium Priority</div>
+            </div>
+            <div class="metric low">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Low Priority</div>
+            </div>
+        </div>
+
+        
+        <div class="section">
+            <h2 class="section-title">🎯 Recommendations</h2>
+            <div class="recommendations">
+                <div class="recommendation">🚨 Address critical issues immediately - these likely prevent core functionality</div><div class="recommendation">🐛 Fix console errors to improve stability and debugging</div><div class="recommendation">✅ Set up automated UI testing in your CI/CD pipeline</div><div class="recommendation">📊 Run this test suite regularly to catch regressions early</div>
+            </div>
+        </div>
+        
+
+        <div class="section">
+            <h2 class="section-title">📄 Page Reports</h2>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: TimeoutError: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/dashboard</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: TimeoutError: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/dashboard", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/dashboard", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/products</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:3000/products
+Call log:
+[2m  - navigating to "http://localhost:3000/products", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:3000/products
+Call log:
+[2m  - navigating to "http://localhost:3000/products", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/quotes/new</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/quotes/new
+Call log:
+[2m  - navigating to "http://localhost:3000/quotes/new", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/quotes/new
+Call log:
+[2m  - navigating to "http://localhost:3000/quotes/new", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/cart</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cart
+Call log:
+[2m  - navigating to "http://localhost:3000/cart", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cart
+Call log:
+[2m  - navigating to "http://localhost:3000/cart", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/profile</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/profile
+Call log:
+[2m  - navigating to "http://localhost:3000/profile", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/profile
+Call log:
+[2m  - navigating to "http://localhost:3000/profile", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/settings</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/settings
+Call log:
+[2m  - navigating to "http://localhost:3000/settings", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/settings
+Call log:
+[2m  - navigating to "http://localhost:3000/settings", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/company</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/company
+Call log:
+[2m  - navigating to "http://localhost:3000/company", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/company
+Call log:
+[2m  - navigating to "http://localhost:3000/company", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/auth/login</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/login", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/login", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/auth/register</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/register", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/register", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-report">
+                    <div class="page-header">
+                        <div class="page-title">Failed to Load</div>
+                        <div class="page-url">http://localhost:3000/auth/reset</div>
+                        <div class="page-url">Load Time: 0ms | Interactive Elements: 0 | Issues: 1</div>
+                    </div>
+                    <div class="issues">
+                        
+                                <div class="issue critical">
+                                    <div class="issue-type">console error</div>
+                                    <div class="issue-description">Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/reset
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/reset", waiting until "networkidle"[22m
+</div>
+                                    <div class="issue-details"><strong>Element:</strong> page </div>
+                                    <div class="issue-details"><strong>Expected:</strong> Page should load successfully</div>
+                                    <div class="issue-details"><strong>Actual:</strong> Page failed to load with error</div>
+                                    <div class="issue-fix"><strong>Suggested Fix:</strong> Check server status and route configuration</div>
+                                </div>
+                            
+                        
+                            <div class="console-errors">
+                                <strong>Console Errors:</strong>
+                                <div class="error-item">error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/reset
+Call log:
+[2m  - navigating to "http://localhost:3000/auth/reset", waiting until "networkidle"[22m
+</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</body>
+</html>
+    

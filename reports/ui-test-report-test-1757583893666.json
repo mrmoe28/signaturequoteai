@@ -1,0 +1,396 @@
+{
+  "projectName": "Signature QuoteCrawler",
+  "testRunId": "test-1757583893666",
+  "timestamp": "2025-09-11T09:44:53.666Z",
+  "pages": [
+    {
+      "url": "http://localhost:3000/",
+      "route": "/",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.236Z"
+    },
+    {
+      "url": "http://localhost:3000/dashboard",
+      "route": "/dashboard",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/dashboard\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/dashboard\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/dashboard"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/dashboard\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/dashboard\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/dashboard\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/dashboard\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.270Z"
+    },
+    {
+      "url": "http://localhost:3000/products",
+      "route": "/products",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/products\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/products\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/products"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/products\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/products\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/products\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/products\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.298Z"
+    },
+    {
+      "url": "http://localhost:3000/quotes/new",
+      "route": "/quotes/new",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/quotes/new\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/quotes/new\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/quotes/new"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/quotes/new\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/quotes/new\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/quotes/new\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/quotes/new\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.326Z"
+    },
+    {
+      "url": "http://localhost:3000/cart",
+      "route": "/cart",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cart\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/cart\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/cart"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cart\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/cart\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cart\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/cart\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.355Z"
+    },
+    {
+      "url": "http://localhost:3000/profile",
+      "route": "/profile",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/profile\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/profile\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/profile"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/profile\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/profile\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/profile\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/profile\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.385Z"
+    },
+    {
+      "url": "http://localhost:3000/settings",
+      "route": "/settings",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/settings\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/settings\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/settings"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/settings\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/settings\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/settings\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/settings\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.415Z"
+    },
+    {
+      "url": "http://localhost:3000/company",
+      "route": "/company",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/company\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/company\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/company"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/company\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/company\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/company\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/company\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.442Z"
+    },
+    {
+      "url": "http://localhost:3000/auth/login",
+      "route": "/auth/login",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/login\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/auth/login"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/login\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/login\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.472Z"
+    },
+    {
+      "url": "http://localhost:3000/auth/register",
+      "route": "/auth/register",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/register\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/auth/register"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/register\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/register\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.500Z"
+    },
+    {
+      "url": "http://localhost:3000/auth/reset",
+      "route": "/auth/reset",
+      "pageTitle": "Failed to Load",
+      "issues": [
+        {
+          "type": "console-error",
+          "severity": "critical",
+          "element": {
+            "selector": "page",
+            "tagName": "html"
+          },
+          "description": "Page failed to load: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/reset\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/reset\", waiting until \"networkidle\"\u001b[22m\n",
+          "expectedBehavior": "Page should load successfully",
+          "actualBehavior": "Page failed to load with error",
+          "suggestedFix": "Check server status and route configuration",
+          "autoFixable": false,
+          "location": {
+            "url": "http://localhost:3000/auth/reset"
+          }
+        }
+      ],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "message": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/reset\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/reset\", waiting until \"networkidle\"\u001b[22m\n",
+          "stack": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/reset\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/auth/reset\", waiting until \"networkidle\"\u001b[22m\n\n    at UITestAgent.testPage (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:227:18)\n    at async UITestAgent.testAllPages (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:149:28)\n    at async runUITests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/ui-test-agent.ts:884:5)\n    at async runTests (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:74:20)\n    at async main (/Users/ekodevapps/Documents/SignatureQuoteCrawler/scripts/run-ui-tests.ts:226:5)"
+        }
+      ],
+      "loadTime": 0,
+      "interactiveElements": 0,
+      "brokenElements": 1,
+      "timestamp": "2025-09-11T09:44:54.527Z"
+    }
+  ],
+  "summary": {
+    "totalPages": 11,
+    "totalIssues": 11,
+    "criticalIssues": 11,
+    "highIssues": 0,
+    "mediumIssues": 0,
+    "lowIssues": 0,
+    "autoFixableIssues": 0
+  },
+  "recommendations": [
+    "🚨 Address critical issues immediately - these likely prevent core functionality",
+    "🐛 Fix console errors to improve stability and debugging",
+    "✅ Set up automated UI testing in your CI/CD pipeline",
+    "📊 Run this test suite regularly to catch regressions early"
+  ]
+}

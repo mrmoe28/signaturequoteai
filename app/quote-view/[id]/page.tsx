@@ -31,7 +31,7 @@ export default async function QuoteViewPage({ params, searchParams }: PageProps)
         `}} />
       )}
       
-      <QuoteDocument quote={quote} companySettings={companySettings} hideImages={isPrintMode} />
+      <QuoteDocument quote={quote} companySettings={companySettings} hideImages={true} />
       
       {!isPrintMode && (
         <div 
