@@ -99,6 +99,8 @@ export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = f
     day: 'numeric'
   });
 
+  const originalTotal = (quote.subtotal || 0) + (quote.shipping || 0) + (quote.tax || 0);
+
   return (
     <div className="bg-white text-gray-900 font-sans max-w-4xl mx-auto p-5 text-sm leading-relaxed">
       {/* Header */}
@@ -244,8 +246,8 @@ export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = f
             </tr>
             {(quote.discount || 0) > 0 && (
               <tr>
-                <td className="p-2 border-b border-gray-200 font-semibold text-gray-700">Discount:</td>
-                <td className="p-2 border-b border-gray-200 text-right text-gray-600">-{money(quote.discount)}</td>
+                <td className="p-2 border-b border-gray-200 font-semibold text-red-700">Discount:</td>
+                <td className="p-2 border-b border-gray-200 text-right text-red-700">-{money(quote.discount)}</td>
               </tr>
             )}
             {(quote.shipping || 0) > 0 && (
@@ -258,6 +260,12 @@ export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = f
               <tr>
                 <td className="p-2 border-b border-gray-200 font-semibold text-gray-700">Tax:</td>
                 <td className="p-2 border-b border-gray-200 text-right text-gray-600">{money(quote.tax)}</td>
+              </tr>
+            )}
+            {(quote.discount || 0) > 0 && (
+              <tr>
+                <td className="p-2 border-b border-gray-200 font-semibold text-gray-500">Original Total:</td>
+                <td className="p-2 border-b border-gray-200 text-right text-gray-500"><span className="line-through">{money(originalTotal)}</span></td>
               </tr>
             )}
             <tr className="bg-teal-700 text-white">
