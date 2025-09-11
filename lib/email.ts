@@ -17,24 +17,8 @@ export interface EmailQuoteData {
 
 export async function sendQuoteEmail(data: EmailQuoteData) {
   try {
-    // Try Gmail API first, fallback to SMTP if it fails
+    // Try SMTP first (more reliable), fallback to Gmail API if it fails
     try {
-      const gmailData: GmailQuoteData = {
-        quoteId: data.quoteId,
-        quoteNumber: data.quoteNumber,
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerCompany: data.customerCompany,
-        total: data.total,
-        validUntil: data.validUntil,
-        pdfBuffer: data.pdfBuffer,
-      };
-
-      return await sendQuoteEmailGmail(gmailData);
-    } catch (gmailError) {
-      logger.warn({ error: gmailError, quoteId: data.quoteId }, 'Gmail API failed, trying SMTP fallback');
-      
-      // Fallback to SMTP
       const smtpData: SimpleEmailData = {
         quoteId: data.quoteId,
         quoteNumber: data.quoteNumber,
@@ -47,6 +31,22 @@ export async function sendQuoteEmail(data: EmailQuoteData) {
       };
 
       return await sendQuoteEmailSimple(smtpData);
+    } catch (smtpError) {
+      logger.warn({ error: smtpError, quoteId: data.quoteId }, 'SMTP failed, trying Gmail API fallback');
+
+      // Fallback to Gmail API
+      const gmailData: GmailQuoteData = {
+        quoteId: data.quoteId,
+        quoteNumber: data.quoteNumber,
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerCompany: data.customerCompany,
+        total: data.total,
+        validUntil: data.validUntil,
+        pdfBuffer: data.pdfBuffer,
+      };
+
+      return await sendQuoteEmailGmail(gmailData);
     }
 
   } catch (error) {
