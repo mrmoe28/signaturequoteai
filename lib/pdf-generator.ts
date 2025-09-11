@@ -87,8 +87,12 @@ async function generatePDFFromUrl(url: string): Promise<Buffer> {
     timeout: 45000
   });
   
-  // Wait a bit more for any dynamic content
-  await page.waitForTimeout(2000);
+  // Wait for key content to be present (quote title or totals table)
+  try {
+    await page.waitForSelector('h1.quote-title, .quote-title, table.items-table', { timeout: 10000 });
+  } catch {}
+  // Small buffer for fonts/styles
+  await page.waitForTimeout(500);
   
   // Generate PDF with proper settings
   const pdf = await page.pdf({

@@ -97,6 +97,7 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
   const CRLF = '\r\n';
 
   let message = [
+    `From: ${process.env.GOOGLE_CLIENT_EMAIL}`,
     `To: ${to}`,
     `Subject: ${subject}`,
     'MIME-Version: 1.0',

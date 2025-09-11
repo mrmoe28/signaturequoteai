@@ -132,7 +132,7 @@ export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = f
       </div>
 
       {/* Quote Title */}
-      <h1 className="text-3xl font-bold text-gray-800 my-5 text-center">
+      <h1 className="quote-title text-3xl font-bold text-gray-800 my-5 text-center">
         QUOTE {quote.number || quote.id}
       </h1>
 
