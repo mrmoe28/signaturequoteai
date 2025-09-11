@@ -41,18 +41,12 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
-  }),
+  adapter: DrizzleAdapter(db) as any,
   session: {
     strategy: 'database',
   },
   pages: {
     signIn: '/auth/login',
-    signUp: '/auth/register',
   },
   providers: [
     Google({
@@ -91,8 +85,8 @@ export const {
             email: user.email,
             name: user.name,
             role: user.role,
-            stripeCustomerId: user.stripeCustomerId,
-            subscriptionStatus: user.subscriptionStatus,
+            stripeCustomerId: user.stripeCustomerId ?? undefined,
+            subscriptionStatus: user.subscriptionStatus ?? undefined,
             quotesUsed: Number(user.quotesUsed),
             quotesLimit: Number(user.quotesLimit),
           }
@@ -133,9 +127,9 @@ export const {
               image: user.image,
               emailVerified: new Date(),
               role: 'user',
-              quotesUsed: 0,
-              quotesLimit: 3,
-            })
+              quotesUsed: '0',
+              quotesLimit: '3',
+            } as any)
           }
         } catch (error) {
           console.error('Google sign-in error:', error)

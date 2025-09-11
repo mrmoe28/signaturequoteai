@@ -104,8 +104,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         stripeCustomerId: customerId,
         subscriptionId,
         subscriptionStatus: subscription.status,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
         updatedAt: new Date(),
       })
       .where(eq(users.id, userId))
@@ -152,8 +152,8 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
   console.log('Payment succeeded:', invoice.id)
   
-  if (invoice.subscription) {
-    const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string)
+  if ((invoice as any).subscription) {
+    const subscription = await stripe.subscriptions.retrieve((invoice as any).subscription as string)
     await updateUserSubscription(subscription)
   }
 }
@@ -187,8 +187,8 @@ async function updateUserSubscription(subscription: Stripe.Subscription) {
       .set({
         subscriptionId: subscription.id,
         subscriptionStatus: subscription.status,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
         updatedAt: new Date(),
       })
       .where(eq(users.stripeCustomerId, customerId))

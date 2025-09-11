@@ -52,7 +52,7 @@ export default function PricingPage() {
             Simple, Transparent Pricing
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Start with our free tier and upgrade when you're ready for unlimited quotes
+            Start with our free tier and upgrade when you&apos;re ready for unlimited quotes
           </p>
 
           {/* Billing Toggle */}
@@ -250,7 +250,7 @@ export default function PricingPage() {
                 Can I cancel my subscription anytime?
               </h3>
               <p className="text-gray-600">
-                Yes, you can cancel your subscription at any time. You'll continue to have access 
+                Yes, you can cancel your subscription at any time. You&apos;ll continue to have access 
                 to Pro features until the end of your billing period.
               </p>
             </div>
@@ -260,7 +260,7 @@ export default function PricingPage() {
                 What happens to my quotes if I downgrade?
               </h3>
               <p className="text-gray-600">
-                All your existing quotes remain accessible. You'll just be limited to 3 new quotes 
+                All your existing quotes remain accessible. You&apos;ll just be limited to 3 new quotes 
                 per month on the free plan.
               </p>
             </div>
@@ -270,7 +270,7 @@ export default function PricingPage() {
                 Do you offer refunds?
               </h3>
               <p className="text-gray-600">
-                We offer a 30-day money-back guarantee. If you're not satisfied, 
+                We offer a 30-day money-back guarantee. If you&apos;re not satisfied, 
                 contact us for a full refund.
               </p>
             </div>

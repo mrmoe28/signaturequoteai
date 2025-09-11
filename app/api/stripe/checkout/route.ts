@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { stripe, createCustomer, createCheckoutSession, STRIPE_CONFIG } from '@/lib/stripe'
-import { db } from '@/lib/db/client'
-import { users } from '@/lib/db/schema'
+import { db } from '@/lib/db'
+import { users } from '@/lib/db'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
@@ -67,10 +67,6 @@ export async function POST(request: NextRequest) {
       const prices = await stripe.prices.list({
         product: await getOrCreateProduct(),
         active: true,
-        recurring: {
-          interval: plan.interval,
-        },
-        unit_amount: plan.price,
       })
 
       if (prices.data.length > 0) {
