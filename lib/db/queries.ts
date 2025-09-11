@@ -297,7 +297,6 @@ export async function getQuoteById(id: string) {
       unitPrice: parseFloat(item.unitPrice),
       quantity: parseFloat(item.quantity),
       extended: parseFloat(item.extended),
-      imageUrl: item.imageUrl || undefined,
     })),
     customer: {
       company: quote[0].customerCompany || undefined,
