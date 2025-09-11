@@ -246,7 +246,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
             quantity: item.quantity.toString(),
             extended: item.extended.toString(),
             notes: item.notes,
-            imageUrl: item.imageUrl,
+            imageUrl: item.imageUrl || null,
           }))
         );
     } catch (error) {
