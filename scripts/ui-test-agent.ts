@@ -292,11 +292,17 @@ class UITestAgent {
 
       buttons.forEach((button, index) => {
         const hasOnClick = button.onclick !== null;
-        const hasEventListeners = (button as any)._events || 
-          getEventListeners ? Object.keys(getEventListeners(button)).length > 0 : false;
+        // DevTools-only helper `getEventListeners` is not available in page context.
+        // Safely detect attached handlers via standard properties and dataset hints.
+        const hasEventListenersDevtools = typeof (window as any).getEventListeners === 'function'
+          ? Object.keys(((window as any).getEventListeners(button) || {})).length > 0
+          : false;
+        const hasInlineOnHandlers = Object.keys(button).some(key => key.startsWith('on') && typeof (button as any)[key] === 'function');
+        const hasDatasetAction = !!(button as HTMLElement).dataset?.action;
+        const hasEventListeners = hasEventListenersDevtools || hasInlineOnHandlers || hasDatasetAction;
         const hasFormAction = button.closest('form') !== null;
         const isSubmitButton = button.getAttribute('type') === 'submit';
-        const hasReactHandlers = Object.keys(button).some(key => key.startsWith('__reactInternalInstance'));
+        const hasReactHandlers = Object.keys(button).some(key => key.startsWith('__react') || key.startsWith('__reactInternalInstance'));
         
         // Create a unique selector
         let selector = button.tagName.toLowerCase();
