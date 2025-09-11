@@ -35,16 +35,19 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Create user
+    const insertUser: typeof users.$inferInsert = {
+      name,
+      email,
+      password: hashedPassword,
+      role: 'user',
+      // drizzle numeric columns expect string inputs
+      quotesUsed: '0',
+      quotesLimit: '3',
+    }
+
     const newUser = await db
       .insert(users)
-      .values({
-        name,
-        email,
-        password: hashedPassword,
-        role: 'user',
-        quotesUsed: 0,
-        quotesLimit: 3, // Free tier: 3 quotes
-      })
+      .values(insertUser)
       .returning({
         id: users.id,
         name: users.name,
