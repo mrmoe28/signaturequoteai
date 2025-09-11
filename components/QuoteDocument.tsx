@@ -285,9 +285,22 @@ export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = f
       )}
 
       {/* Footer */}
-      <div className="mt-10 pt-5 border-t border-gray-200 text-center text-xs text-gray-500">
-        <p><strong>Signature QuoteCrawler</strong> | Professional Solar Equipment Solutions</p>
-        <p>This quote was generated automatically. For questions, please contact our sales team.</p>
+      <div className="mt-10 pt-5 border-t border-gray-200 text-xs text-gray-600 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="text-center md:text-left">
+          <p><strong>Signature QuoteCrawler</strong> | Professional Solar Equipment Solutions</p>
+          <p>This quote was generated automatically. For questions, please contact our sales team.</p>
+        </div>
+        {companySettings && (
+          <div className="text-center md:text-right">
+            {companySettings.companyName && <div className="font-semibold">{companySettings.companyName}</div>}
+            {companySettings.companyAddress && <div>{companySettings.companyAddress}</div>}
+            {(companySettings.companyCity && companySettings.companyState && companySettings.companyZip) && (
+              <div>{companySettings.companyCity}, {companySettings.companyState} {companySettings.companyZip}</div>
+            )}
+            {companySettings.companyPhone && <div>{companySettings.companyPhone}</div>}
+            {companySettings.companyEmail && <div>{companySettings.companyEmail}</div>}
+          </div>
+        )}
       </div>
     </div>
   );

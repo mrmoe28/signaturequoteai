@@ -604,14 +604,16 @@ async function htmlToPDF(html: string): Promise<Buffer> {
 }
 
 function generateSimplePDF(html: string): Buffer {
-  // Extract text content from HTML for a simple PDF
+  // Strip style/script content and extract text for a simple PDF fallback
   const textContent = html
-    .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .replace(/&nbsp;/g, ' ') // Replace HTML entities
+    .replace(/<style[\s\S]*?<\/style>/gi, '') // Remove CSS blocks
+    .replace(/<script[\s\S]*?<\/script>/gi, '') // Remove scripts
+    .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
+    .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/\s+/g, ' ') // Normalize whitespace
+    .replace(/\s+/g, ' ')
     .trim();
 
   // Create a simple PDF structure
@@ -651,13 +653,13 @@ endobj
 
 4 0 obj
 <<
-/Length ${textContent.length + 100}
+/Length ${Math.min(textContent.length + 200, 8000)}
 >>
 stream
 BT
 /F1 12 Tf
 72 720 Td
-(${textContent.substring(0, 200)}) Tj
+(${textContent.substring(0, 700)}) Tj
 ET
 endstream
 endobj
@@ -675,7 +677,7 @@ trailer
 /Root 1 0 R
 >>
 startxref
-${300 + textContent.length}
+${300 + Math.min(textContent.length, 700)}
 %%EOF`;
 
   return Buffer.from(pdfContent, 'utf-8');
