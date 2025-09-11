@@ -283,3 +283,48 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 
 4. This prevents client-side crashes when APIs return errors or empty data
 
+## Blank or corrupted PDF attachment in quote emails
+
+- Symptom: Customer receives quote email, but the PDF attachment appears blank or cannot be opened by some clients.
+- Root cause: MIME message used `\n` line endings instead of RFC-compliant `\r\n`, causing boundary parsing issues in certain email clients when a base64 PDF is attached.
+- Fix: Build the MIME message using CRLF line endings and ensure the final boundary is terminated properly.
+- Implemented in `lib/gmail-service.ts` `createEmailMessage`:
+
+```12:137:/Users/ekodevapps/Documents/SignatureQuoteCrawler/lib/gmail-service.ts
+  const CRLF = '\r\n';
+  let message = [
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${boundary}"`,
+    '',
+    `--${boundary}`,
+    'Content-Type: multipart/alternative; boundary="' + boundary + '_alt"',
+    '',
+    `--${boundary}_alt`,
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    text,
+    '',
+    `--${boundary}_alt`,
+    'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    html,
+    '',
+    `--${boundary}_alt--`,
+  ].join(CRLF);
+  // ... then append attachment and closing boundary with CRLF
+```
+
+- Validation: Send a test email using the send endpoint. The attachment should open correctly and display the quote.
+
+## Quote creation fails: quote_items.product_id foreign key violation
+
+- Symptom: Creating/sending a quote fails with `violates foreign key constraint "quote_items_product_id_products_id_fk"`.
+- Root cause: In preview or fresh databases, referenced `products` rows may not exist for items being quoted, especially for ad-hoc/custom items.
+- Fix: During quote creation, ensure each `product_id` exists, creating a minimal product record when missing. Implemented in `lib/db/raw-queries.ts` `createQuote` by adding `ensureProductExists` and using `resolvedProductId` for custom items.
+- Alternative: Pre-seed the `products` table with all items used in quotes.
+- Validation: Retry creating a quote; it should succeed without FK errors, and the product record will exist for each item.
+

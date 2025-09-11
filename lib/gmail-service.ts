@@ -92,7 +92,10 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
   quoteNumber: string;
 }): string {
   const boundary = '----=_Part_' + Math.random().toString(36).substr(2, 9);
-  
+
+  // Use CRLF line endings per RFC 2822/ MIME to avoid attachment corruption in some clients
+  const CRLF = '\r\n';
+
   let message = [
     `To: ${to}`,
     `Subject: ${subject}`,
@@ -115,12 +118,12 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
     html,
     '',
     `--${boundary}_alt--`,
-  ];
+  ].join(CRLF);
 
   // Add PDF attachment if provided
   if (pdfBuffer) {
     const pdfBase64 = pdfBuffer.toString('base64');
-    message.push(
+    message += CRLF + [
       '',
       `--${boundary}`,
       'Content-Type: application/pdf; name="quote-' + quoteNumber + '.pdf"',
@@ -128,12 +131,12 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
       'Content-Transfer-Encoding: base64',
       '',
       pdfBase64,
-    );
+    ].join(CRLF);
   }
 
-  message.push(`--${boundary}--`);
+  message += CRLF + `--${boundary}--` + CRLF;
 
-  return Buffer.from(message.join('\n')).toString('base64url');
+  return Buffer.from(message).toString('base64url');
 }
 
 function generateQuoteEmailHTML(data: GmailQuoteData): string {

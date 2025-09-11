@@ -87,15 +87,32 @@ export async function createQuote(data: CreateQuoteData): Promise<Quote> {
 
   // Insert quote items
   if (data.items.length > 0) {
+    // Ensure referenced products exist to satisfy FK constraints (allows custom items)
+    const ensureProductExists = async (id: string, name: string, price: number) => {
+      const exists = await sql`SELECT 1 FROM products WHERE id = ${id} LIMIT 1`;
+      if (exists.length === 0) {
+        await sql`
+          INSERT INTO products (id, name, price)
+          VALUES (${id}, ${name}, ${price})
+        `;
+      }
+    };
+
     for (const item of data.items) {
       const itemId = crypto.randomUUID();
       const extended = item.unitPrice * item.quantity;
+      const resolvedProductId = item.productId && item.productId.trim().length > 0
+        ? item.productId
+        : `custom-${itemId}`;
+
+      // Create minimal product row if it does not exist (handles preview DBs without seeded products)
+      await ensureProductExists(resolvedProductId, item.name, item.unitPrice);
       
       await sql`
         INSERT INTO quote_items (
           id, quote_id, product_id, name, unit_price, quantity, extended, notes, image_url
         ) VALUES (
-          ${itemId}, ${quoteId}, ${item.productId}, ${item.name}, ${item.unitPrice}, 
+          ${itemId}, ${quoteId}, ${resolvedProductId}, ${item.name}, ${item.unitPrice}, 
           ${item.quantity}, ${extended}, ${item.notes || null}, ${item.imageUrl || null}
         )
       `;

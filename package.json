@@ -28,7 +28,8 @@
     "test:ui:fix": "tsx scripts/run-ui-tests.ts --auto-fix",
     "monitor:ui": "tsx scripts/ui-monitor.ts start",
     "monitor:trend": "tsx scripts/ui-monitor.ts trend-report",
-    "monitor:check": "tsx scripts/ui-monitor.ts single-check"
+    "monitor:check": "tsx scripts/ui-monitor.ts single-check",
+    "demo:ui-testing": "tsx scripts/demo-ui-testing.ts"
   },
   "dependencies": {
     "@corsaro-creative/super-design-tokens": "^0.2.0",
