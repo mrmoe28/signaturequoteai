@@ -31,6 +31,13 @@ function getGmailService() {
   return google.gmail({ version: 'v1', auth });
 }
 
+// Lightweight connectivity check for API credentials
+export async function verifyGmailConnectivity(): Promise<{ ok: boolean; email?: string }>{
+  const gmail = getGmailService();
+  const profile = await gmail.users.getProfile({ userId: 'me' });
+  return { ok: true, email: profile.data.emailAddress || undefined };
+}
+
 export async function sendQuoteEmailGmail(data: GmailQuoteData) {
   try {
     if (!data.customerEmail) {

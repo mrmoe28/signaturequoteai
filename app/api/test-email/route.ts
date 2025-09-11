@@ -1,55 +1,43 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { verifyGmailConnectivity } from '@/lib/gmail-service';
 
 export async function GET() {
   try {
-    // Test Gmail SMTP connection
+    // Check required Gmail API creds
     const hasEmail = !!process.env.GOOGLE_CLIENT_EMAIL;
-    const hasPassword = !!process.env.GOOGLE_APP_PASSWORD;
+    const hasKey = !!process.env.GOOGLE_PRIVATE_KEY;
     
-    if (!hasEmail || !hasPassword) {
+    if (!hasEmail || !hasKey) {
       return NextResponse.json({
         success: false,
-        error: 'Missing credentials',
+        error: 'Missing Gmail API credentials',
         hasEmail,
-        hasPassword,
+        hasKey,
         emailPrefix: process.env.GOOGLE_CLIENT_EMAIL ? 
           process.env.GOOGLE_CLIENT_EMAIL.substring(0, 3) + '***' : 'Not set',
-        passwordLength: process.env.GOOGLE_APP_PASSWORD ? 
-          process.env.GOOGLE_APP_PASSWORD.length : 0,
+        privateKeySet: hasKey,
       });
     }
 
-    // Test SMTP connection
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GOOGLE_CLIENT_EMAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-      },
-    });
-
-    // Verify connection
-    await transporter.verify();
+    // Verify Gmail API connectivity
+    const result = await verifyGmailConnectivity();
 
     return NextResponse.json({
       success: true,
-      message: 'SMTP connection successful',
-      emailPrefix: process.env.GOOGLE_CLIENT_EMAIL?.substring(0, 3) + '***',
-      passwordLength: process.env.GOOGLE_APP_PASSWORD?.length || 0,
+      message: 'Gmail API connectivity successful',
+      email: result.email,
     });
 
   } catch (error) {
     return NextResponse.json({
       success: false,
-      error: 'SMTP connection failed',
+      error: 'Gmail API connectivity failed',
       message: error instanceof Error ? error.message : 'Unknown error',
       hasEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
-      hasPassword: !!process.env.GOOGLE_APP_PASSWORD,
+      hasKey: !!process.env.GOOGLE_PRIVATE_KEY,
       emailPrefix: process.env.GOOGLE_CLIENT_EMAIL ? 
         process.env.GOOGLE_CLIENT_EMAIL.substring(0, 3) + '***' : 'Not set',
-      passwordLength: process.env.GOOGLE_APP_PASSWORD ? 
-        process.env.GOOGLE_APP_PASSWORD.length : 0,
+      privateKeySet: !!process.env.GOOGLE_PRIVATE_KEY,
     });
   }
 }
