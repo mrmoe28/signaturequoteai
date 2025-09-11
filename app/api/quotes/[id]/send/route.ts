@@ -58,6 +58,13 @@ export async function POST(
       total: parseFloat(quote.total),
       validUntil: quote.validUntil?.toISOString(),
       pdfBuffer,
+      items: quote.items.map(i => ({
+        name: i.name,
+        sku: undefined,
+        quantity: i.quantity,
+        unitPrice: i.unitPrice,
+        extended: i.extended,
+      })),
     };
 
     // Send email

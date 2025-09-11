@@ -12,6 +12,7 @@ export interface SimpleEmailData {
   total: number;
   validUntil?: string | null;
   pdfBuffer?: Buffer;
+  items?: Array<{ name: string; sku?: string | null; quantity: number; unitPrice: number; extended: number; }>;
 }
 
 export async function sendQuoteEmailSimple(data: SimpleEmailData) {
@@ -92,6 +93,26 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
 
 function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): string {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const itemsTable = data.items && data.items.length > 0 ? `
+    <table class="items" role="presentation" style="width:100%; border-collapse:collapse; margin: 20px 0;">
+      <thead>
+        <tr>
+          <th style="background:#0f766e; color:#ffffff; text-align:left; padding:10px 8px;">Item</th>
+          <th style="background:#0f766e; color:#ffffff; text-align:center; padding:10px 8px;">Qty</th>
+          <th style="background:#0f766e; color:#ffffff; text-align:right; padding:10px 8px;">Unit</th>
+          <th style="background:#0f766e; color:#ffffff; text-align:right; padding:10px 8px;">Extended</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.items.map(i => `
+          <tr>
+            <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb;">${i.name}${i.sku ? ` <span style=\"color:#6b7280\">(${i.sku})</span>` : ''}</td>
+            <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:center;">${i.quantity}</td>
+            <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:right;">$${i.unitPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+            <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:right;">$${i.extended.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>` : '';
   return `
     <!DOCTYPE html>
     <html>
@@ -132,6 +153,7 @@ function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): 
         </div>
 
         <div class="notice"><strong>This quote is valid until ${validUntilText}</strong></div>
+        ${itemsTable}
         <div class="total">Total Quote Amount: $${data.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
 
         <div class="cta">
@@ -152,6 +174,7 @@ function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): 
 
 function generateQuoteEmailText(data: SimpleEmailData, validUntilText: string): string {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const items = (data.items || []).map(i => `- ${i.name}${i.sku ? ` (${i.sku})` : ''} | Qty: ${i.quantity} | Unit: $${i.unitPrice?.toFixed(2)} | Ext: $${i.extended?.toFixed(2)}`).join('\n');
   return `
 Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment
 
@@ -168,6 +191,9 @@ ${data.customerCompany ? `- Company: ${data.customerCompany}` : ''}
 IMPORTANT: This quote is valid until ${validUntilText}
 
 TOTAL QUOTE AMOUNT: $${data.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+
+ITEMS:
+${items}
 
 NEXT STEPS:
 Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.

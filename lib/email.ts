@@ -13,6 +13,7 @@ export interface EmailQuoteData {
   total: number;
   validUntil?: string | null;
   pdfBuffer?: Buffer;
+  items?: Array<{ name: string; sku?: string | null; quantity: number; unitPrice: number; extended: number; }>
 }
 
 export async function sendQuoteEmail(data: EmailQuoteData) {
@@ -28,6 +29,7 @@ export async function sendQuoteEmail(data: EmailQuoteData) {
         total: data.total,
         validUntil: data.validUntil,
         pdfBuffer: data.pdfBuffer,
+        items: data.items,
       };
 
       return await sendQuoteEmailSimple(smtpData);
@@ -44,6 +46,7 @@ export async function sendQuoteEmail(data: EmailQuoteData) {
         total: data.total,
         validUntil: data.validUntil,
         pdfBuffer: data.pdfBuffer,
+        items: data.items,
       };
 
       return await sendQuoteEmailGmail(gmailData);

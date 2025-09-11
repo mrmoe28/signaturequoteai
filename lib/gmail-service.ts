@@ -12,6 +12,7 @@ export interface GmailQuoteData {
   total: number;
   validUntil?: string | null;
   pdfBuffer?: Buffer;
+  items?: Array<{ name: string; sku?: string | null; quantity: number; unitPrice: number; extended: number; }>;
 }
 
 // Initialize Gmail API
@@ -146,6 +147,23 @@ function generateQuoteEmailHTML(data: GmailQuoteData): string {
     ? new Date(data.validUntil).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     : '30 days from receipt';
 
+  // Build optional items table
+  const itemsTable = data.items && data.items.length > 0 ? `
+    <table class="items" role="presentation">
+      <thead>
+        <tr><th>Item</th><th class="center">Qty</th><th class="right">Unit</th><th class="right">Extended</th></tr>
+      </thead>
+      <tbody>
+        ${data.items.map(i => `
+          <tr>
+            <td>${i.name}${i.sku ? ` <span style=\"color:#6b7280\">(${i.sku})</span>` : ''}</td>
+            <td class="center">${i.quantity}</td>
+            <td class="right">$${i.unitPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+            <td class="right">$${i.extended.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>` : '';
+
   return `
     <!DOCTYPE html>
     <html>
@@ -186,6 +204,7 @@ function generateQuoteEmailHTML(data: GmailQuoteData): string {
         </div>
 
         <div class="notice"><strong>This quote is valid until ${validUntilText}</strong></div>
+        ${itemsTable}
         <div class="total">Total Quote Amount: $${data.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
 
         <div class="cta">
@@ -208,6 +227,8 @@ function generateQuoteEmailText(data: GmailQuoteData): string {
       })
     : '30 days from receipt';
 
+  const items = (data.items || []).map(i => `- ${i.name}${i.sku ? ` (${i.sku})` : ''} | Qty: ${i.quantity} | Unit: $${i.unitPrice.toFixed(2)} | Ext: $${i.extended.toFixed(2)}`).join('\n');
+
   return `
 Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment
 
@@ -224,6 +245,9 @@ ${data.customerCompany ? `- Company: ${data.customerCompany}` : ''}
 IMPORTANT: This quote is valid until ${validUntilText}
 
 TOTAL QUOTE AMOUNT: $${data.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+
+ITEMS:
+${items}
 
 NEXT STEPS:
 Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.
