@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import { sendQuoteEmailGmail } from './gmail-service';
 import { createLogger } from './logger';
 
 const logger = createLogger('simple-email-service');
@@ -21,9 +21,24 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
       throw new Error('Customer email is required');
     }
 
-    // Check if we have SMTP credentials
-    if (!process.env.GOOGLE_APP_PASSWORD || !process.env.GOOGLE_CLIENT_EMAIL) {
-      console.log(`SMTP not configured - simulating quote email send for quote ${data.quoteId} to ${data.customerEmail}`);
+    // Prefer Gmail API if credentials exist
+    if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
+      const result = await sendQuoteEmailGmail({
+        quoteId: data.quoteId,
+        quoteNumber: data.quoteNumber,
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerCompany: data.customerCompany,
+        total: data.total,
+        validUntil: data.validUntil,
+        pdfBuffer: data.pdfBuffer,
+        items: data.items,
+      });
+      return result;
+    }
+
+    // Fall back to simulation when Gmail API is not configured
+    console.log(`Email service not configured - simulating quote email send for quote ${data.quoteId} to ${data.customerEmail}`);
       
       // Simulate email sending delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -35,55 +50,9 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
       return {
         success: true,
         messageId,
-        message: 'Quote email simulated (SMTP not configured - add GOOGLE_APP_PASSWORD to .env.local)',
+        message: 'Quote email simulated (configure GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY to enable Gmail API send)',
       };
     }
-
-    // Use real SMTP with Gmail App Password
-    console.log(`Sending real quote email for quote ${data.quoteId} to ${data.customerEmail}`);
-    console.log(`SMTP Email: ${process.env.GOOGLE_CLIENT_EMAIL?.substring(0, 3)}***, Password length: ${process.env.GOOGLE_APP_PASSWORD?.length}`);
-
-    // Create transporter using Gmail SMTP
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GOOGLE_CLIENT_EMAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-      },
-    });
-
-    const validUntilText = data.validUntil 
-      ? new Date(data.validUntil).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
-      : '30 days from receipt';
-
-    const mailOptions = {
-      from: `"Signature QuoteCrawler" <${process.env.GOOGLE_CLIENT_EMAIL}>`,
-      to: data.customerEmail,
-      subject: `Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment`,
-      html: generateQuoteEmailHTML(data, validUntilText),
-      text: generateQuoteEmailText(data, validUntilText),
-      attachments: data.pdfBuffer ? [
-        {
-          filename: `quote-${data.quoteNumber || data.quoteId}.pdf`,
-          content: data.pdfBuffer,
-          contentType: 'application/pdf',
-        }
-      ] : [],
-    };
-
-    const result = await transporter.sendMail(mailOptions);
-
-    console.log(`Quote email sent successfully via SMTP. Message ID: ${result.messageId}`);
-
-    return {
-      success: true,
-      messageId: result.messageId,
-      message: 'Quote sent successfully via Gmail SMTP',
-    };
 
   } catch (error) {
     console.error(`Error sending quote email for ${data.quoteId}:`, error);
