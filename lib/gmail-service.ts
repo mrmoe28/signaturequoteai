@@ -140,6 +140,7 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
 }
 
 function generateQuoteEmailHTML(data: GmailQuoteData): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   const validUntilText = data.validUntil 
     ? new Date(data.validUntil).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -300,6 +301,12 @@ function generateQuoteEmailHTML(data: GmailQuoteData): string {
         <div class="cta-section">
           <h3>Next Steps</h3>
           <p>Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.</p>
+          <p style="margin: 20px 0;">
+            <a href="${baseUrl}/quote-view/${data.quoteId}" 
+               style="display: inline-block; background: #0f766e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
+              View Quote Online
+            </a>
+          </p>
           <p>If you have any questions or would like to proceed with this quote, please don't hesitate to contact us.</p>
         </div>
 
@@ -315,6 +322,7 @@ function generateQuoteEmailHTML(data: GmailQuoteData): string {
 }
 
 function generateQuoteEmailText(data: GmailQuoteData): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   const validUntilText = data.validUntil 
     ? new Date(data.validUntil).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -344,6 +352,8 @@ NEXT STEPS:
 Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.
 
 If you have any questions or would like to proceed with this quote, please don't hesitate to contact us.
+
+View online: ${baseUrl}/quote-view/${data.quoteId}
 
 Best regards,
 Signature QuoteCrawler

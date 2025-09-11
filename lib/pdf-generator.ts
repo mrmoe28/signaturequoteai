@@ -44,10 +44,9 @@ type DatabaseQuote = {
 const logger = createLogger('pdf-generator');
 
 async function generatePDFFromUrl(url: string): Promise<Buffer> {
-  const puppeteer = require('puppeteer');
-  
   // Check if we're running on Vercel
   const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+  const puppeteer = isVercel ? require('puppeteer-core') : require('puppeteer');
   
   let browser;
   
@@ -80,10 +79,12 @@ async function generatePDFFromUrl(url: string): Promise<Buffer> {
   
   const page = await browser.newPage();
   
+  // Ensure consistent rendering
+  await page.emulateMediaType('screen');
   // Navigate to the quote page
   await page.goto(url, { 
     waitUntil: ['networkidle0', 'domcontentloaded'],
-    timeout: 30000
+    timeout: 45000
   });
   
   // Wait a bit more for any dynamic content
@@ -118,7 +119,8 @@ export async function generateQuotePDF(quote: Quote | DatabaseQuote): Promise<Bu
     const normalizedQuote = normalizeQuote(quote);
     
     // Try to use the dedicated quote view page for better rendering
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL 
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
     const quoteUrl = `${baseUrl}/quote-view/${normalizedQuote.id}?format=pdf`;
     
     try {
@@ -519,11 +521,10 @@ function generateQuoteHTML(quote: Quote, companySettings: CompanySettings | null
 
 async function htmlToPDF(html: string): Promise<Buffer> {
   try {
-    // Use puppeteer for real PDF generation
-    const puppeteer = require('puppeteer');
-    
     // Check if we're running on Vercel
     const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+    // Use puppeteer-core with @sparticuz/chromium on Vercel
+    const puppeteer = isVercel ? require('puppeteer-core') : require('puppeteer');
     
     let browser;
     
@@ -557,9 +558,10 @@ async function htmlToPDF(html: string): Promise<Buffer> {
     const page = await browser.newPage();
     
     // Set content and wait for it to load completely
+    await page.emulateMediaType('screen');
     await page.setContent(html, { 
       waitUntil: ['networkidle0', 'domcontentloaded'],
-      timeout: 30000
+      timeout: 45000
     });
     
     // Wait a bit more for any dynamic content

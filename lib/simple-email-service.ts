@@ -91,6 +91,7 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
 }
 
 function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   return `
     <!DOCTYPE html>
     <html>
@@ -244,7 +245,7 @@ function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): 
           <h3>Next Steps</h3>
           <p>Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.</p>
           <p style="margin: 20px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/quote-view/${data.quoteId}" 
+            <a href="${baseUrl}/quote-view/${data.quoteId}" 
                style="display: inline-block; background: #0f766e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
               View Quote Online
             </a>
@@ -264,6 +265,7 @@ function generateQuoteEmailHTML(data: SimpleEmailData, validUntilText: string): 
 }
 
 function generateQuoteEmailText(data: SimpleEmailData, validUntilText: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   return `
 Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment
 
@@ -285,7 +287,7 @@ NEXT STEPS:
 Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.
 
 You can also view your quote online at:
-${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/quote-view/${data.quoteId}
+${baseUrl}/quote-view/${data.quoteId}
 
 If you have any questions or would like to proceed with this quote, please don't hesitate to contact us.
 
