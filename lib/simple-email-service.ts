@@ -21,7 +21,7 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
     }
 
     // Check if we have SMTP credentials
-    if (!process.env.GOOGLE_APP_PASSWORD) {
+    if (!process.env.GOOGLE_APP_PASSWORD || !process.env.GOOGLE_CLIENT_EMAIL) {
       console.log(`SMTP not configured - simulating quote email send for quote ${data.quoteId} to ${data.customerEmail}`);
       
       // Simulate email sending delay
@@ -40,6 +40,7 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
 
     // Use real SMTP with Gmail App Password
     console.log(`Sending real quote email for quote ${data.quoteId} to ${data.customerEmail}`);
+    console.log(`SMTP Email: ${process.env.GOOGLE_CLIENT_EMAIL?.substring(0, 3)}***, Password length: ${process.env.GOOGLE_APP_PASSWORD?.length}`);
 
     // Create transporter using Gmail SMTP
     const transporter = nodemailer.createTransport({
