@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { db } from '@/lib/db/client'
-import { users } from '@/lib/db/schema'
+import { db } from '@/lib/db'
+import { users } from '@/lib/db'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
