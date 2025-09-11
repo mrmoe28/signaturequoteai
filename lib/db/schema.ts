@@ -88,7 +88,6 @@ export const quoteItems = pgTable('quote_items', {
   quantity: numeric('quantity', { precision: 10, scale: 2 }).notNull(),
   extended: numeric('extended', { precision: 12, scale: 2 }).notNull(),
   notes: text('notes'),
-  imageUrl: text('image_url'),
 }, (table) => ({
   quoteIdIndex: index('quote_items_quote_id_idx').on(table.quoteId),
   productIdIndex: index('quote_items_product_id_idx').on(table.productId),
