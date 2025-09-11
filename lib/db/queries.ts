@@ -245,7 +245,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
             unitPrice: item.unitPrice?.toString() || '0',
             quantity: item.quantity.toString(),
             extended: item.extended.toString(),
-            notes: item.notes,
+            notes: item.notes || null,
           }))
         );
     } catch (error) {
