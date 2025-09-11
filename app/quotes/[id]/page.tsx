@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -39,13 +39,7 @@ export default function QuoteDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    if (quoteId) {
-      fetchQuote();
-    }
-  }, [quoteId]);
-
-  const fetchQuote = async () => {
+  const fetchQuote = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/quotes/${quoteId}`);
@@ -61,7 +55,13 @@ export default function QuoteDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [quoteId]);
+
+  useEffect(() => {
+    if (quoteId) {
+      fetchQuote();
+    }
+  }, [quoteId, fetchQuote]);
 
   const handleDownloadPDF = async () => {
     try {

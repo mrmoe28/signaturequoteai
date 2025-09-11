@@ -1,0 +1,107 @@
+{
+  "projectName": "Signature QuoteCrawler",
+  "baseUrl": "http://localhost:3000",
+  "routes": [
+    "/",
+    "/dashboard",
+    "/products",
+    "/quotes/new", 
+    "/cart",
+    "/profile",
+    "/settings",
+    "/company"
+  ],
+  "excludeRoutes": [
+    "/auth/login",
+    "/auth/register",
+    "/auth/reset"
+  ],
+  "testSettings": {
+    "timeout": 30000,
+    "retries": 2,
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "slowMo": 0
+  },
+  "reporting": {
+    "outputDir": "./reports",
+    "generateHTML": true,
+    "generateJSON": true,
+    "includeScreenshots": true,
+    "includeConsoleErrors": true
+  },
+  "thresholds": {
+    "maxCriticalIssues": 0,
+    "maxHighIssues": 3,
+    "maxMediumIssues": 10,
+    "maxLowIssues": 20
+  },
+  "autoFix": {
+    "enabled": false,
+    "backupOriginal": true,
+    "dryRun": true
+  },
+  "monitoring": {
+    "enabled": false,
+    "interval": "1h",
+    "webhook": null,
+    "email": null
+  },
+  "testPatterns": {
+    "buttons": [
+      "button:not([disabled])",
+      "[role=\"button\"]:not([aria-disabled=\"true\"])",
+      "input[type=\"button\"]:not([disabled])",
+      "input[type=\"submit\"]:not([disabled])"
+    ],
+    "tabs": [
+      "[role=\"tablist\"]",
+      ".tab-list",
+      "[data-tabs]"
+    ],
+    "forms": [
+      "form",
+      "[role=\"form\"]"
+    ],
+    "navigation": [
+      "nav a",
+      "[role=\"navigation\"] a",
+      ".navbar a",
+      ".menu a"
+    ],
+    "interactiveElements": [
+      "button:not([disabled])",
+      "input:not([disabled]):not([readonly])",
+      "select:not([disabled])",
+      "textarea:not([disabled]):not([readonly])",
+      "a[href]:not([href=\"\"]):not([href=\"#\"])",
+      "[onclick]",
+      "[role=\"button\"]",
+      "[role=\"tab\"]",
+      "[tabindex]:not([tabindex=\"-1\"])"
+    ]
+  },
+  "customChecks": [
+    {
+      "name": "Wizard Navigation",
+      "selector": ".wizard button",
+      "expectedBehavior": "Should navigate between wizard steps",
+      "testAction": "click"
+    },
+    {
+      "name": "Profile Dropdown",
+      "selector": "[data-testid=\"profile-dropdown\"], .profile-dropdown button",
+      "expectedBehavior": "Should open dropdown menu on click",
+      "testAction": "click"
+    },
+    {
+      "name": "Product Add Buttons",
+      "selector": "button:contains('Add')",
+      "expectedBehavior": "Should add product to quote or cart",
+      "testAction": "click"
+    }
+  ]
+}

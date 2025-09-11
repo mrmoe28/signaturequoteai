@@ -1,11 +1,15 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import ProfileDropdown from '@/components/ProfileDropdown';
 
 export const metadata: Metadata = {
   title: 'Signature QuoteCrawler',
   description: 'Quote builder with Signature Solar price cache',
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

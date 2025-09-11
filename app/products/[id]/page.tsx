@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { ArrowLeft, ExternalLink, ShoppingCart } from 'lucide-react';
@@ -108,13 +109,14 @@ export default function ProductDetailsPage() {
             <Card>
               <CardContent className="p-0">
                 <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={product.primaryImageUrl}
                     alt={product.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    unoptimized
+                    onError={() => { /* handled by unoptimized and fallback UI */ }}
                   />
                 </div>
               </CardContent>
@@ -126,10 +128,13 @@ export default function ProductDetailsPage() {
             <div className="grid grid-cols-4 gap-2">
               {product.images.slice(1, 5).map((image, index) => (
                 <div key={index} className="aspect-square overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={image.localPath || image.url}
                     alt={`${product.name} ${index + 2}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 25vw, 25vw"
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
               ))}

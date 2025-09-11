@@ -1,4 +1,5 @@
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from './ui/Table';
+import Image from 'next/image';
 import PriceTag from './PriceTag';
 
 interface LineItem {
@@ -31,11 +32,16 @@ export default function QuoteLineItemsTable({ items }: QuoteLineItemsTableProps)
             <TableCell>
               <div className="flex items-center space-x-3">
                 {i.imageUrl && (
-                  <img
-                    src={i.imageUrl}
-                    alt={i.name}
-                    className="w-12 h-12 object-cover rounded border"
-                  />
+                  <div className="relative w-12 h-12">
+                    <Image
+                      src={i.imageUrl}
+                      alt={i.name}
+                      fill
+                      sizes="48px"
+                      className="object-cover rounded border"
+                      unoptimized
+                    />
+                  </div>
                 )}
                 <div>
                   <div className="font-semibold">{i.name}</div>

@@ -1,6 +1,7 @@
 'use client';
 
 import type { Quote, CompanySettings } from '@/lib/types';
+import Image from 'next/image';
 import { money } from '@/lib/formatting';
 
 // Database quote type (from queries)
@@ -44,6 +45,7 @@ type DatabaseQuote = {
 type QuoteDocumentProps = {
   quote: Quote | DatabaseQuote;
   companySettings: CompanySettings | null;
+  hideImages?: boolean;
 };
 
 function normalizeQuote(quote: Quote | DatabaseQuote): Quote {
@@ -80,7 +82,7 @@ function normalizeQuote(quote: Quote | DatabaseQuote): Quote {
   };
 }
 
-export function QuoteDocument({ quote: rawQuote, companySettings }: QuoteDocumentProps) {
+export function QuoteDocument({ quote: rawQuote, companySettings, hideImages = false }: QuoteDocumentProps) {
   const quote = normalizeQuote(rawQuote);
   
   const validUntilText = quote.validUntil 
@@ -101,12 +103,15 @@ export function QuoteDocument({ quote: rawQuote, companySettings }: QuoteDocumen
     <div className="bg-white text-gray-900 font-sans max-w-4xl mx-auto p-5 text-sm leading-relaxed">
       {/* Header */}
       <div className="text-center border-b-2 border-teal-700 pb-5 mb-8">
-        {companySettings?.companyLogo && (
-          <div className="mb-2">
-            <img 
-              src={companySettings.companyLogo} 
-              alt={companySettings.companyName} 
-              className="max-h-16 max-w-48 object-contain mx-auto"
+        {companySettings?.companyLogo && !hideImages && (
+          <div className="mb-2 mx-auto relative" style={{ height: '64px', width: '192px' }}>
+            <Image 
+              src={companySettings.companyLogo}
+              alt={companySettings.companyName || 'Company logo'}
+              fill
+              sizes="192px"
+              className="object-contain"
+              unoptimized
             />
           </div>
         )}

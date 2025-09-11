@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Label } from '@/components/ui/Label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
 import FreshnessBadge from '@/components/FreshnessBadge';
+import Image from 'next/image';
 import { Product } from '@/lib/types';
 import { money } from '@/lib/formatting';
 
@@ -179,15 +180,14 @@ export default function ProductsPage() {
           <Card key={product.id} className="hover:shadow-lg transition-shadow">
             {/* Product Image */}
             {(product.primaryImageUrl || (product.images && product.images.length > 0)) && (
-              <div className="aspect-square overflow-hidden rounded-t-lg">
-                <img
-                  src={product.primaryImageUrl || product.images[0]?.localPath}
+              <div className="aspect-square overflow-hidden rounded-t-lg relative">
+                <Image
+                  src={product.primaryImageUrl || product.images[0]?.localPath || '/logo.svg'}
                   alt={product.name}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Hide image on error
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
             )}

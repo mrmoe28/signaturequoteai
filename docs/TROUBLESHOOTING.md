@@ -1,3 +1,23 @@
+## PDF generation buffer type error on build/deploy
+
+Symptom during `next build` or Vercel deploy:
+
+```
+Type error: Type 'Uint8Array<ArrayBufferLike>' is missing the following properties from type 'Buffer<ArrayBufferLike>': write, toJSON, equals, compare, copy
+```
+
+Cause: Puppeteer's `page.pdf()` return type can be `Uint8Array` in some versions/environments, which does not match Node's `Buffer` type expected elsewhere in the code.
+
+Fix implemented in `lib/pdf-generator.ts`:
+
+```ts
+const pdf = await page.pdf({...});
+const pdfBuffer: Buffer = Buffer.from(pdf);
+return pdfBuffer;
+```
+
+This coerces the `Uint8Array` to a Node `Buffer` for consistent typing across environments (including Vercel lambdas).
+
 ## Tailwind CSS v4 PostCSS Plugin Error (Next.js + shadcn/ui)
 
 ### Symptom

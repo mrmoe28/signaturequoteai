@@ -103,10 +103,13 @@ async function generatePDFFromUrl(url: string): Promise<Buffer> {
     preferCSSPageSize: true,
     scale: 0.9
   });
-  
+
+  // Some Puppeteer versions type this as Uint8Array; coerce to Node Buffer
+  const pdfBuffer: Buffer = Buffer.from(pdf);
+
   await browser.close();
-  
-  return pdf;
+
+  return pdfBuffer;
 }
 
 export async function generateQuotePDF(quote: Quote | DatabaseQuote): Promise<Buffer> {
@@ -363,11 +366,6 @@ function generateQuoteHTML(quote: Quote, companySettings: CompanySettings | null
     </head>
     <body>
       <div class="header">
-        ${companySettings?.companyLogo ? `
-          <div class="logo-container">
-            <img src="${companySettings.companyLogo}" alt="${companySettings.companyName}" class="company-logo" />
-          </div>
-        ` : ''}
         <div class="logo">${companySettings?.companyName || 'Signature QuoteCrawler'}</div>
         <div class="tagline">Professional Solar Equipment Solutions</div>
         ${companySettings?.companyAddress || companySettings?.companyPhone || companySettings?.companyEmail ? `
@@ -582,10 +580,13 @@ async function htmlToPDF(html: string): Promise<Buffer> {
       scale: 0.8
     });
     
+    // Coerce Uint8Array to Node Buffer for consistent typing
+    const pdfBuffer: Buffer = Buffer.from(pdf);
+
     await browser.close();
     
     logger.info('PDF generated successfully using Puppeteer');
-    return pdf;
+    return pdfBuffer;
     
   } catch (error) {
     logger.error({ error }, 'Failed to generate PDF from HTML');

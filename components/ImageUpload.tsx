@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import { Button } from './ui/Button';
 import { UploadCloud, X, Image as ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { Card } from './ui/Card';
 
 interface ImageUploadProps {
@@ -89,11 +90,14 @@ export default function ImageUpload({
       {currentImage ? (
         <Card className="p-4">
           <div className="flex items-center space-x-4">
-            <div className="relative">
-              <img
+            <div className="relative w-20 h-20">
+              <Image
                 src={currentImage}
                 alt="Uploaded"
-                className="w-20 h-20 object-cover rounded-lg border"
+                fill
+                sizes="80px"
+                className="object-cover rounded-lg border"
+                unoptimized
               />
               <Button
                 type="button"
