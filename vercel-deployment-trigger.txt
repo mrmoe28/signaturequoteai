@@ -1,0 +1,2 @@
+Deployment trigger - Database schema fix for image_url column
+Timestamp: 2025-01-11T20:54:18Z
