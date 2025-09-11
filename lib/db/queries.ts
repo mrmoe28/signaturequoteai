@@ -246,12 +246,11 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
             quantity: item.quantity.toString(),
             extended: item.extended.toString(),
             notes: item.notes,
-            imageUrl: item.imageUrl || null,
           }))
         );
     } catch (error) {
       // If imageUrl column doesn't exist, try without it
-      if (error instanceof Error && error.message?.includes('image_url')) {
+      if (error instanceof Error && (error.message?.includes('image_url') || error.message?.includes('imageUrl'))) {
         console.log('image_url column not found, inserting without imageUrl');
         await db
           .insert(quoteItems)
@@ -267,6 +266,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
             }))
           );
       } else {
+        console.error('Quote items insertion error:', error);
         throw error;
       }
     }
