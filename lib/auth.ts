@@ -196,14 +196,23 @@ export async function checkQuoteLimit(userId: string): Promise<{ canCreate: bool
 }
 
 export async function incrementQuoteUsage(userId: string): Promise<void> {
+  const currentUser = await db
+    .select({ quotesUsed: users.quotesUsed })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1)
+    .then(rows => rows[0])
+
+  if (!currentUser) {
+    throw new Error('User not found')
+  }
+
+  const newQuotesUsed = Number(currentUser.quotesUsed) + 1
+
   await db
     .update(users)
     .set({
-      quotesUsed: db
-        .select({ count: users.quotesUsed })
-        .from(users)
-        .where(eq(users.id, userId))
-        .then(rows => Number(rows[0]?.count || 0) + 1),
+      quotesUsed: String(newQuotesUsed),
     })
     .where(eq(users.id, userId))
 }
