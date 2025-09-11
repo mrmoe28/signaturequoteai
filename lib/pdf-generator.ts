@@ -43,24 +43,96 @@ type DatabaseQuote = {
 
 const logger = createLogger('pdf-generator');
 
+async function generatePDFFromUrl(url: string): Promise<Buffer> {
+  const puppeteer = require('puppeteer');
+  
+  // Check if we're running on Vercel
+  const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+  
+  let browser;
+  
+  if (isVercel) {
+    // Use chromium for Vercel deployment
+    const chromium = require('@sparticuz/chromium');
+    
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+  } else {
+    // Use local puppeteer for development
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process',
+        '--disable-gpu'
+      ]
+    });
+  }
+  
+  const page = await browser.newPage();
+  
+  // Navigate to the quote page
+  await page.goto(url, { 
+    waitUntil: ['networkidle0', 'domcontentloaded'],
+    timeout: 30000
+  });
+  
+  // Wait a bit more for any dynamic content
+  await page.waitForTimeout(2000);
+  
+  // Generate PDF with proper settings
+  const pdf = await page.pdf({
+    format: 'A4',
+    printBackground: true,
+    margin: {
+      top: '15mm',
+      right: '15mm',
+      bottom: '15mm',
+      left: '15mm'
+    },
+    displayHeaderFooter: false,
+    preferCSSPageSize: true,
+    scale: 0.9
+  });
+  
+  await browser.close();
+  
+  return pdf;
+}
+
 export async function generateQuotePDF(quote: Quote | DatabaseQuote): Promise<Buffer> {
   try {
     // Convert database quote to standard quote format
     const normalizedQuote = normalizeQuote(quote);
     
-    // Get company settings
-    const companySettings = await getCompanySettings();
+    // Try to use the dedicated quote view page for better rendering
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const quoteUrl = `${baseUrl}/quote-view/${normalizedQuote.id}?format=pdf`;
     
-    // For now, we'll use a simple HTML-to-PDF approach
-    // In production, you might want to use @react-pdf/renderer or puppeteer
-    const html = generateQuoteHTML(normalizedQuote, companySettings);
-    
-    // Convert HTML to PDF using a simple approach
-    // This is a placeholder - in production you'd use puppeteer or similar
-    const pdfBuffer = await htmlToPDF(html);
-    
-    logger.info({ quoteId: normalizedQuote.id }, 'PDF generated successfully');
-    return pdfBuffer;
+    try {
+      const pdfBuffer = await generatePDFFromUrl(quoteUrl);
+      logger.info({ quoteId: normalizedQuote.id }, 'PDF generated successfully from URL');
+      return pdfBuffer;
+    } catch (urlError) {
+      logger.warn({ error: urlError, quoteId: normalizedQuote.id }, 'URL-based PDF generation failed, falling back to HTML');
+      
+      // Fallback to HTML generation
+      const companySettings = await getCompanySettings();
+      const html = generateQuoteHTML(normalizedQuote, companySettings);
+      const pdfBuffer = await htmlToPDF(html);
+      
+      logger.info({ quoteId: normalizedQuote.id }, 'PDF generated successfully from HTML fallback');
+      return pdfBuffer;
+    }
     
   } catch (error) {
     logger.error({ error, quoteId: quote.id }, 'Failed to generate PDF');
@@ -486,21 +558,28 @@ async function htmlToPDF(html: string): Promise<Buffer> {
     
     const page = await browser.newPage();
     
-    // Set content and wait for it to load
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    // Set content and wait for it to load completely
+    await page.setContent(html, { 
+      waitUntil: ['networkidle0', 'domcontentloaded'],
+      timeout: 30000
+    });
+    
+    // Wait a bit more for any dynamic content
+    await page.waitForTimeout(1000);
     
     // Generate PDF with proper settings
     const pdf = await page.pdf({
       format: 'A4',
       printBackground: true,
       margin: {
-        top: '20mm',
-        right: '20mm',
-        bottom: '20mm',
-        left: '20mm'
+        top: '15mm',
+        right: '15mm',
+        bottom: '15mm',
+        left: '15mm'
       },
       displayHeaderFooter: false,
-      preferCSSPageSize: true
+      preferCSSPageSize: true,
+      scale: 0.8
     });
     
     await browser.close();
