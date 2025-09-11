@@ -83,6 +83,7 @@ export default function ImageUpload({
         accept={acceptedFormats.join(',')}
         onChange={handleFileSelect}
         className="hidden"
+        aria-label="Upload image file"
       />
       
       {currentImage ? (

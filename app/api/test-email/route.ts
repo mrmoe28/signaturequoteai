@@ -21,7 +21,7 @@ export async function GET() {
     }
 
     // Test SMTP connection
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.GOOGLE_CLIENT_EMAIL,
@@ -35,8 +35,8 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       message: 'SMTP connection successful',
-      emailPrefix: process.env.GOOGLE_CLIENT_EMAIL.substring(0, 3) + '***',
-      passwordLength: process.env.GOOGLE_APP_PASSWORD.length,
+      emailPrefix: process.env.GOOGLE_CLIENT_EMAIL?.substring(0, 3) + '***',
+      passwordLength: process.env.GOOGLE_APP_PASSWORD?.length || 0,
     });
 
   } catch (error) {

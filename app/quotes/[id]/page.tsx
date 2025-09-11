@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 import { Download, Mail, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
