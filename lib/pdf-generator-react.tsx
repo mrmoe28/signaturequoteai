@@ -1,18 +1,10 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { Quote } from './types';
 
-// Register fonts for better rendering
-Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2',
-});
-
-Font.register({
-  family: 'Inter-Bold',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2',
-  fontWeight: 'bold',
-});
+// Use built-in fonts for reliable PDF generation
+// React-PDF has built-in fonts that are guaranteed to work
+// We'll use Helvetica which renders similarly to Inter
 
 // Define styles
 const styles = StyleSheet.create({
@@ -20,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
     padding: 30,
-    fontFamily: 'Inter',
+    fontFamily: 'Helvetica',
     fontSize: 10,
     lineHeight: 1.4,
   },

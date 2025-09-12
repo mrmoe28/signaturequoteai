@@ -9,6 +9,7 @@ export default auth((req) => {
     pathname.startsWith('/api/auth/') ||
     pathname === '/' ||
     pathname.startsWith('/api/webhook') ||
+    pathname === '/api/test-env' ||
     pathname.startsWith('/_next') ||
     pathname.includes('.') // Static files
   ) {

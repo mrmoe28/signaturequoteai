@@ -38,3 +38,7 @@ secret-keys/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PDF test files - prevent accidental commits of generated PDFs
+*.pdf
+test-*.pdf
