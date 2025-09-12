@@ -423,3 +423,37 @@ Tailwind CSS v4+ separates the PostCSS plugin into `@tailwindcss/postcss`. Proje
 - Fix: During quote creation, ensure each `product_id` exists, creating a minimal product record when missing. Implemented in `lib/db/raw-queries.ts` `createQuote` by adding `ensureProductExists` and using `resolvedProductId` for custom items.
 - Alternative: Pre-seed the `products` table with all items used in quotes.
 - Validation: Retry creating a quote; it should succeed without FK errors, and the product record will exist for each item.
+
+## Blank page on quotes/new or redirect to your-vercel-domain.vercel.app
+
+### Symptom
+
+- Visiting `/quotes/new` shows a blank page or you are redirected to `your-vercel-domain.vercel.app/auth/login?...` which does not resolve.
+
+### Root Cause
+
+- `middleware.ts` redirects unauthenticated users to `/auth/login` and preserves `callbackUrl`.
+- If `NEXTAUTH_URL` or `NEXT_PUBLIC_APP_URL` are not set correctly in the environment (local or Vercel), NextAuth builds absolute URLs using a placeholder like `your-vercel-domain.vercel.app`, causing a broken redirect and a blank page.
+
+### Fix
+
+Set the correct public and NextAuth URLs:
+
+```bash
+# Local .env.local
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=generate-a-strong-secret
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+On Vercel Project → Settings → Environment Variables (for Production and Preview):
+
+- `NEXTAUTH_URL` = https://<your-real-domain>
+- `NEXT_PUBLIC_APP_URL` = https://<your-real-domain>
+
+After updating envs, redeploy or restart `npm run dev`.
+
+### Verification
+
+- Navigate to `/auth/login`; the URL should use your real domain.
+- After login, `/quotes/new` renders the wizard instead of a blank page.
