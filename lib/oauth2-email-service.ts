@@ -146,6 +146,7 @@ function createEmailMessage({ to, subject, html, text, pdfBuffer, quoteNumber }:
 }
 
 function generateQuoteEmailHTML(data: OAuth2EmailData, validUntilText: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
   return `
     <!DOCTYPE html>
     <html>
@@ -231,6 +232,15 @@ function generateQuoteEmailHTML(data: OAuth2EmailData, validUntilText: string): 
           background: #f0f9ff;
           border-radius: 6px;
         }
+        .btn {
+          display: inline-block;
+          background: #0f766e;
+          color: #ffffff !important;
+          padding: 12px 18px;
+          border-radius: 8px;
+          text-decoration: none;
+          font-weight: 700;
+        }
         .footer {
           text-align: center;
           margin-top: 40px;
@@ -299,6 +309,8 @@ function generateQuoteEmailHTML(data: OAuth2EmailData, validUntilText: string): 
           <h3>Next Steps</h3>
           <p>Please review the attached PDF for complete details of your quote, including itemized pricing, specifications, and terms.</p>
           <p>If you have any questions or would like to proceed with this quote, please don't hesitate to contact us.</p>
+          <p style="margin-top:12px;color:#374151;">Or view your quote online:</p>
+          <a class="btn" href="${baseUrl}/quote-view/${data.quoteId}">View Quote Online</a>
         </div>
 
         <div class="footer">
