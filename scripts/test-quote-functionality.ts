@@ -1,7 +1,7 @@
 import { db } from '../lib/db/index';
 import { quotes } from '../lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { generateQuotePDF } from '../lib/pdf-generator';
+import { generateQuotePDF } from '../lib/pdf-generator-stable';
 import { sendQuoteEmail } from '../lib/email';
 
 async function testQuoteFunctionality() {
