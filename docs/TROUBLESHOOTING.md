@@ -1,3 +1,16 @@
+## Service Account JSON Extraction Issues
+
+**Symptom**: Script fails with "No service account JSON files found in download folder" even when JSON file exists in Downloads.
+
+**Cause**: The extraction script was filtering files by specific keywords that didn't match the actual filename.
+
+**Solution**: See detailed fix in [SERVICE_ACCOUNT_EXTRACTION_FIX.md](./SERVICE_ACCOUNT_EXTRACTION_FIX.md)
+
+**Quick Fix**: Use the automated extraction script:
+```bash
+node scripts/auto-extract-credentials.js
+```
+
 ## PDF generation buffer type error on build/deploy
 
 Symptom during `next build` or Vercel deploy:

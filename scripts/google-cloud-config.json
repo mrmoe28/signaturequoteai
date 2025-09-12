@@ -1,0 +1,9 @@
+{
+  "projectName": "SignatureQuoteCrawler",
+  "userEmail": "ekosolarize@gmail.com",
+  "appName": "SignatureQuoteCrawler",
+  "localUrl": "http://localhost:3000",
+  "productionUrl": "https://signaturequoteai-git-quote-pdf-improvements-ekoapps.vercel.app",
+  "serviceAccountName": "signature-quote-emailer",
+  "oauthClientName": "SignatureQuoteCrawler Web Client"
+}

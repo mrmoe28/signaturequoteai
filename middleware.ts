@@ -10,6 +10,7 @@ export default auth((req) => {
     pathname === '/' ||
     pathname.startsWith('/api/webhook') ||
     pathname === '/api/test-env' ||
+    pathname === '/api/test-email' ||
     pathname.startsWith('/_next') ||
     pathname.includes('.') // Static files
   ) {
