@@ -4,7 +4,7 @@ import { db } from './db'
 import { users, accounts, sessions, verificationTokens } from './db'
 import Credentials from 'next-auth/providers/credentials'
 import Google from 'next-auth/providers/google'
-import bcrypt from 'bcryptjs'
+import * as bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
