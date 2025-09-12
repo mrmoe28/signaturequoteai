@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createLogger } from '@/lib/logger';
 import { getQuoteById } from '@/lib/db/queries';
-import { generateQuotePDF } from '@/lib/pdf-generator';
+import { generateQuotePDF } from '@/lib/pdf-generator-stable';
 
 const logger = createLogger('api-quotes-pdf');
 

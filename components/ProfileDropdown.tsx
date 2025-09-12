@@ -4,6 +4,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { User, Settings, Building2, LogOut, ChevronDown, CreditCard } from 'lucide-react';
 import { Button } from './ui/Button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProfileDropdown() {
   const { data: session, status } = useSession();
@@ -60,9 +61,11 @@ export default function ProfileDropdown() {
       >
         <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
           {session.user.image ? (
-            <img 
+            <Image 
               src={session.user.image} 
               alt={session.user.name || 'Profile'} 
+              width={32}
+              height={32}
               className="w-full h-full rounded-full object-cover"
             />
           ) : (
