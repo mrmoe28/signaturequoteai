@@ -587,7 +587,7 @@ async function htmlToPDF(html: string): Promise<Buffer> {
     });
     
     // Coerce Uint8Array to Node Buffer for consistent typing
-    const pdfBuffer: Buffer = Buffer.from(pdf);
+    const pdfBuffer = Buffer.from(pdf);
 
     await browser.close();
     
