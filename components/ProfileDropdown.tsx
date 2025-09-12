@@ -25,7 +25,7 @@ export default function ProfileDropdown() {
   }, []);
 
   if (status === 'loading') {
-    return <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />;
+    return null;
   }
 
   if (!session) {
