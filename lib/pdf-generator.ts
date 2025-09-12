@@ -110,7 +110,7 @@ async function generatePDFFromUrl(url: string): Promise<Buffer> {
   });
 
   // Some Puppeteer versions type this as Uint8Array; coerce to Node Buffer
-  const pdfBuffer: Buffer = Buffer.from(pdf);
+  const pdfBuffer = Buffer.from(pdf);
 
   await browser.close();
 
