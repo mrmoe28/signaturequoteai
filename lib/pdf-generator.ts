@@ -114,7 +114,7 @@ async function generatePDFFromUrl(url: string): Promise<Buffer> {
 
   await browser.close();
 
-  return pdfBuffer;
+  return pdfBuffer as Buffer;
 }
 
 export async function generateQuotePDF(quote: Quote | DatabaseQuote): Promise<Buffer> {
@@ -592,7 +592,7 @@ async function htmlToPDF(html: string): Promise<Buffer> {
     await browser.close();
     
     logger.info('PDF generated successfully using Puppeteer');
-    return pdfBuffer;
+    return pdfBuffer as Buffer;
     
   } catch (error) {
     logger.error({ error }, 'Failed to generate PDF from HTML');
