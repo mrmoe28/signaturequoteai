@@ -47,6 +47,7 @@ export const {
   },
   pages: {
     signIn: '/auth/login',
+    error: '/auth/error',
   },
   providers: [
     Google({
