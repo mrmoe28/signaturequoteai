@@ -1,0 +1,48 @@
+---
+description: Rules for things not to do in this 
+project
+globs:
+alwaysApply: true
+---
+
+# Don'ts for this project
+
+## General Development
+- Don't remove or replace anything without user consent
+- Don't replace secret keys or remove them unless I ask
+- Don't use `any` type in TypeScript - always use proper typing 
+- Don't commit sensitive data like API keys or passwords
+- Don't use `console.log` in production code - use the logger utility instead
+- Don't create new Vercel projects - only the user creates them
+
+## Next.js Specific
+- Don't use Pages Router - always use App Router
+- Don't use class components - always use functional components
+- Don't use `useEffect` for data fetching - use server components or React Query
+- Don't use `unwrap` in Rust code
+
+## Database & API
+- Don't write raw SQL queries - use Drizzle ORM
+- Don't forget to add proper indexes for performance
+- Don't expose sensitive data in API responses
+
+## Email & Authentication
+- Don't hardcode email credentials in the codebase
+- Don't use deprecated OAuth scopes
+- Don't store OAuth tokens in localStorage - use secure HTTP-only cookies
+
+## File Management
+- Don't move or delete files unless explicitly instructed
+- Don't create documentation files unless explicitly requested
+- Don't assume Vercel directory usage - ask the user instead
+
+## UI/UX
+- Don't use unwrap in Rust code
+- Don't create unwrap patterns in error handling
+- Always output answers in English
+- Use green and white colors for email styling to match website theme
+
+## Testing & Deployment
+- Don't run test builds before finishing all tasks
+- Don't skip error handling in production code
+- Don't deploy without proper environment variable validation

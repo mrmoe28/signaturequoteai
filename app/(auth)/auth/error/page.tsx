@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { AlertCircle, Home, RefreshCw } from 'lucide-react'
+import { Suspense } from 'react'
 
-export default function AuthError() {
+function AuthErrorContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
 
@@ -120,5 +121,29 @@ export default function AuthError() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function AuthError() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div className="max-w-md w-full p-8 bg-gray-800/50 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700">
+          <div className="flex justify-center mb-6">
+            <div className="p-3 bg-blue-500/10 rounded-full">
+              <RefreshCw className="h-12 w-12 text-blue-500 animate-spin" />
+            </div>
+          </div>
+          <h1 className="text-2xl font-bold text-center text-white mb-2">
+            Loading...
+          </h1>
+          <p className="text-gray-300 text-center">
+            Please wait while we load the error details.
+          </p>
+        </div>
+      </div>
+    }>
+      <AuthErrorContent />
+    </Suspense>
   )
 }
