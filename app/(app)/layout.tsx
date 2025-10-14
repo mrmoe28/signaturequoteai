@@ -1,5 +1,6 @@
 import ProfileDropdown from '@/components/ProfileDropdown';
 import QuoteHistoryLeftSidebar from '@/components/QuoteHistoryLeftSidebar';
+import { InactivityLogout } from '@/components/InactivityLogout';
 
 // Force dynamic rendering - this layout uses session and database queries
 export const dynamic = 'force-dynamic';
@@ -7,6 +8,9 @@ export const dynamic = 'force-dynamic';
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen">
+      {/* Auto-logout after 30 minutes of inactivity */}
+      <InactivityLogout timeoutMinutes={30} warningMinutes={2} />
+
       {/* Left Sidebar */}
       <QuoteHistoryLeftSidebar />
 
