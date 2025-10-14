@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useInactivityTimeout } from '@/hooks/useInactivityTimeout';
-import { stackClientApp } from '@/stack/client';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -44,7 +43,7 @@ export function InactivityLogout({
 
   const handleLogout = async () => {
     try {
-      await stackClientApp.signOut();
+      await user?.signOut();
       router.push('/auth/sign-in');
     } catch (error) {
       console.error('Logout error:', error);
