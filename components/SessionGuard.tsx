@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useUser } from '@stackframe/stack';
 import { useRouter } from 'next/navigation';
 
@@ -19,15 +19,23 @@ import { useRouter } from 'next/navigation';
 export function SessionGuard() {
   const user = useUser();
   const router = useRouter();
+  const isLoggingOut = useRef(false);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
+    // Prevent running multiple times
+    if (hasInitialized.current) return;
+
     if (!user) {
       // User not logged in, clear any leftover flags
-      sessionStorage.removeItem('stack-session-active');
-      localStorage.removeItem('stack-has-session');
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('stack-session-active');
+        localStorage.removeItem('stack-has-session');
+      }
       return;
     }
 
+    // User is logged in, check session
     const sessionKey = 'stack-session-active';
     const persistentKey = 'stack-has-session';
 
@@ -37,23 +45,31 @@ export function SessionGuard() {
     if (!hasSessionStorage && hasLocalStorage) {
       // Case B: Had a previous session (localStorage exists) but sessionStorage cleared
       // This means browser was closed → new browser session → log out
-      console.log('New browser session detected (browser was closed), logging out...');
+      if (!isLoggingOut.current) {
+        isLoggingOut.current = true;
+        console.log('New browser session detected (browser was closed), logging out...');
 
-      // Clear flags before signing out
-      localStorage.removeItem(persistentKey);
-      sessionStorage.removeItem(sessionKey);
+        // Clear flags before signing out
+        localStorage.removeItem(persistentKey);
+        sessionStorage.removeItem(sessionKey);
 
-      user.signOut().then(() => {
-        router.push('/auth/sign-in');
-      }).catch((error) => {
-        console.error('Error signing out:', error);
-        router.push('/auth/sign-in');
-      });
+        user.signOut().then(() => {
+          router.push('/auth/sign-in');
+        }).catch((error) => {
+          console.error('Error signing out:', error);
+          router.push('/auth/sign-in');
+        });
+      }
     } else {
       // Case A: Fresh sign-in OR continuing existing session
-      // Set both flags to track the session
-      sessionStorage.setItem(sessionKey, 'true');
-      localStorage.setItem(persistentKey, 'true');
+      // Only set flags if they don't already exist
+      if (!hasSessionStorage) {
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+      if (!hasLocalStorage) {
+        localStorage.setItem(persistentKey, 'true');
+      }
+      hasInitialized.current = true;
     }
   }, [user, router]);
 
