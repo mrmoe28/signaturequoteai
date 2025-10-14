@@ -1,0 +1,155 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - paragraph [ref=e5]:
+      - text: "NEW: Real-time pricing updates from Signature Solar."
+      - link "Learn more →" [ref=e6] [cursor=pointer]:
+        - /url: "#pricing"
+    - navigation [ref=e7]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - img [ref=e11]
+          - generic [ref=e13]: SignatureQuote
+        - generic [ref=e14]:
+          - link "Products" [ref=e15] [cursor=pointer]:
+            - /url: /products
+          - link "Pricing" [ref=e16] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Resources" [ref=e17] [cursor=pointer]:
+            - /url: /dashboard
+        - generic [ref=e18]:
+          - link "Log in" [ref=e19] [cursor=pointer]:
+            - /url: /auth/sign-in
+          - link "Get started" [ref=e20] [cursor=pointer]:
+            - /url: /auth/sign-in
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - img [ref=e25]
+        - generic [ref=e27]: "#1 QUOTE BUILDER FOR SOLAR PROFESSIONALS"
+      - heading "Professional solar quotes in seconds" [level=1] [ref=e28]
+      - paragraph [ref=e29]: Access Signature Solar's complete catalog with live pricing. Build professional quotes in under 60 seconds. Save 90% of time on quote generation.
+      - link "Start building quotes" [ref=e31] [cursor=pointer]:
+        - /url: "#pricing"
+        - text: Start building quotes
+        - img
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - img [ref=e34]
+          - generic [ref=e36]: No credit card required
+        - generic [ref=e37]:
+          - img [ref=e38]
+          - generic [ref=e40]: Rated 4.9/5 by installers
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - generic [ref=e44]: SEARCH
+        - generic [ref=e45]: BUILD
+        - generic [ref=e46]: PREVIEW
+        - generic [ref=e47]: CUSTOMIZE
+        - generic [ref=e48]: SEND
+      - img "SignatureQuote Product Catalog Interface" [ref=e53]
+    - generic [ref=e55]:
+      - generic [ref=e56]:
+        - heading "Everything you need to quote faster" [level=2] [ref=e57]
+        - paragraph [ref=e58]: Built for solar professionals who value speed and accuracy
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - img [ref=e62]
+          - heading "Lightning fast" [level=3] [ref=e64]
+          - paragraph [ref=e65]: Build complete quotes in under 60 seconds with our streamlined workflow and instant price updates.
+        - generic [ref=e66]:
+          - img [ref=e68]
+          - heading "Always current" [level=3] [ref=e70]
+          - paragraph [ref=e71]: Real-time pricing from Signature Solar ensures you always quote the right price. No more outdated catalogs.
+        - generic [ref=e72]:
+          - img [ref=e74]
+          - heading "Professional output" [level=3] [ref=e76]
+          - paragraph [ref=e77]: Generate beautiful, branded PDFs that impress customers and win more business. Professional every time.
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - heading "Simple, transparent pricing" [level=2] [ref=e81]
+        - paragraph [ref=e82]: Choose the plan that fits your business
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - heading "Starter" [level=3] [ref=e85]
+          - generic [ref=e86]:
+            - generic [ref=e87]: $29
+            - generic [ref=e88]: /month
+          - list [ref=e89]:
+            - listitem [ref=e90]:
+              - img [ref=e91]
+              - generic [ref=e93]: 50 quotes/month
+            - listitem [ref=e94]:
+              - img [ref=e95]
+              - generic [ref=e97]: Real-time pricing
+            - listitem [ref=e98]:
+              - img [ref=e99]
+              - generic [ref=e101]: PDF generation
+            - listitem [ref=e102]:
+              - img [ref=e103]
+              - generic [ref=e105]: Email support
+          - link "Get started" [ref=e106] [cursor=pointer]:
+            - /url: /auth/sign-in
+        - generic [ref=e107]:
+          - generic [ref=e108]: Most Popular
+          - heading "Professional" [level=3] [ref=e109]
+          - generic [ref=e110]:
+            - generic [ref=e111]: $79
+            - generic [ref=e112]: /month
+          - list [ref=e113]:
+            - listitem [ref=e114]:
+              - img [ref=e115]
+              - generic [ref=e117]: Unlimited quotes
+            - listitem [ref=e118]:
+              - img [ref=e119]
+              - generic [ref=e121]: Custom branding
+            - listitem [ref=e122]:
+              - img [ref=e123]
+              - generic [ref=e125]: Quote tracking
+            - listitem [ref=e126]:
+              - img [ref=e127]
+              - generic [ref=e129]: Priority support
+          - link "Get started" [ref=e130] [cursor=pointer]:
+            - /url: /auth/sign-in
+        - generic [ref=e131]:
+          - heading "Enterprise" [level=3] [ref=e132]
+          - generic [ref=e133]:
+            - generic [ref=e134]: $199
+            - generic [ref=e135]: /month
+          - list [ref=e136]:
+            - listitem [ref=e137]:
+              - img [ref=e138]
+              - generic [ref=e140]: Everything in Pro
+            - listitem [ref=e141]:
+              - img [ref=e142]
+              - generic [ref=e144]: Multiple users
+            - listitem [ref=e145]:
+              - img [ref=e146]
+              - generic [ref=e148]: API access
+            - listitem [ref=e149]:
+              - img [ref=e150]
+              - generic [ref=e152]: Dedicated support
+          - link "Contact sales" [ref=e153] [cursor=pointer]:
+            - /url: /auth/sign-in
+    - generic [ref=e155]:
+      - heading "Ready to quote faster?" [level=2] [ref=e156]
+      - paragraph [ref=e157]: Join solar professionals saving hours every week with SignatureQuote
+      - link "Start free trial" [ref=e158] [cursor=pointer]:
+        - /url: /auth/sign-in
+      - paragraph [ref=e159]: No credit card required • 14-day free trial
+    - contentinfo [ref=e160]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - img [ref=e164]
+          - generic [ref=e166]: SignatureQuote
+        - generic [ref=e167]:
+          - link "Pricing" [ref=e168] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Products" [ref=e169] [cursor=pointer]:
+            - /url: /products
+          - link "Sign in" [ref=e170] [cursor=pointer]:
+            - /url: /auth/sign-in
+        - paragraph [ref=e171]: © 2025 SignatureQuote. All rights reserved.
+  - alert [ref=e172]
+```

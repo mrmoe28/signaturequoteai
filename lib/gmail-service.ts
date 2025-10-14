@@ -31,7 +31,7 @@ function getGmailService() {
     email: process.env.GOOGLE_CLIENT_EMAIL,
     key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     scopes: ['https://www.googleapis.com/auth/gmail.send'],
-    subject: process.env.GOOGLE_CLIENT_EMAIL, // Use the service account email as the subject
+    // Removed subject field - service account will send as itself
   });
 
   return google.gmail({ version: 'v1', auth });
