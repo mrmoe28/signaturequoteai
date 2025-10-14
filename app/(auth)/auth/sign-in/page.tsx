@@ -12,7 +12,9 @@ export default function SignInPage() {
             Sign in to your account to continue
           </p>
         </div>
-        <SignIn />
+        <SignIn
+          oauthProviders={[]}
+        />
       </div>
     </div>
   );
