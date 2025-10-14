@@ -61,6 +61,16 @@ export function useInactivityTimeout(options: InactivityTimeoutOptions) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
 
+  // Store callbacks in refs to avoid re-running effect when they change
+  const onTimeoutRef = useRef(onTimeout);
+  const onWarningRef = useRef(onWarning);
+
+  // Update refs when callbacks change
+  useEffect(() => {
+    onTimeoutRef.current = onTimeout;
+    onWarningRef.current = onWarning;
+  }, [onTimeout, onWarning]);
+
   const clearTimers = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -83,18 +93,18 @@ export function useInactivityTimeout(options: InactivityTimeoutOptions) {
     lastActivityRef.current = Date.now();
 
     // Set warning timeout
-    if (onWarning && warningTime > 0) {
+    if (onWarningRef.current && warningTime > 0) {
       warningRef.current = setTimeout(() => {
         setIsWarning(true);
-        if (onWarning) {
-          onWarning();
+        if (onWarningRef.current) {
+          onWarningRef.current();
         }
       }, timeout - warningTime);
     }
 
     // Set logout timeout
     timeoutRef.current = setTimeout(() => {
-      onTimeout();
+      onTimeoutRef.current();
     }, timeout);
 
     // Update time remaining every second
@@ -129,7 +139,8 @@ export function useInactivityTimeout(options: InactivityTimeoutOptions) {
         window.removeEventListener(event, handleActivity);
       });
     };
-  }, [timeout, warningTime, onTimeout, onWarning]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeout, warningTime]);
 
   const formatTime = (ms: number): string => {
     const totalSeconds = Math.floor(ms / 1000);
