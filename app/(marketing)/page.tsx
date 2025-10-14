@@ -34,9 +34,9 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-4">
-              <a href="/auth/login" className="text-sm text-slate-600 hover:text-slate-900">Log in</a>
+              <a href="/auth/sign-in" className="text-sm text-slate-600 hover:text-slate-900">Log in</a>
               <Button className="bg-emerald-600 hover:bg-emerald-700 text-white px-6" asChild>
-                <a href="/auth/login">Get started</a>
+                <a href="/auth/sign-in">Get started</a>
               </Button>
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function Home() {
                 </li>
               </ul>
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/login">Get started</a>
+                <a href="/auth/sign-in">Get started</a>
               </Button>
             </div>
 
@@ -284,7 +284,7 @@ export default function Home() {
                 </li>
               </ul>
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/login">Get started</a>
+                <a href="/auth/sign-in">Get started</a>
               </Button>
             </div>
 
@@ -322,7 +322,7 @@ export default function Home() {
                 </li>
               </ul>
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/login">Contact sales</a>
+                <a href="/auth/sign-in">Contact sales</a>
               </Button>
             </div>
           </div>
@@ -343,7 +343,7 @@ export default function Home() {
             className="bg-emerald-600 hover:bg-emerald-700 text-white text-lg px-10 py-7 rounded-xl"
             asChild
           >
-            <a href="/auth/login">Start free trial</a>
+            <a href="/auth/sign-in">Start free trial</a>
           </Button>
           <p className="text-sm text-slate-400 mt-8">
             No credit card required • 14-day free trial
@@ -364,7 +364,7 @@ export default function Home() {
             <div className="flex items-center gap-8 text-sm text-slate-400">
               <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
               <a href="/products" className="hover:text-white transition-colors">Products</a>
-              <a href="/auth/login" className="hover:text-white transition-colors">Sign in</a>
+              <a href="/auth/sign-in" className="hover:text-white transition-colors">Sign in</a>
             </div>
             <p className="text-sm text-slate-400">
               © 2025 SignatureQuote. All rights reserved.
