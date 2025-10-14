@@ -12,9 +12,7 @@ export default function SignUpPage() {
             Get started with Signature QuoteCrawler
           </p>
         </div>
-        <SignUp
-          oauthProviders={[]}
-        />
+        <SignUp />
       </div>
     </div>
   );
