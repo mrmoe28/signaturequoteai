@@ -103,7 +103,6 @@
     "mcp:vercel-once": "tsx src/mcp/vercelAutoFix.ts"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^1.11.0",
     "@corsaro-creative/super-design-tokens": "^0.2.0",
     "@corsaro-creative/super-react": "^0.2.0",
     "@neondatabase/serverless": "^1.0.2",
@@ -117,7 +116,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/cheerio": "^0.22.35",
     "autoprefixer": "^10.4.21",
-    "bcryptjs": "^3.0.2",
     "cheerio": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -130,7 +128,6 @@
     "jsonc-parser": "^3.3.1",
     "lucide-react": "^0.543.0",
     "next": "14.2.15",
-    "next-auth": "^4.24.11",
     "nodemailer": "^6.10.1",
     "openai": "^4.104.0",
     "pino": "^9.13.1",
@@ -150,7 +147,6 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
-    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.21",
     "@types/nodemailer": "^7.0.2",

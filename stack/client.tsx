@@ -18,7 +18,7 @@ export const stackClientApp = new StackClientApp({
   urls: {
     afterSignIn: `${baseUrl}/dashboard`,
     afterSignUp: `${baseUrl}/dashboard`,
-    signIn: `${baseUrl}/handler/sign-in`,
-    signUp: `${baseUrl}/handler/sign-up`,
+    signIn: `${baseUrl}/auth/sign-in`,
+    signUp: `${baseUrl}/auth/sign-up`,
   },
 });
