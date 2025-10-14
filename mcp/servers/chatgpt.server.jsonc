@@ -1,0 +1,18 @@
+{
+  // ChatGPT MCP server definition (HTTP transport)
+  "id": "chatgpt",
+  "transport": "http",
+  "baseUrl": "https://api.openai.com/v1",
+  "auth": {
+    "scheme": "bearer",
+    "env": "OPENAI_API_KEY"
+  },
+  "tools": [
+    { "name": "completion", "path": "/chat/completions" },
+    { "name": "embeddings", "path": "/embeddings" }
+  ],
+  "models": {
+    "default": "${OPENAI_MODEL:gpt-4.1-mini}"
+  },
+  "timeouts": { "connectMs": 8000, "readMs": 60000 }
+}

@@ -1,0 +1,115 @@
+# Command Index
+
+This directory contains all command documentation for the SignatureQuoteAI project.
+
+## Available Command Categories
+
+### Core Development
+- **`dev-commands`** - Development workflow commands
+- **`build-commands`** - Build and deployment commands
+- **`test-commands`** - Testing and validation commands
+
+### Data Management
+- **`db-commands`** - Database operations and migrations
+- **`crawl-commands`** - Product crawling and data management
+- **`quote-commands`** - Quote creation and management
+
+### Services
+- **`email-commands`** - Email service management
+- **`pdf-commands`** - PDF generation and management
+- **`auth-commands`** - Authentication and user management
+- **`vercel-commands`** - Vercel deployment monitoring and fixes
+
+### Documentation
+- **`doc-features`** - Documentation features and commands
+
+## Quick Reference
+
+### Development
+```bash
+npm run dev:start      # Start development server
+npm run dev:build      # Build for production
+npm run dev:lint       # Run linting
+npm run dev:type-check # TypeScript type checking
+```
+
+### Testing
+```bash
+npm run test:unit      # Run unit tests
+npm run test:e2e       # Run end-to-end tests
+npm run test:coverage  # Generate coverage report
+```
+
+### Database
+```bash
+npm run db:migrate     # Run migrations
+npm run db:seed        # Seed database
+npm run db:studio      # Open database studio
+```
+
+### Crawling
+```bash
+npm run crawl:start    # Start product crawling
+npm run crawl:test     # Test crawler
+npm run crawl:freshness # Check data freshness
+```
+
+### Email
+```bash
+npm run email:test     # Test email configuration
+npm run email:send     # Send test email
+npm run email:verify   # Verify email setup
+```
+
+### PDF
+```bash
+npm run pdf:generate   # Generate PDF from quote
+npm run pdf:test       # Test PDF generation
+npm run pdf:preview    # Preview PDF template
+```
+
+### Authentication
+```bash
+npm run auth:setup     # Setup authentication
+npm run auth:test      # Test auth configuration
+npm run auth:users     # List users
+```
+
+### Quotes
+```bash
+npm run quote:create   # Create new quote
+npm run quote:list     # List all quotes
+npm run quote:export   # Export quotes
+```
+
+### Vercel Deployment
+```bash
+npm run vercel:status  # Check deployment status
+npm run vercel:logs    # View deployment logs
+npm run vercel:fix     # Auto-fix deployment errors
+npm run vercel:rollback # Rollback to previous deployment
+npm run vercel:health  # Check deployment health
+```
+
+## Usage Tips
+
+1. **Always check the specific command file** for detailed usage instructions
+2. **Use the quick commands** for common tasks
+3. **Follow the workflows** for complex operations
+4. **Check environment variables** before running commands
+5. **Use `--help` flag** for command-specific help
+
+## Adding New Commands
+
+1. Create or update the appropriate command file
+2. Add the script to `package.json`
+3. Update this README with the new command
+4. Test the command thoroughly
+
+## Command Structure
+
+Each command file follows this structure:
+- **Quick Commands** - Short reference list
+- **Detailed Commands** - Full documentation
+- **Workflows** - Step-by-step processes
+- **Environment Variables** - Required configuration

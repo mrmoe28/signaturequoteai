@@ -1,0 +1,66 @@
+# Testing Commands
+
+## Quick Commands
+- `test-unit` - Run unit tests
+- `test-e2e` - Run end-to-end tests
+- `test-watch` - Run tests in watch mode
+- `test-coverage` - Generate test coverage report
+- `test-debug` - Run tests in debug mode
+
+## Detailed Commands
+
+### test-unit
+**Purpose**: Run unit tests using Jest
+**Usage**: `npm run test`
+**Example**: `npm run test`
+**Notes**: Runs all unit tests in the project
+
+### test-e2e
+**Purpose**: Run end-to-end tests using Playwright
+**Usage**: `npm run test:e2e`
+**Example**: `npm run test:e2e`
+**Notes**: Tests complete user workflows
+
+### test-watch
+**Purpose**: Run tests in watch mode
+**Usage**: `npm run test:watch`
+**Example**: `npm run test:watch`
+**Notes**: Automatically re-runs tests when files change
+
+### test-coverage
+**Purpose**: Generate test coverage report
+**Usage**: `npm run test:coverage`
+**Example**: `npm run test:coverage`
+**Notes**: Creates coverage report in coverage/ folder
+
+### test-debug
+**Purpose**: Run tests in debug mode
+**Usage**: `npm run test:debug`
+**Example**: `npm run test:debug`
+**Notes**: Enables debugging for test failures
+
+### test-specific
+**Purpose**: Run specific test file or pattern
+**Usage**: `npm run test -- --testNamePattern="ComponentName"`
+**Example**: `npm run test -- --testNamePattern="QuotePreview"`
+**Notes**: Runs only tests matching the pattern
+
+### test-update-snapshots
+**Purpose**: Update Jest snapshots
+**Usage**: `npm run test -- --updateSnapshot`
+**Example**: `npm run test -- --updateSnapshot`
+**Notes**: Updates snapshot files for component tests
+
+## Testing Workflow
+1. `test-unit` - Run unit tests
+2. `test-e2e` - Run end-to-end tests
+3. `test-coverage` - Check coverage
+4. `test-debug` - Debug any failures
+5. `test-update-snapshots` - Update snapshots if needed
+
+## Test Categories
+- **Unit Tests**: Individual component and function tests
+- **Integration Tests**: Component interaction tests
+- **E2E Tests**: Full user workflow tests
+- **Visual Tests**: Screenshot comparisons
+- **Performance Tests**: Load and speed tests

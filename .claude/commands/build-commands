@@ -1,0 +1,59 @@
+# Build & Deployment Commands
+
+## Quick Commands
+- `build-prod` - Build for production
+- `build-analyze` - Analyze bundle size
+- `deploy-vercel` - Deploy to Vercel
+- `deploy-preview` - Create preview deployment
+- `build-check` - Check build without output
+
+## Detailed Commands
+
+### build-prod
+**Purpose**: Create optimized production build
+**Usage**: `npm run build`
+**Example**: `npm run build`
+**Notes**: Generates optimized build in .next folder, ready for deployment
+
+### build-analyze
+**Purpose**: Analyze bundle size and dependencies
+**Usage**: `npm run build && npx @next/bundle-analyzer`
+**Example**: `npm run build && npx @next/bundle-analyzer`
+**Notes**: Shows detailed bundle analysis in browser
+
+### deploy-vercel
+**Purpose**: Deploy to Vercel production
+**Usage**: `vercel --prod`
+**Example**: `vercel --prod`
+**Notes**: Deploys to production environment on Vercel
+
+### deploy-preview
+**Purpose**: Create preview deployment
+**Usage**: `vercel`
+**Example**: `vercel`
+**Notes**: Creates preview deployment for testing
+
+### build-check
+**Purpose**: Check if build would succeed without creating output
+**Usage**: `npm run build -- --dry-run`
+**Example**: `npm run build -- --dry-run`
+**Notes**: Validates build process without generating files
+
+### build-export
+**Purpose**: Export static site (if applicable)
+**Usage**: `npm run build && npm run export`
+**Example**: `npm run build && npm run export`
+**Notes**: Creates static export in out folder
+
+## Build Workflow
+1. `build-check` - Verify build will succeed
+2. `build-prod` - Create production build
+3. `build-analyze` - Check bundle size
+4. `deploy-preview` - Test deployment
+5. `deploy-vercel` - Deploy to production
+
+## Environment Variables
+Ensure these are set before building:
+- `NEXT_PUBLIC_APP_URL` - Application URL
+- `AUTH_SECRET` - Authentication secret
+- `AUTH_GOOGLE_CLIENT_ID` - Google OAuth client ID

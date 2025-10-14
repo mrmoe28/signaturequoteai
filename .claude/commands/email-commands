@@ -1,0 +1,75 @@
+# Email Commands
+
+## Quick Commands
+- `email-test` - Test email configuration
+- `email-send` - Send test email
+- `email-verify` - Verify email setup
+- `email-templates` - Generate email templates
+- `email-queue` - Check email queue status
+
+## Detailed Commands
+
+### email-test
+**Purpose**: Test email service configuration
+**Usage**: `npm run email:test`
+**Example**: `npm run email:test`
+**Notes**: Tests SMTP/Gmail API connection and authentication
+
+### email-send
+**Purpose**: Send a test email
+**Usage**: `npm run email:send`
+**Example**: `npm run email:send`
+**Notes**: Sends a test email to verify functionality
+
+### email-verify
+**Purpose**: Verify email service setup
+**Usage**: `npm run email:verify`
+**Example**: `npm run email:verify`
+**Notes**: Checks all email service configurations
+
+### email-templates
+**Purpose**: Generate email templates
+**Usage**: `npm run email:templates`
+**Example**: `npm run email:templates`
+**Notes**: Creates HTML email templates for quotes
+
+### email-queue
+**Purpose**: Check email queue status
+**Usage**: `npm run email:queue`
+**Example**: `npm run email:queue`
+**Notes**: Shows pending and sent email status
+
+### email-resend
+**Purpose**: Resend failed emails
+**Usage**: `npm run email:resend`
+**Example**: `npm run email:resend`
+**Notes**: Retries failed email deliveries
+
+### email-cleanup
+**Purpose**: Clean up old email logs
+**Usage**: `npm run email:cleanup`
+**Example**: `npm run email:cleanup`
+**Notes**: Removes old email logs and temporary files
+
+## Email Workflow
+1. `email-verify` - Check email setup
+2. `email-test` - Test configuration
+3. `email-send` - Send test email
+4. `email-queue` - Monitor queue
+5. `email-cleanup` - Clean up logs
+
+## Email Services
+- **Gmail API**: Primary email service
+- **SMTP**: Fallback email service
+- **Resend**: Alternative email service
+- **Nodemailer**: Email sending library
+
+## Environment Variables
+Required for email functionality:
+- `GMAIL_CLIENT_ID` - Gmail API client ID
+- `GMAIL_CLIENT_SECRET` - Gmail API client secret
+- `GMAIL_REFRESH_TOKEN` - Gmail API refresh token
+- `SMTP_HOST` - SMTP server host
+- `SMTP_PORT` - SMTP server port
+- `SMTP_USER` - SMTP username
+- `SMTP_PASS` - SMTP password

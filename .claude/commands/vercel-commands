@@ -1,0 +1,116 @@
+# Vercel Deployment Commands
+
+## Quick Commands
+- `vercel:status` - Check deployment status
+- `vercel:logs` - View deployment logs
+- `vercel:fix` - Auto-fix common deployment errors
+- `vercel:rollback` - Rollback to previous deployment
+- `vercel:health` - Check deployment health
+
+## Detailed Commands
+
+### vercel:status
+**Purpose**: Check current deployment status and health
+**Usage**: `npm run vercel:status`
+**Example**: `npm run vercel:status`
+**Notes**: Shows deployment status, build logs, and any errors
+
+### vercel:logs
+**Purpose**: View detailed deployment and runtime logs
+**Usage**: `npm run vercel:logs`
+**Example**: `npm run vercel:logs`
+**Notes**: Displays build logs, function logs, and error details
+
+### vercel:fix
+**Purpose**: Automatically fix common deployment errors
+**Usage**: `npm run vercel:fix`
+**Example**: `npm run vercel:fix`
+**Notes**: Analyzes errors and applies common fixes
+
+### vercel:rollback
+**Purpose**: Rollback to previous working deployment
+**Usage**: `npm run vercel:rollback`
+**Example**: `npm run vercel:rollback`
+**Notes**: Reverts to the last successful deployment
+
+### vercel:health
+**Purpose**: Check overall deployment health and performance
+**Usage**: `npm run vercel:health`
+**Example**: `npm run vercel:health`
+**Notes**: Monitors performance metrics and error rates
+
+### vercel:debug
+**Purpose**: Debug specific deployment issues
+**Usage**: `npm run vercel:debug`
+**Example**: `npm run vercel:debug`
+**Notes**: Runs comprehensive diagnostics
+
+### vercel:rebuild
+**Purpose**: Force rebuild and redeploy
+**Usage**: `npm run vercel:rebuild`
+**Example**: `npm run vercel:rebuild`
+**Notes**: Clears cache and rebuilds from scratch
+
+### vercel:env-check
+**Purpose**: Check environment variables configuration
+**Usage**: `npm run vercel:env-check`
+**Example**: `npm run vercel:env-check`
+**Notes**: Validates all required environment variables
+
+### vercel:function-logs
+**Purpose**: View serverless function logs
+**Usage**: `npm run vercel:function-logs`
+**Example**: `npm run vercel:function-logs`
+**Notes**: Shows logs for API routes and serverless functions
+
+### vercel:build-analyze
+**Purpose**: Analyze build output and bundle size
+**Usage**: `npm run vercel:build-analyze`
+**Example**: `npm run vercel:build-analyze`
+**Notes**: Identifies build issues and optimization opportunities
+
+## Common Error Fixes
+
+### Build Errors
+- **Memory Issues**: Increase build memory allocation
+- **Timeout Issues**: Optimize build process
+- **Dependency Issues**: Update or fix package versions
+- **TypeScript Errors**: Fix type issues and configuration
+
+### Runtime Errors
+- **Environment Variables**: Check and fix missing variables
+- **API Routes**: Fix serverless function issues
+- **Database Connections**: Verify database configuration
+- **Authentication**: Fix OAuth and session issues
+
+### Deployment Errors
+- **Build Failures**: Fix build configuration
+- **Function Errors**: Debug serverless functions
+- **Static Generation**: Fix SSG/ISR issues
+- **Edge Functions**: Debug edge runtime issues
+
+## Vercel Workflow
+1. `vercel:status` - Check current status
+2. `vercel:logs` - Review error details
+3. `vercel:fix` - Apply automatic fixes
+4. `vercel:debug` - Debug remaining issues
+5. `vercel:rebuild` - Deploy fixes
+
+## Monitoring Commands
+- `vercel:health` - Overall health check
+- `vercel:function-logs` - Function-specific logs
+- `vercel:env-check` - Environment validation
+- `vercel:build-analyze` - Build analysis
+
+## Environment Variables
+Required for Vercel operations:
+- `VERCEL_TOKEN` - Vercel API token
+- `VERCEL_PROJECT_ID` - Project identifier
+- `VERCEL_ORG_ID` - Organization identifier
+- `VERCEL_TEAM_ID` - Team identifier (if applicable)
+
+## Error Categories
+- **Build Errors**: TypeScript, dependencies, configuration
+- **Runtime Errors**: Environment, API, database
+- **Deployment Errors**: Build failures, function errors
+- **Performance Issues**: Bundle size, memory, timeouts

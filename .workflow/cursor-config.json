@@ -1,0 +1,12 @@
+{
+  "name": "SignatureQuoteCrawler",
+  "type": "node",
+  "request": "launch",
+  "program": "${workspaceFolder}/app.js",
+  "console": "integratedTerminal",
+  "workflow": {
+    "bridge": true,
+    "autoSync": true,
+    "openOnEdit": true
+  }
+}

@@ -1,0 +1,4 @@
+Deployment trigger - Fix quote items database insertion error
+Timestamp: 2025-01-11T21:15:00Z
+Changed bulk insert to individual inserts to avoid SQL parameter issues
+# Trigger deployment

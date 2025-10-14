@@ -1,0 +1,73 @@
+# Database Commands
+
+## Quick Commands
+- `db-migrate` - Run database migrations
+- `db-seed` - Seed database with test data
+- `db-reset` - Reset database
+- `db-generate` - Generate new migration
+- `db-studio` - Open database studio
+
+## Detailed Commands
+
+### db-migrate
+**Purpose**: Run pending database migrations
+**Usage**: `npx drizzle-kit migrate`
+**Example**: `npx drizzle-kit migrate`
+**Notes**: Applies pending migrations to the database
+
+### db-seed
+**Purpose**: Seed database with initial/test data
+**Usage**: `npm run db:seed`
+**Example**: `npm run db:seed`
+**Notes**: Populates database with sample products and quotes
+
+### db-reset
+**Purpose**: Reset database to clean state
+**Usage**: `npm run db:reset`
+**Example**: `npm run db:reset`
+**Notes**: Drops all tables and recreates schema
+
+### db-generate
+**Purpose**: Generate new migration from schema changes
+**Usage**: `npx drizzle-kit generate`
+**Example**: `npx drizzle-kit generate`
+**Notes**: Creates migration files based on schema changes
+
+### db-studio
+**Purpose**: Open Drizzle Studio for database management
+**Usage**: `npx drizzle-kit studio`
+**Example**: `npx drizzle-kit studio`
+**Notes**: Opens web interface for database management
+
+### db-push
+**Purpose**: Push schema changes directly to database
+**Usage**: `npx drizzle-kit push`
+**Example**: `npx drizzle-kit push`
+**Notes**: Applies schema changes without creating migration files
+
+### db-drop
+**Purpose**: Drop all tables (destructive)
+**Usage**: `npm run db:drop`
+**Example**: `npm run db:drop`
+**Notes**: ⚠️ DESTRUCTIVE - Removes all data
+
+## Database Workflow
+1. `db-generate` - Create migration from schema changes
+2. `db-migrate` - Apply migrations to database
+3. `db-seed` - Add test data
+4. `db-studio` - Verify data in browser
+
+## Schema Management
+- **Products Table**: Store crawled product data
+- **Quotes Table**: Store quote information
+- **Quote Items Table**: Store line items for quotes
+- **Customers Table**: Store customer information
+- **Users Table**: Store user authentication data
+
+## Environment Variables
+Required for database operations:
+- `DATABASE_URL` - Database connection string
+- `DB_HOST` - Database host
+- `DB_USER` - Database username
+- `DB_PASSWORD` - Database password
+- `DB_NAME` - Database name

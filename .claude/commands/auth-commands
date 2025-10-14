@@ -1,0 +1,73 @@
+# Authentication Commands
+
+## Quick Commands
+- `auth-setup` - Setup authentication
+- `auth-test` - Test auth configuration
+- `auth-users` - List users
+- `auth-sessions` - Check active sessions
+- `auth-cleanup` - Clean up auth data
+
+## Detailed Commands
+
+### auth-setup
+**Purpose**: Setup authentication services
+**Usage**: `npm run auth:setup`
+**Example**: `npm run auth:setup`
+**Notes**: Configures Google OAuth and email/password auth
+
+### auth-test
+**Purpose**: Test authentication configuration
+**Usage**: `npm run auth:test`
+**Example**: `npm run auth:test`
+**Notes**: Tests OAuth and session management
+
+### auth-users
+**Purpose**: List all users in system
+**Usage**: `npm run auth:users`
+**Example**: `npm run auth:users`
+**Notes**: Shows user accounts and their status
+
+### auth-sessions
+**Purpose**: Check active user sessions
+**Usage**: `npm run auth:sessions`
+**Example**: `npm run auth:sessions`
+**Notes**: Displays current active sessions
+
+### auth-cleanup
+**Purpose**: Clean up expired sessions
+**Usage**: `npm run auth:cleanup`
+**Example**: `npm run auth:cleanup`
+**Notes**: Removes expired sessions and tokens
+
+### auth-reset
+**Purpose**: Reset user password
+**Usage**: `npm run auth:reset`
+**Example**: `npm run auth:reset`
+**Notes**: Resets user password (admin only)
+
+### auth-verify
+**Purpose**: Verify user email addresses
+**Usage**: `npm run auth:verify`
+**Example**: `npm run auth:verify`
+**Notes**: Sends verification emails to users
+
+## Authentication Workflow
+1. `auth-setup` - Configure services
+2. `auth-test` - Test configuration
+3. `auth-users` - Check user accounts
+4. `auth-sessions` - Monitor sessions
+5. `auth-cleanup` - Clean up data
+
+## Auth Services
+- **Google OAuth**: Primary authentication
+- **Email/Password**: Alternative auth method
+- **Session Management**: JWT tokens
+- **Password Reset**: Email-based reset
+
+## Environment Variables
+Required for authentication:
+- `AUTH_SECRET` - JWT secret key
+- `AUTH_GOOGLE_CLIENT_ID` - Google OAuth client ID
+- `AUTH_GOOGLE_CLIENT_SECRET` - Google OAuth client secret
+- `NEXTAUTH_URL` - Application URL
+- `NEXTAUTH_SECRET` - NextAuth secret

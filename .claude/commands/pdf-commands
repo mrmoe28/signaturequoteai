@@ -1,0 +1,77 @@
+# PDF Commands
+
+## Quick Commands
+- `pdf-generate` - Generate PDF from quote
+- `pdf-test` - Test PDF generation
+- `pdf-preview` - Preview PDF template
+- `pdf-validate` - Validate PDF output
+- `pdf-cleanup` - Clean up PDF files
+
+## Detailed Commands
+
+### pdf-generate
+**Purpose**: Generate PDF from quote data
+**Usage**: `npm run pdf:generate`
+**Example**: `npm run pdf:generate`
+**Notes**: Creates PDF using React PDF renderer
+
+### pdf-test
+**Purpose**: Test PDF generation functionality
+**Usage**: `npm run pdf:test`
+**Example**: `npm run pdf:test`
+**Notes**: Tests PDF generation with sample data
+
+### pdf-preview
+**Purpose**: Preview PDF template in browser
+**Usage**: `npm run pdf:preview`
+**Example**: `npm run pdf:preview`
+**Notes**: Opens PDF template in browser for preview
+
+### pdf-validate
+**Purpose**: Validate PDF output quality
+**Usage**: `npm run pdf:validate`
+**Example**: `npm run pdf:validate`
+**Notes**: Checks PDF file integrity and formatting
+
+### pdf-cleanup
+**Purpose**: Clean up generated PDF files
+**Usage**: `npm run pdf:cleanup`
+**Example**: `npm run pdf:cleanup`
+**Notes**: Removes temporary and old PDF files
+
+### pdf-batch
+**Purpose**: Generate multiple PDFs in batch
+**Usage**: `npm run pdf:batch`
+**Example**: `npm run pdf:batch`
+**Notes**: Processes multiple quotes for PDF generation
+
+### pdf-optimize
+**Purpose**: Optimize PDF file size
+**Usage**: `npm run pdf:optimize`
+**Example**: `npm run pdf:optimize`
+**Notes**: Compresses PDF files for better performance
+
+## PDF Workflow
+1. `pdf-test` - Test generation
+2. `pdf-preview` - Check template
+3. `pdf-generate` - Create PDF
+4. `pdf-validate` - Verify output
+5. `pdf-cleanup` - Clean up files
+
+## PDF Features
+- **Quote Templates**: Professional quote layouts
+- **Dynamic Content**: Customer and product data
+- **Styling**: Brand-consistent design
+- **Optimization**: Compressed file sizes
+- **Batch Processing**: Multiple quotes at once
+
+## Dependencies
+- **@react-pdf/renderer**: PDF generation
+- **@sparticuz/chromium**: Headless browser
+- **Puppeteer**: PDF rendering engine
+
+## Environment Variables
+Required for PDF generation:
+- `PDF_TEMPLATE_PATH` - Template file path
+- `PDF_OUTPUT_PATH` - Output directory
+- `PDF_FONT_PATH` - Custom font directory

@@ -1,0 +1,53 @@
+# Development Commands
+
+## Quick Commands
+- `dev-start` - Start Next.js development server
+- `dev-build` - Build for production
+- `dev-lint` - Run ESLint
+- `dev-type-check` - Run TypeScript type checking
+- `dev-format` - Format code with Prettier
+
+## Detailed Commands
+
+### dev-start
+**Purpose**: Start the Next.js development server in development mode
+**Usage**: `npm run dev`
+**Example**: `npm run dev`
+**Notes**: Runs on http://localhost:3000 by default
+
+### dev-build
+**Purpose**: Build the application for production
+**Usage**: `npm run build`
+**Example**: `npm run build`
+**Notes**: Creates optimized build in .next folder
+
+### dev-lint
+**Purpose**: Run ESLint to check code quality
+**Usage**: `npm run lint`
+**Example**: `npm run lint`
+**Notes**: Checks for code quality issues and enforces coding standards
+
+### dev-type-check
+**Purpose**: Run TypeScript compiler to check types
+**Usage**: `npx tsc --noEmit`
+**Example**: `npx tsc --noEmit`
+**Notes**: Checks TypeScript types without generating output files
+
+### dev-format
+**Purpose**: Format code using Prettier
+**Usage**: `npx prettier --write .`
+**Example**: `npx prettier --write .`
+**Notes**: Formats all supported files in the project
+
+### dev-watch
+**Purpose**: Watch for file changes and rebuild
+**Usage**: `npm run build -- --watch`
+**Example**: `npm run build -- --watch`
+**Notes**: Automatically rebuilds when files change
+
+## Development Workflow
+1. `dev-start` - Start development server
+2. `dev-lint` - Check code quality
+3. `dev-type-check` - Verify TypeScript types
+4. `dev-build` - Test production build
+5. `dev-format` - Format code before commit

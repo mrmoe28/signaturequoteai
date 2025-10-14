@@ -1,0 +1,72 @@
+# Crawling Commands
+
+## Quick Commands
+- `crawl-start` - Start product crawling
+- `crawl-test` - Test crawler functionality
+- `crawl-freshness` - Check data freshness
+- `crawl-validate` - Validate crawled data
+- `crawl-cleanup` - Clean up old data
+
+## Detailed Commands
+
+### crawl-start
+**Purpose**: Start crawling Signature Solar products
+**Usage**: `npm run crawl:start`
+**Example**: `npm run crawl:start`
+**Notes**: Begins crawling process with rate limiting
+
+### crawl-test
+**Purpose**: Test crawler on single product
+**Usage**: `npm run crawl:test`
+**Example**: `npm run crawl:test`
+**Notes**: Tests crawler functionality on one product
+
+### crawl-freshness
+**Purpose**: Check freshness of existing data
+**Usage**: `npm run crawl:freshness`
+**Example**: `npm run crawl:freshness`
+**Notes**: Reports on data age and freshness status
+
+### crawl-validate
+**Purpose**: Validate crawled data integrity
+**Usage**: `npm run crawl:validate`
+**Example**: `npm run crawl:validate`
+**Notes**: Checks data quality and completeness
+
+### crawl-cleanup
+**Purpose**: Remove old or invalid data
+**Usage**: `npm run crawl:cleanup`
+**Example**: `npm run crawl:cleanup`
+**Notes**: Cleans up outdated or corrupted data
+
+### crawl-robots
+**Purpose**: Check robots.txt compliance
+**Usage**: `npm run crawl:robots`
+**Example**: `npm run crawl:robots`
+**Notes**: Verifies crawler respects robots.txt rules
+
+### crawl-rate-limit
+**Purpose**: Test rate limiting functionality
+**Usage**: `npm run crawl:rate-limit`
+**Example**: `npm run crawl:rate-limit`
+**Notes**: Tests rate limiting to avoid overwhelming server
+
+## Crawling Workflow
+1. `crawl-robots` - Check compliance
+2. `crawl-test` - Test functionality
+3. `crawl-start` - Begin crawling
+4. `crawl-validate` - Verify data
+5. `crawl-freshness` - Check data age
+
+## Data Management
+- **Product Data**: Name, SKU, price, category, vendor
+- **Freshness Tracking**: Last updated timestamps
+- **Error Handling**: Failed crawl attempts
+- **Rate Limiting**: Respectful crawling intervals
+
+## Compliance Notes
+- Always respect robots.txt
+- Implement proper rate limiting
+- Handle errors gracefully
+- Log all crawling activities
+- Monitor for TOS violations

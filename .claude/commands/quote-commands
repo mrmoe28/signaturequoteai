@@ -1,0 +1,79 @@
+# Quote Commands
+
+## Quick Commands
+- `quote-create` - Create new quote
+- `quote-list` - List all quotes
+- `quote-export` - Export quotes
+- `quote-import` - Import quotes
+- `quote-cleanup` - Clean up quotes
+
+## Detailed Commands
+
+### quote-create
+**Purpose**: Create a new quote
+**Usage**: `npm run quote:create`
+**Example**: `npm run quote:create`
+**Notes**: Creates a new quote with sample data
+
+### quote-list
+**Purpose**: List all quotes in system
+**Usage**: `npm run quote:list`
+**Example**: `npm run quote:list`
+**Notes**: Shows all quotes with basic information
+
+### quote-export
+**Purpose**: Export quotes to CSV/JSON
+**Usage**: `npm run quote:export`
+**Example**: `npm run quote:export`
+**Notes**: Exports quotes in various formats
+
+### quote-import
+**Purpose**: Import quotes from file
+**Usage**: `npm run quote:import`
+**Example**: `npm run quote:import`
+**Notes**: Imports quotes from CSV/JSON files
+
+### quote-cleanup
+**Purpose**: Clean up old quotes
+**Usage**: `npm run quote:cleanup`
+**Example**: `npm run quote:cleanup`
+**Notes**: Removes old or invalid quotes
+
+### quote-validate
+**Purpose**: Validate quote data
+**Usage**: `npm run quote:validate`
+**Example**: `npm run quote:validate`
+**Notes**: Checks quote data integrity
+
+### quote-duplicate
+**Purpose**: Duplicate existing quote
+**Usage**: `npm run quote:duplicate`
+**Example**: `npm run quote:duplicate`
+**Notes**: Creates a copy of an existing quote
+
+## Quote Workflow
+1. `quote-create` - Create new quote
+2. `quote-validate` - Check data
+3. `quote-export` - Export if needed
+4. `quote-list` - Review quotes
+5. `quote-cleanup` - Clean up old data
+
+## Quote Features
+- **Quote Generation**: Create professional quotes
+- **Product Integration**: Add products to quotes
+- **Customer Management**: Link quotes to customers
+- **PDF Export**: Generate PDF quotes
+- **Email Sending**: Send quotes via email
+
+## Quote Data Structure
+- **Quote Header**: Quote number, dates, customer
+- **Line Items**: Products, quantities, prices
+- **Totals**: Subtotal, discount, tax, total
+- **Terms**: Payment terms and conditions
+- **Metadata**: Created by, last updated
+
+## Environment Variables
+Required for quote functionality:
+- `QUOTE_TEMPLATE_PATH` - Quote template path
+- `QUOTE_EXPORT_PATH` - Export directory
+- `QUOTE_BACKUP_PATH` - Backup directory

@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1757516493662,
+      "tag": "0000_odd_quasar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757540884132,
+      "tag": "0001_dark_mister_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757545484748,
+      "tag": "0002_mighty_magus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1757909150166,
+      "tag": "0003_loving_roland_deschain",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1759967835878,
+      "tag": "0004_misty_dragon_lord",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1759990723137,
+      "tag": "0005_yielding_power_man",
+      "breakpoints": true
+    }
+  ]
+}

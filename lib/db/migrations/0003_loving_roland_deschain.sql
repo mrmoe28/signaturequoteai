@@ -1,0 +1,1 @@
+ALTER TABLE "quote_items" DROP COLUMN "image_url";
