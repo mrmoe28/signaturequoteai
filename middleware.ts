@@ -11,10 +11,12 @@ export async function middleware(request: NextRequest) {
     '/auth/sign-up',
     '/auth/forgot-password',
     '/auth/error',
+    '/handler/sign-in',
+    '/handler/sign-up',
   ];
 
   const isPublicRoute = publicRoutes.some(
-    (route) => pathname === route || pathname.startsWith('/api/auth')
+    (route) => pathname === route || pathname.startsWith('/api/auth') || pathname.startsWith('/handler')
   );
 
   // Allow access to API routes and public routes
@@ -27,7 +29,7 @@ export async function middleware(request: NextRequest) {
 
   // If not authenticated and trying to access protected route, redirect to sign-in
   if (!user && !isPublicRoute) {
-    const signInUrl = new URL('/auth/sign-in', request.url);
+    const signInUrl = new URL('/handler/sign-in', request.url);
     signInUrl.searchParams.set('redirectUrl', pathname);
     return NextResponse.redirect(signInUrl);
   }
