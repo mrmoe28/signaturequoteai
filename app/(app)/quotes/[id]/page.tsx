@@ -34,7 +34,7 @@ interface Quote {
 
 export default function QuoteDetailPage() {
   const params = useParams();
-  const quoteId = params.id as string;
+  const quoteId = params?.id as string;
   const [quote, setQuote] = useState<Quote | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

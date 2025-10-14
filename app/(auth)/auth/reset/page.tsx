@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 function ResetForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const token = searchParams?.get('token');
 
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');

@@ -43,7 +43,7 @@ function NewQuoteContent() {
 
   // Load items from localStorage when coming from cart
   useEffect(() => {
-    const fromCart = searchParams.get('fromCart');
+    const fromCart = searchParams?.get('fromCart');
     if (fromCart === 'true') {
       const savedItems = localStorage.getItem('quoteItems');
       if (savedItems) {
