@@ -9,6 +9,9 @@ const baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
 
 export const stackServerApp = new StackServerApp({
   tokenStore: "nextjs-cookie",
+  projectId: process.env.NEXT_PUBLIC_STACK_PROJECT_ID!,
+  publishableClientKey: process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY!,
+  secretServerKey: process.env.STACK_SECRET_SERVER_KEY!,
   urls: {
     afterSignIn: `${baseUrl}/dashboard`,
     afterSignUp: `${baseUrl}/dashboard`,
