@@ -20,7 +20,13 @@ export default function ProductDetailsPage() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        
+
+        if (!params?.id) {
+          setError('Invalid product ID');
+          setLoading(false);
+          return;
+        }
+
         // Try to get from Signature Solar data first
         const signatureResponse = await fetch('/api/signature-solar');
         if (signatureResponse.ok) {
@@ -32,7 +38,7 @@ export default function ProductDetailsPage() {
             return;
           }
         }
-        
+
         // Fallback to regular products API
         const response = await fetch(`/api/products/${params.id}`);
         if (response.ok) {
@@ -49,10 +55,10 @@ export default function ProductDetailsPage() {
       }
     };
 
-    if (params.id) {
+    if (params?.id) {
       fetchProduct();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   if (loading) {
     return (

@@ -13,8 +13,8 @@ import { Suspense } from 'react';
 
 function PaymentErrorContent() {
   const searchParams = useSearchParams();
-  const quoteId = searchParams.get('quoteId');
-  const error = searchParams.get('error');
+  const quoteId = searchParams?.get('quoteId');
+  const error = searchParams?.get('error');
   const isConfig = error === 'not_configured';
 
   return (
