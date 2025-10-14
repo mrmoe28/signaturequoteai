@@ -3,9 +3,9 @@ import "server-only";
 import { StackServerApp } from "@stackframe/stack";
 
 // Get the base URL from environment variable, fallback to localhost for development
+// NEXT_PUBLIC_APP_URL should be set to https://signaturequoteai-main.vercel.app in production
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
-                process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
-                'http://localhost:3000';
+                (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export const stackServerApp = new StackServerApp({
   tokenStore: "nextjs-cookie",
