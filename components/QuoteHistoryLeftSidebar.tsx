@@ -163,11 +163,6 @@ export default function QuoteHistoryLeftSidebar() {
           <div className="text-center py-8 text-muted-foreground">
             <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
             <p className="text-sm">No quotes yet</p>
-            <a href="/quotes/new">
-              <Button variant="outline" size="sm" className="mt-4">
-                Create First Quote
-              </Button>
-            </a>
           </div>
         ) : (
           <div className="space-y-3">
@@ -237,14 +232,6 @@ export default function QuoteHistoryLeftSidebar() {
         )}
       </div>
 
-      {/* Footer with New Quote button */}
-      <div className="p-4 border-t border-border">
-        <a href="/quotes/new" className="block">
-          <Button className="w-full">
-            Create New Quote
-          </Button>
-        </a>
-      </div>
     </aside>
   );
 }

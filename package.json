@@ -130,6 +130,7 @@
     "next": "14.2.15",
     "nodemailer": "^6.10.1",
     "openai": "^4.104.0",
+    "optional": "^0.1.4",
     "pino": "^9.13.1",
     "pino-pretty": "^13.1.2",
     "playwright": "^1.56.0",
@@ -146,6 +147,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@esbuild/darwin-arm64": "^0.25.10",
     "@jest/globals": "^30.2.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.21",

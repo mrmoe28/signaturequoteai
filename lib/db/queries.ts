@@ -3,6 +3,7 @@ import { db, sql } from './index';
 import { products, priceSnapshots, quotes, quoteItems, crawlJobs, companySettings, customers } from './schema';
 import type { Product, ProductFilter, Quote, CrawlJob, CompanySettings } from '../types';
 import { createLogger } from '../logger';
+import { findOrCreateCustomer } from './customer-queries';
 
 const logger = createLogger('db-queries');
 
@@ -393,50 +394,28 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
     total: totalValue
   }, 'Quote numeric values before insert');
 
-  // First, create or get the customer
+  // First, create or get the customer using the proper helper function
   let customerId = quote.customerId;
-  
+
   if (!customerId) {
-    // Create/upsert customer if we don't have a customerId
-    logger.info('Creating customer for quote');
+    // Use findOrCreateCustomer which properly handles duplicates
+    logger.info('Creating/finding customer for quote');
     try {
-      const [customer] = await db
-        .insert(customers)
-        .values({
-          company: quote.customer.company || null,
-          name: quote.customer.name,
-          email: quote.customer.email || null,
-          phone: quote.customer.phone || null,
-          address: quote.customer.address || null,
-          city: quote.customer.city || null,
-          state: quote.customer.state || null,
-          zip: quote.customer.zip || null,
-          country: quote.customer.country || 'USA',
-          notes: null,
-          isActive: 'true',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-        .onConflictDoUpdate({
-          target: [customers.email],
-          set: {
-            company: quote.customer.company || null,
-            name: quote.customer.name,
-            phone: quote.customer.phone || null,
-            address: quote.customer.address || null,
-            city: quote.customer.city || null,
-            state: quote.customer.state || null,
-            zip: quote.customer.zip || null,
-            country: quote.customer.country || 'USA',
-            updatedAt: new Date(),
-          }
-        })
-        .returning();
-      
-      customerId = customer.id;
-      logger.info({ customerId }, 'Customer created/updated');
+      customerId = await findOrCreateCustomer({
+        company: quote.customer.company,
+        name: quote.customer.name,
+        email: quote.customer.email,
+        phone: quote.customer.phone,
+        address: quote.customer.address,
+        city: quote.customer.city,
+        state: quote.customer.state,
+        zip: quote.customer.zip,
+        country: quote.customer.country || 'USA',
+      });
+
+      logger.info({ customerId }, 'Customer created/found successfully');
     } catch (customerError) {
-      logger.error({ error: customerError }, 'Failed to create/update customer');
+      logger.error({ error: customerError, customerData: quote.customer }, 'Failed to create/find customer');
       throw new Error('Failed to create customer for quote');
     }
   }
@@ -479,7 +458,7 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
     })
     .returning();
   } catch (insertError) {
-    logger.error({ 
+    logger.error({
       error: insertError,
       values: {
         discount: discountValue,
@@ -487,48 +466,10 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'createdAt'>) {
         tax: taxValue,
         subtotal: subtotalValue,
         total: totalValue,
-        customerName: quote.customer.name
+        customerId: customerId
       }
     }, 'Failed to insert quote with Drizzle ORM');
-    
-    // Fallback to raw SQL if Drizzle fails
-    try {
-      logger.info('Attempting fallback with raw SQL');
-      const result = await sql`
-        INSERT INTO quotes (
-          number, created_at, valid_until, prepared_by, lead_time_note,
-          discount, shipping, tax, subtotal, total, terms,
-          customer_company, customer_name, customer_email, 
-          customer_phone, customer_ship_to,
-          status, payment_status, updated_at
-        ) VALUES (
-          ${quote.number || null},
-          ${new Date()},
-          ${quote.validUntil ? new Date(quote.validUntil) : null},
-          ${quote.preparedBy || null},
-          ${quote.leadTimeNote || null},
-          ${discountValue}::numeric,
-          ${shippingValue}::numeric,
-          ${taxValue}::numeric,
-          ${subtotalValue}::numeric,
-          ${totalValue}::numeric,
-          ${quote.terms || null},
-          ${quote.customer.company || null},
-          ${quote.customer.name},
-          ${quote.customer.email || null},
-          ${quote.customer.phone || null},
-          ${quote.shipTo || null},
-          'draft',
-          'pending',
-          ${new Date()}
-        ) RETURNING *
-      `;
-      insertedQuote = result;
-      logger.info('Successfully inserted quote using raw SQL fallback');
-    } catch (fallbackError) {
-      logger.error({ error: fallbackError }, 'Raw SQL fallback also failed');
-      throw insertError; // Throw the original error
-    }
+    throw new Error(`Failed to create quote: ${insertError instanceof Error ? insertError.message : 'Unknown error'}`);
   }
 
   const quoteId = (insertedQuote as any[])[0].id;
