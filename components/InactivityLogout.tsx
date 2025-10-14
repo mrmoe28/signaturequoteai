@@ -81,7 +81,7 @@ export function InactivityLogout({
         <AlertDialogHeader>
           <AlertDialogTitle>Session Timeout Warning</AlertDialogTitle>
           <AlertDialogDescription>
-            You've been inactive for a while. For your security, you'll be automatically logged out in{' '}
+            You&apos;ve been inactive for a while. For your security, you&apos;ll be automatically logged out in{' '}
             <span className="font-semibold text-foreground">{timeRemainingFormatted}</span>.
           </AlertDialogDescription>
         </AlertDialogHeader>
