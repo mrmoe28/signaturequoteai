@@ -84,10 +84,8 @@ export function SquareIntegration({
       }
 
       alert('Square account disconnected successfully');
-      router.refresh();
-      setTimeout(() => {
-        window.location.href = '/settings';
-      }, 500);
+      // Force a full page reload to refresh all data
+      window.location.href = '/settings';
     } catch (error) {
       console.error('Error disconnecting Square:', error);
       alert('Failed to disconnect Square account. Please try again.');
