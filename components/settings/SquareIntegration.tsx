@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
 import { Badge } from '@/components/ui/Badge';
-import { CreditCard, CheckCircle, XCircle, ExternalLink, RefreshCw } from 'lucide-react';
+import { CreditCard, CheckCircle, XCircle, ExternalLink, Loader2, Shield } from 'lucide-react';
 
 interface SquareIntegrationProps {
   userId: string;
@@ -23,51 +25,39 @@ export function SquareIntegration({
   squareEnvironment,
   squareConnectedAt
 }: SquareIntegrationProps) {
-  const [connecting, setConnecting] = useState(false);
-  const [disconnecting, setDisconnecting] = useState(false);
-  const [squareConfig, setSquareConfig] = useState<{
-    configured: boolean;
-    applicationId: string | null;
-    environment: string;
-  } | null>(null);
-
-  // Fetch Square configuration on mount
-  useEffect(() => {
-    fetch('/api/integrations/square/config')
-      .then(res => res.json())
-      .then(data => setSquareConfig(data))
-      .catch(err => console.error('Failed to fetch Square config:', err));
-  }, []);
+  const [isExpanded, setIsExpanded] = useState(!squareConnected);
+  const [accessToken, setAccessToken] = useState('');
+  const [locationId, setLocationId] = useState('');
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isDisconnecting, setIsDisconnecting] = useState(false);
 
   const handleConnect = async () => {
-    setConnecting(true);
-    try {
-      // Check if Square is configured
-      if (!squareConfig?.configured || !squareConfig?.applicationId) {
-        alert('Square integration is not configured yet. Please contact support or configure Square OAuth credentials in your environment variables.');
-        setConnecting(false);
-        return;
-      }
+    if (!accessToken || !locationId) {
+      alert('Please enter both Access Token and Location ID');
+      return;
+    }
 
-      // Generate Square OAuth URL
-      const params = new URLSearchParams({
-        client_id: squareConfig.applicationId,
-        scope: 'MERCHANT_PROFILE_READ PAYMENTS_WRITE PAYMENTS_READ',
-        session: 'false',
-        state: userId, // Use userId to verify callback
+    setIsConnecting(true);
+    try {
+      const response = await fetch('/api/integrations/square/connect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken, locationId }),
       });
 
-      const oauthEnvironment = squareConfig.environment === 'production' ? 'connect' : 'connect.squareupsandbox';
-      const squareOAuthUrl = `https://${oauthEnvironment}.squareup.com/oauth2/authorize?${params.toString()}`;
+      const data = await response.json();
 
-      console.log('Redirecting to Square OAuth:', squareOAuthUrl);
-
-      // Redirect to Square OAuth
-      window.location.href = squareOAuthUrl;
+      if (response.ok) {
+        alert('Square account connected successfully!');
+        window.location.reload();
+      } else {
+        alert(data.error || 'Failed to connect Square account');
+      }
     } catch (error) {
-      console.error('Error connecting to Square:', error);
-      alert('Failed to connect to Square. Please try again.');
-      setConnecting(false);
+      console.error('Error connecting Square:', error);
+      alert('Network error occurred. Please try again.');
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -76,7 +66,7 @@ export function SquareIntegration({
       return;
     }
 
-    setDisconnecting(true);
+    setIsDisconnecting(true);
     try {
       const response = await fetch('/api/integrations/square/disconnect', {
         method: 'POST',
@@ -93,52 +83,18 @@ export function SquareIntegration({
       console.error('Error disconnecting Square:', error);
       alert('Failed to disconnect Square account. Please try again.');
     } finally {
-      setDisconnecting(false);
-    }
-  };
-
-  const handleRefreshToken = async () => {
-    try {
-      const response = await fetch('/api/integrations/square/refresh', {
-        method: 'POST',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to refresh token');
-      }
-
-      alert('Square access token refreshed successfully');
-    } catch (error) {
-      console.error('Error refreshing token:', error);
-      alert('Failed to refresh Square token. Please try again.');
+      setIsDisconnecting(false);
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CreditCard className="w-5 h-5" />
-          Square Payment Integration
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Server Configuration Status */}
-        {squareConfig && !squareConfig.configured && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-900 font-medium mb-1">
-              ⚠️ Square OAuth Not Configured
-            </p>
-            <p className="text-xs text-red-800">
-              The server administrator needs to configure Square OAuth credentials (Application ID and Client Secret) before you can connect your Square account.
-            </p>
-          </div>
-        )}
-
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <p className="font-medium">Connection Status</p>
+            <CardTitle className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5" />
+              Square Payment Integration
               {squareConnected ? (
                 <Badge className="bg-green-100 text-green-800 border-green-300">
                   <CheckCircle className="w-3 h-3 mr-1" />
@@ -150,119 +106,161 @@ export function SquareIntegration({
                   Not Connected
                 </Badge>
               )}
-            </div>
-            <p className="text-sm text-muted-foreground">
+            </CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">
               {squareConnected
                 ? 'Your Square account is connected and ready to accept payments.'
-                : 'Connect your Square account to enable payment links in quotes.'}
+                : 'Connect your Square account to enable payment processing in quotes.'}
             </p>
           </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Hide' : 'Setup'}
+          </Button>
         </div>
+      </CardHeader>
 
-        {squareConnected && (
-          <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-              <div>
-                <p className="text-muted-foreground">Environment</p>
-                <p className="font-medium capitalize">{squareEnvironment || 'Sandbox'}</p>
+      {isExpanded && (
+        <CardContent className="space-y-4">
+          {squareConnected ? (
+            <div className="space-y-4">
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center gap-2 text-green-800 mb-2">
+                  <CheckCircle className="w-4 h-4" />
+                  <span className="font-medium">Square Connected Successfully</span>
+                </div>
+                <div className="text-sm text-green-700 space-y-1">
+                  <p>Your quotes will now include payment links powered by Square.</p>
+                  {squareLocationId && (
+                    <p className="text-xs">Location ID: {squareLocationId}</p>
+                  )}
+                  {squareEnvironment && (
+                    <p className="text-xs">Environment: {squareEnvironment}</p>
+                  )}
+                  {squareConnectedAt && (
+                    <p className="text-xs">Connected: {new Date(squareConnectedAt).toLocaleDateString()}</p>
+                  )}
+                </div>
               </div>
-              {squareMerchantId && (
-                <div>
-                  <p className="text-muted-foreground">Merchant ID</p>
-                  <p className="font-mono text-xs">{squareMerchantId.substring(0, 20)}...</p>
-                </div>
-              )}
-              {squareLocationId && (
-                <div>
-                  <p className="text-muted-foreground">Location ID</p>
-                  <p className="font-mono text-xs">{squareLocationId.substring(0, 20)}...</p>
-                </div>
-              )}
-              {squareConnectedAt && (
-                <div>
-                  <p className="text-muted-foreground">Connected Since</p>
-                  <p className="font-medium">
-                    {new Date(squareConnectedAt).toLocaleDateString()}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
-        <div className="flex flex-col sm:flex-row gap-2">
-          {!squareConnected ? (
-            <Button
-              onClick={handleConnect}
-              disabled={connecting || !squareConfig?.configured}
-              className="flex items-center gap-2"
-            >
-              <CreditCard className="w-4 h-4" />
-              {connecting ? 'Connecting...' : 'Connect Square Account'}
-            </Button>
-          ) : (
-            <>
-              <Button
-                onClick={handleRefreshToken}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Refresh Token
-              </Button>
               <Button
                 onClick={handleDisconnect}
                 variant="destructive"
-                disabled={disconnecting}
-                className="flex items-center gap-2"
+                disabled={isDisconnecting}
+                className="w-full"
               >
-                <XCircle className="w-4 h-4" />
-                {disconnecting ? 'Disconnecting...' : 'Disconnect'}
+                {isDisconnecting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Disconnecting...
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="w-4 h-4 mr-2" />
+                    Disconnect Square Account
+                  </>
+                )}
               </Button>
+            </div>
+          ) : (
+            <>
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-blue-900">Don&apos;t have a Square account?</h4>
+                    <p className="text-sm text-blue-700">
+                      Sign up for Square to start accepting credit card payments with competitive rates and next-day deposits.
+                    </p>
+                    <a
+                      href="https://squareup.com/signup?v=developers&country=US&language=en"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 underline"
+                    >
+                      Create Square Account
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="accessToken">Square Access Token</Label>
+                  <Input
+                    id="accessToken"
+                    type="password"
+                    placeholder="EAAAxxxxxxxxxxxxxx"
+                    value={accessToken}
+                    onChange={(e) => setAccessToken(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Get this from your Square Developer Dashboard → Applications → Your App → Credentials
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="locationId">Square Location ID</Label>
+                  <Input
+                    id="locationId"
+                    placeholder="LXXXXXXXXXXXXXXX"
+                    value={locationId}
+                    onChange={(e) => setLocationId(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Find this in Square Dashboard → Account & Settings → Locations
+                  </p>
+                </div>
+
+                <Button
+                  onClick={handleConnect}
+                  disabled={!accessToken || !locationId || isConnecting}
+                  className="w-full"
+                >
+                  {isConnecting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Connecting...
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="w-4 h-4 mr-2" />
+                      Connect Square Account
+                    </>
+                  )}
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gray-50 border rounded-lg">
+                <h4 className="font-medium text-gray-900 mb-2">Setup Instructions:</h4>
+                <ol className="text-sm text-gray-700 space-y-1 list-decimal list-inside">
+                  <li>Create a Square Developer account at <a href="https://developer.squareup.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">developer.squareup.com</a></li>
+                  <li>Create a new application in your Square Developer Dashboard</li>
+                  <li>Copy your Access Token from the Credentials tab</li>
+                  <li>Get your Location ID from your Square main dashboard</li>
+                  <li>Paste both values above and click Connect</li>
+                </ol>
+              </div>
             </>
           )}
-        </div>
 
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-900 font-medium mb-1">
-            How Square Payments Work
-          </p>
-          <ul className="text-xs text-blue-800 space-y-1 list-disc list-inside">
-            <li>Connect your Square account to enable payment links</li>
-            <li>When you send a quote, customers receive a secure payment link</li>
-            <li>Payments are processed directly through your Square account</li>
-            <li>You manage refunds and transactions in your Square Dashboard</li>
-          </ul>
-          <a
-            href="https://developer.squareup.com/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 mt-2"
-          >
-            Learn more about Square integration
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-
-        {!squareConnected && (
-          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-xs text-yellow-900">
-              <strong>Note:</strong> You&apos;ll need a Square account to accept payments.
-              {' '}
-              <a
-                href="https://squareup.com/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-yellow-700"
-              >
-                Sign up for free
-              </a>
-              {' '}
-              if you don&apos;t have one yet.
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-900 font-medium mb-1">
+              How Square Payments Work
             </p>
+            <ul className="text-xs text-blue-800 space-y-1 list-disc list-inside">
+              <li>Connect your Square account using your API credentials</li>
+              <li>When you send a quote, customers can pay directly through Square</li>
+              <li>Payments are processed securely through your Square account</li>
+              <li>You manage refunds and transactions in your Square Dashboard</li>
+            </ul>
           </div>
-        )}
-      </CardContent>
+        </CardContent>
+      )}
     </Card>
   );
 }
