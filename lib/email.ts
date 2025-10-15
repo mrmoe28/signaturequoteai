@@ -13,6 +13,7 @@ export interface EmailQuoteData {
   total: number;
   validUntil?: string | null;
   pdfBuffer?: Buffer;
+  userId?: string; // User ID for Square OAuth
   items?: Array<{
     name: string;
     quantity: number;
@@ -34,6 +35,7 @@ export async function sendQuoteEmail(data: EmailQuoteData) {
       total: data.total,
       validUntil: data.validUntil,
       pdfBuffer: data.pdfBuffer,
+      userId: data.userId, // Pass userId for Square OAuth
       items: data.items,
     };
 

@@ -19,6 +19,7 @@ export async function middleware(request: NextRequest) {
     '/auth/sign-up',
     '/auth/forgot-password',
     '/auth/error',
+    '/payment-error', // Allow unauthenticated access to payment error page
   ];
 
   const isPublicRoute = publicRoutes.includes(pathname);

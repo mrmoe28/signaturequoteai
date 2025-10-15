@@ -1,11 +1,10 @@
 import nodemailer from 'nodemailer';
 import { createLogger } from './logger';
 import {
-  createSquarePaymentLink,
   createPlaceholderPaymentLink,
-  isSquareConfigured,
   type PaymentLinkData,
 } from './square-client';
+import { createUserSquarePaymentLink } from './square-user-client';
 
 const logger = createLogger('simple-email-service');
 
@@ -18,6 +17,7 @@ export interface SimpleEmailData {
   total: number;
   validUntil?: string | null;
   pdfBuffer?: Buffer;
+  userId?: string; // User ID for Square OAuth
   items?: Array<{
     name: string;
     quantity: number;
@@ -116,11 +116,11 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
 }
 
 async function generateSquarePaymentLink(data: SimpleEmailData): Promise<string> {
-  // Check if Square is properly configured
-  if (!isSquareConfigured()) {
+  // If no userId provided, use placeholder
+  if (!data.userId) {
     logger.warn(
       { quoteId: data.quoteId },
-      'Square not configured - using placeholder payment link'
+      'No userId provided - using placeholder payment link'
     );
     return createPlaceholderPaymentLink({
       quoteId: data.quoteId,
@@ -133,8 +133,8 @@ async function generateSquarePaymentLink(data: SimpleEmailData): Promise<string>
   }
 
   try {
-    // Create a real Square payment link
-    const paymentUrl = await createSquarePaymentLink({
+    // Create a real Square payment link using user's OAuth tokens
+    const paymentUrl = await createUserSquarePaymentLink(data.userId, {
       quoteId: data.quoteId,
       quoteNumber: data.quoteNumber || undefined,
       customerName: data.customerName,
@@ -147,8 +147,8 @@ async function generateSquarePaymentLink(data: SimpleEmailData): Promise<string>
     return paymentUrl;
   } catch (error) {
     logger.error(
-      { error, quoteId: data.quoteId },
-      'Failed to create Square payment link, falling back to placeholder'
+      { error, quoteId: data.quoteId, userId: data.userId },
+      'Failed to create user Square payment link, falling back to placeholder'
     );
 
     // Fall back to placeholder if Square API fails

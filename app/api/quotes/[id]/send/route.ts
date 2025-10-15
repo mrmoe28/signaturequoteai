@@ -3,6 +3,7 @@ import { createLogger } from '@/lib/logger';
 import { getQuoteById, updateQuoteStatus } from '@/lib/db/queries';
 import { sendQuoteEmail, EmailQuoteData } from '@/lib/email';
 import { generateQuotePDF } from '@/lib/pdf-generator';
+import { stackServerApp } from '@/stack/server';
 
 const logger = createLogger('api-quotes-send');
 
@@ -10,6 +11,14 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Get authenticated user
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
   try {
     const quoteId = params.id;
     
@@ -67,6 +76,7 @@ export async function POST(
       total: typeof quote.total === 'string' ? parseFloat(quote.total) : quote.total,
       validUntil: quote.validUntil,
       pdfBuffer,
+      userId: user.id, // Pass user ID for Square OAuth payment link generation
       items: quote.items.map(item => ({
         name: item.name,
         quantity: typeof item.quantity === 'string' ? parseFloat(item.quantity) : Number(item.quantity),
