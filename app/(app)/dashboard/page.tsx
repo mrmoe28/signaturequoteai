@@ -13,22 +13,34 @@ type ViewMode = 'table' | 'list';
 export default function Dashboard() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [viewMode, setViewMode] = useState<ViewMode>('table');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchQuotes = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/quotes');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data?.items) {
+          setQuotes(result.data.items);
+        } else {
+          setError('Failed to load quotes. Please try again.');
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.error || `Server error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error fetching quotes:', error);
+      setError('Unable to connect to the database. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchQuotes = async () => {
-      try {
-        const response = await fetch('/api/quotes');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.data?.items) {
-            setQuotes(result.data.items);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching quotes:', error);
-      }
-    };
-
     fetchQuotes();
   }, []);
 
@@ -143,7 +155,24 @@ export default function Dashboard() {
           </div>
         </CardHeader>
         <CardContent>
-          {quotes.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-primary" role="status">
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-4">Loading quotes...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <XCircle className="h-12 w-12 mx-auto mb-4 text-destructive opacity-80" />
+              <p className="text-lg mb-2 font-semibold text-destructive">Error Loading Quotes</p>
+              <p className="text-sm text-muted-foreground mb-4">{error}</p>
+              <Button onClick={fetchQuotes} variant="outline" size="sm">
+                <Clock className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
+            </div>
+          ) : quotes.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p className="text-lg mb-2">No quotes yet</p>

@@ -18,7 +18,9 @@ import {
   X,
   Pencil,
   Trash2,
-  FileText
+  FileText,
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
 
 interface Customer {
@@ -41,6 +43,7 @@ interface Customer {
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
@@ -63,6 +66,7 @@ export default function CustomersPage() {
 
   const fetchCustomers = async (search?: string) => {
     setLoading(true);
+    setError(null);
     try {
       const url = search
         ? `/api/customers?search=${encodeURIComponent(search)}`
@@ -72,9 +76,13 @@ export default function CustomersPage() {
       if (response.ok) {
         const result = await response.json();
         setCustomers(result.data?.customers || []);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.error || `Server error: ${response.status}`);
       }
     } catch (error) {
       console.error('Failed to fetch customers:', error);
+      setError('Unable to connect to the database. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -379,7 +387,22 @@ export default function CustomersPage() {
         </CardHeader>
         <CardContent>
           {loading ? (
-            <div className="text-center py-8">Loading customers...</div>
+            <div className="text-center py-12">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-primary" role="status">
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-4">Loading customers...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <AlertCircle className="h-12 w-12 mx-auto mb-4 text-destructive opacity-80" />
+              <p className="text-lg mb-2 font-semibold text-destructive">Error Loading Customers</p>
+              <p className="text-sm text-muted-foreground mb-4">{error}</p>
+              <Button onClick={() => fetchCustomers()} variant="outline" size="sm">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
+            </div>
           ) : customers.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />

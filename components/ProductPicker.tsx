@@ -6,6 +6,7 @@ import { money } from '@/lib/formatting';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Card, CardContent } from './ui/Card';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 interface ProductPickerProps {
   onAdd: (p: Product) => void;
@@ -19,7 +20,7 @@ export default function ProductPicker({ onAdd, addedProducts = new Set() }: Prod
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
-  useEffect(() => {
+  const fetchProducts = () => {
     setLoading(true);
     setError(null);
 
@@ -36,9 +37,13 @@ export default function ProductPicker({ onAdd, addedProducts = new Set() }: Prod
       })
       .catch(err => {
         console.error('Failed to fetch products:', err);
-        setError('Failed to load products');
+        setError('Unable to connect to the database. Please check your connection.');
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
   
   // Function to categorize products based on their names
@@ -112,8 +117,14 @@ export default function ProductPicker({ onAdd, addedProducts = new Set() }: Prod
         )}
         
         {error && (
-          <div className="text-center py-12 text-destructive">
-            {error}
+          <div className="text-center py-12">
+            <AlertCircle className="h-12 w-12 mx-auto mb-4 text-destructive opacity-80" />
+            <p className="text-lg mb-2 font-semibold text-destructive">Error Loading Products</p>
+            <p className="text-sm text-muted-foreground mb-4">{error}</p>
+            <Button onClick={fetchProducts} variant="outline" size="sm">
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Retry
+            </Button>
           </div>
         )}
         
