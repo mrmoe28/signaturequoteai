@@ -165,10 +165,21 @@ export const users = pgTable('users', {
   lastLoginAt: timestamp('last_login_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+
+  // Square Integration fields
+  squareMerchantId: text('square_merchant_id'),
+  squareAccessToken: text('square_access_token'),
+  squareRefreshToken: text('square_refresh_token'),
+  squareTokenExpiresAt: timestamp('square_token_expires_at'),
+  squareLocationId: text('square_location_id'),
+  squareEnvironment: text('square_environment').default('sandbox'),
+  squareConnectedAt: timestamp('square_connected_at'),
+  squareScopes: text('square_scopes'), // JSON array
 }, (table) => ({
   emailIndex: index('users_email_idx').on(table.email),
   roleIndex: index('users_role_idx').on(table.role),
   isActiveIndex: index('users_is_active_idx').on(table.isActive),
+  squareMerchantIdIndex: index('users_square_merchant_id_idx').on(table.squareMerchantId),
 }));
 
 export const sessions = pgTable('sessions', {

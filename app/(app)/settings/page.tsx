@@ -6,8 +6,13 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Settings, Save, Bell, Shield, Palette, Globe } from 'lucide-react';
+import { SquareIntegration } from '@/components/settings/SquareIntegration';
+import { useUser } from '@stackframe/stack';
+
+
 
 export default function SettingsPage() {
+  const user = useUser({ or: 'redirect' });
   const [settings, setSettings] = useState({
     // Notification Settings
     emailNotifications: true,
@@ -278,6 +283,16 @@ export default function SettingsPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Square Integration */}
+      <SquareIntegration
+        userId={user.id}
+        squareConnected={false}
+        squareMerchantId={null}
+        squareLocationId={null}
+        squareEnvironment="sandbox"
+        squareConnectedAt={null}
+      />
 
       <div className="flex justify-end">
         <Button
