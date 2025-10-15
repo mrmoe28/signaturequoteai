@@ -3,16 +3,19 @@ import type { LogLevel, LogContext } from './types';
 
 const logLevel = (process.env.LOG_LEVEL as LogLevel) || 'info';
 
-// Use simpler logger configuration to prevent worker crashes in development
+// Disable worker threads to prevent crashes in Next.js environment
+// Use synchronous logging with direct stdout writes
 export const logger = pino({
   level: logLevel,
+  // Disable transport/worker threads completely
+  transport: undefined,
   browser: {
     asObject: true,
   },
   formatters: {
     level: (label) => ({ level: label }),
   },
-});
+}, pino.destination({ sync: true })); // Force synchronous writes
 
 export function createLogger(component: string) {
   return logger.child({ component });
