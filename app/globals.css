@@ -80,3 +80,16 @@
 .table { @apply w-full border-collapse; }
 .table th, .table td { @apply border-b border-border p-2.5 text-left; }
 /* Removed custom .grid class to avoid Tailwind circular dependency with @apply */
+
+/* Hide Stack Auth "last used" badge and indicators */
+/* Policy: Users should explicitly choose login method each time, not have it remembered */
+[class*="last"][class*="badge"],
+[class*="Last"][class*="Badge"],
+button[class*="last"]:not([class*="lastname"]):not([class*="Last Name"]),
+div[class*="last-used"],
+span[class*="last-used"],
+.stack-last-badge,
+[data-last-used="true"] {
+  display: none !important;
+  visibility: hidden !important;
+}

@@ -144,6 +144,38 @@ useEffect(() => {
 
 **Remember**: If a user can change it, save it, or it varies per user/tenant → fetch from database!
 
+## Pre-Commit Verification Checklist (MANDATORY)
+
+**CRITICAL: Run these checks BEFORE every commit:**
+
+### 1. Check for Hardcoded Settings
+```bash
+# Search for hardcoded values in pages
+grep -rn "useState({" app/ components/ | grep -v "node_modules"
+grep -rn "= true\|= false\|= '\|= \"" app/ components/ | grep "default\|initial"
+```
+
+### 2. Verify Database Schema
+```bash
+# Check for hardcoded defaults in schema
+grep -n "\.default(" lib/db/schema.ts
+```
+
+### 3. Verify Environment Variables
+```bash
+# Check all env vars are set correctly
+vercel env ls production | grep SQUARE
+vercel env ls production | grep AUTH
+```
+
+### 4. Check for Session Persistence
+- ❌ NO "Remember me" checkboxes
+- ❌ NO "Keep me signed in" features
+- ❌ NO storing last login methods
+- ✅ Users should explicitly choose login method each time
+
+**If any of these checks fail → Fix before committing!**
+
 ## TypeScript Safety Protocol (MANDATORY)
 
 **CRITICAL RULE: Never consider a task complete until `npm run build` passes with 0 TypeScript errors.**
