@@ -97,7 +97,7 @@ async function refreshSquareToken(
   environment: string
 ): Promise<boolean> {
   try {
-    const tokenUrl = `https://${environment === 'production' ? 'connect' : 'connect.squareupsandbox'}.squareup.com/oauth2/token`;
+    const tokenUrl = `https://${environment.trim().toLowerCase() === 'production' ? 'connect' : 'connect.squareupsandbox'}.squareup.com/oauth2/token`;
 
     const tokenResponse = await fetch(tokenUrl, {
       method: 'POST',
@@ -171,7 +171,7 @@ export async function createUserSquarePaymentLink(
     // Dynamic import of Square SDK
     const { SquareClient, SquareEnvironment } = await import('square');
 
-    const environment = credentials.environment === 'production'
+    const environment = credentials.environment.trim().toLowerCase() === 'production'
       ? SquareEnvironment.Production
       : SquareEnvironment.Sandbox;
 

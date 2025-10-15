@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     const userId = state;
 
     // Exchange authorization code for access token
-    const squareEnvironment = process.env.SQUARE_ENVIRONMENT || 'sandbox';
+    const squareEnvironment = (process.env.SQUARE_ENVIRONMENT || 'sandbox').trim().toLowerCase();
     const tokenUrl = `https://${squareEnvironment === 'production' ? 'connect' : 'connect.squareupsandbox'}.squareup.com/oauth2/token`;
 
     const tokenResponse = await fetch(tokenUrl, {
