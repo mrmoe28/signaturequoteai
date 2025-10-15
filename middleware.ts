@@ -1,14 +1,11 @@
-import { stackServerApp } from "./stack/server";
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from './lib/db';
-import { users } from './lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { getUser } from './lib/auth';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Always allow API routes and handler routes (Stack Auth uses these)
-  if (pathname.startsWith('/api') || pathname.startsWith('/handler')) {
+  // Always allow API routes
+  if (pathname.startsWith('/api')) {
     return NextResponse.next();
   }
 
@@ -19,61 +16,20 @@ export async function middleware(request: NextRequest) {
     '/auth/sign-up',
     '/auth/forgot-password',
     '/auth/error',
-    '/payment-error', // Allow unauthenticated access to payment error page
+    '/payment-error',
   ];
 
   const isPublicRoute = publicRoutes.includes(pathname);
 
-  // Check authentication using Stack Auth
-  let user;
-  try {
-    user = await stackServerApp.getUser();
-  } catch (error) {
-    console.error('[Middleware] Error getting user:', error);
-    // If there's an error getting the user, allow the request through
-    // This prevents infinite redirect loops during auth flow
-    return NextResponse.next();
-  }
+  // Check authentication
+  const user = await getUser();
 
   console.log(`[Middleware] Path: ${pathname}, User: ${user ? user.id : 'null'}`);
 
-  // If authenticated, sync user to local database (do this first, before any redirects)
-  if (user) {
-    try {
-      // Check if user exists in local database
-      const existingUser = await db
-        .select({ id: users.id })
-        .from(users)
-        .where(eq(users.id, user.id))
-        .limit(1);
-
-      // If user doesn't exist, create them
-      if (existingUser.length === 0) {
-        await db.insert(users).values({
-          id: user.id,
-          email: user.primaryEmail || `${user.id}@stack-auth.temp`,
-          name: user.displayName || null,
-          emailVerified: user.primaryEmailVerified ? new Date() : null,
-          firstName: user.clientMetadata?.firstName as string || null,
-          lastName: user.clientMetadata?.lastName as string || null,
-          role: 'user',
-          isActive: 'true',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
-        console.log(`[Middleware] Created new user in database: ${user.id}`);
-      }
-    } catch (error) {
-      console.error('[Middleware] Error syncing user to database:', error);
-      // Continue anyway - don't block the request
-    }
-
-    // If authenticated and trying to access auth pages, redirect to dashboard
-    // Note: We allow '/' (landing page) for authenticated users in case they want to see marketing content
-    if (pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up')) {
-      console.log(`[Middleware] Redirecting authenticated user from ${pathname} to /dashboard`);
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
+  // If authenticated and trying to access auth pages, redirect to dashboard
+  if (user && (pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up'))) {
+    console.log(`[Middleware] Redirecting authenticated user from ${pathname} to /dashboard`);
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
   // If not authenticated and trying to access protected route, redirect to sign-in
