@@ -7,6 +7,11 @@ import { eq } from 'drizzle-orm';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Always allow API routes and handler routes (Stack Auth uses these)
+  if (pathname.startsWith('/api') || pathname.startsWith('/handler')) {
+    return NextResponse.next();
+  }
+
   // Public routes that don't require authentication
   const publicRoutes = [
     '/',
@@ -14,30 +19,22 @@ export async function middleware(request: NextRequest) {
     '/auth/sign-up',
     '/auth/forgot-password',
     '/auth/error',
-    '/handler/sign-in',
-    '/handler/sign-up',
   ];
 
-  const isPublicRoute = publicRoutes.some(
-    (route) => pathname === route || pathname.startsWith('/api/auth') || pathname.startsWith('/handler')
-  );
+  const isPublicRoute = publicRoutes.includes(pathname);
 
-  // Allow access to API routes and public routes
-  if (pathname.startsWith('/api') || isPublicRoute) {
+  // Check authentication using Stack Auth
+  let user;
+  try {
+    user = await stackServerApp.getUser();
+  } catch (error) {
+    console.error('[Middleware] Error getting user:', error);
+    // If there's an error getting the user, allow the request through
+    // This prevents infinite redirect loops during auth flow
     return NextResponse.next();
   }
 
-  // Check authentication using Stack Auth
-  const user = await stackServerApp.getUser();
-
-  // If not authenticated and trying to access protected route, redirect to sign-in
-  if (!user && !isPublicRoute) {
-    const signInUrl = new URL('/auth/sign-in', request.url);
-    signInUrl.searchParams.set('redirectUrl', pathname);
-    return NextResponse.redirect(signInUrl);
-  }
-
-  // If authenticated, sync user to local database
+  // If authenticated, sync user to local database (do this first, before any redirects)
   if (user) {
     try {
       // Check if user exists in local database
@@ -67,11 +64,18 @@ export async function middleware(request: NextRequest) {
       console.error('[Middleware] Error syncing user to database:', error);
       // Continue anyway - don't block the request
     }
+
+    // If authenticated and trying to access auth pages or landing page, redirect to dashboard
+    if (pathname === '/' || pathname.startsWith('/auth/')) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
   }
 
-  // If authenticated and trying to access auth pages or landing page, redirect to dashboard
-  if (user && (pathname === '/' || pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up'))) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // If not authenticated and trying to access protected route, redirect to sign-in
+  if (!user && !isPublicRoute) {
+    const signInUrl = new URL('/auth/sign-in', request.url);
+    signInUrl.searchParams.set('redirectUrl', pathname);
+    return NextResponse.redirect(signInUrl);
   }
 
   return NextResponse.next();
