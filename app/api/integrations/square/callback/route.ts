@@ -89,10 +89,12 @@ export async function GET(request: NextRequest) {
       defaultLocationId = mainLocation?.id || locationsData.locations?.[0]?.id;
     }
 
-    // Store Square credentials in database
+    // Store Square credentials in database (upsert: insert if not exists, update if exists)
     await db
-      .update(users)
-      .set({
+      .insert(users)
+      .values({
+        id: userId,
+        email: `user-${userId.substring(0, 8)}@stack-auth.temp`, // Temporary email, will be synced from Stack Auth
         squareMerchantId: merchant_id,
         squareAccessToken: access_token, // TODO: Encrypt this in production
         squareRefreshToken: refresh_token, // TODO: Encrypt this in production
@@ -102,7 +104,19 @@ export async function GET(request: NextRequest) {
         squareConnectedAt: new Date(),
         squareScopes: JSON.stringify(scope ? scope.split(' ') : []),
       })
-      .where(eq(users.id, userId));
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          squareMerchantId: merchant_id,
+          squareAccessToken: access_token,
+          squareRefreshToken: refresh_token,
+          squareTokenExpiresAt: new Date(expires_at),
+          squareLocationId: defaultLocationId,
+          squareEnvironment,
+          squareConnectedAt: new Date(),
+          squareScopes: JSON.stringify(scope ? scope.split(' ') : []),
+        },
+      });
 
     logger.info(
       { userId, merchantId: merchant_id },
