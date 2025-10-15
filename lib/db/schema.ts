@@ -175,11 +175,20 @@ export const users = pgTable('users', {
   squareEnvironment: text('square_environment'), // Set by OAuth, not defaulted
   squareConnectedAt: timestamp('square_connected_at'),
   squareScopes: text('square_scopes'), // JSON array
+
+  // Stripe Integration fields
+  stripeAccountId: text('stripe_account_id'),
+  stripeAccessToken: text('stripe_access_token'),
+  stripeRefreshToken: text('stripe_refresh_token'),
+  stripeTokenExpiresAt: timestamp('stripe_token_expires_at'),
+  stripeConnectedAt: timestamp('stripe_connected_at'),
+  stripeScopes: text('stripe_scopes'), // JSON array
 }, (table) => ({
   emailIndex: index('users_email_idx').on(table.email),
   roleIndex: index('users_role_idx').on(table.role),
   isActiveIndex: index('users_is_active_idx').on(table.isActive),
   squareMerchantIdIndex: index('users_square_merchant_id_idx').on(table.squareMerchantId),
+  stripeAccountIdIndex: index('users_stripe_account_id_idx').on(table.stripeAccountId),
 }));
 
 export const sessions = pgTable('sessions', {
