@@ -8,10 +8,10 @@ const logger = createLogger('api-user-square-status');
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const userId = params.id;
+    const { id: userId } = await params;
 
     if (!userId) {
       return NextResponse.json(
@@ -59,7 +59,8 @@ export async function GET(
     });
 
   } catch (error) {
-    logger.error({ error, userId: params.id }, 'Failed to fetch user Square status');
+    const { id: userId } = await params;
+    logger.error({ error, userId }, 'Failed to fetch user Square status');
     return NextResponse.json(
       { error: 'Failed to fetch Square status' },
       { status: 500 }
