@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Settings, Save, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { SquareIntegration } from '@/components/settings/SquareIntegration';
-import { StripeIntegration } from '@/components/settings/StripeIntegration';
 import { useUser } from '@stackframe/stack';
 
 interface UserSquareData {
@@ -18,20 +17,12 @@ interface UserSquareData {
   squareConnectedAt?: string | null;
 }
 
-interface UserStripeData {
-  stripeConnected: boolean;
-  stripeAccountId?: string | null;
-  stripeConnectedAt?: string | null;
-}
 
 export default function SettingsPage() {
   const user = useUser({ or: 'redirect' });
   const [squareData, setSquareData] = useState<UserSquareData | null>(null);
   const [loadingSquare, setLoadingSquare] = useState(true);
   const [showSquareSuccess, setShowSquareSuccess] = useState(false);
-  const [stripeData, setStripeData] = useState<UserStripeData | null>(null);
-  const [loadingStripe, setLoadingStripe] = useState(true);
-  const [showStripeSuccess, setShowStripeSuccess] = useState(false);
 
   // Fetch user's Square connection status
   useEffect(() => {
@@ -54,26 +45,6 @@ export default function SettingsPage() {
     }
   }, [user?.id]);
 
-  // Fetch user's Stripe connection status
-  useEffect(() => {
-    const fetchStripeData = async () => {
-      try {
-        const response = await fetch(`/api/users/${user.id}/stripe-status`);
-        if (response.ok) {
-          const data = await response.json();
-          setStripeData(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch Stripe data:', error);
-      } finally {
-        setLoadingStripe(false);
-      }
-    };
-
-    if (user?.id) {
-      fetchStripeData();
-    }
-  }, [user?.id]);
 
   // Refresh Square data when returning from OAuth
   useEffect(() => {
@@ -97,22 +68,6 @@ export default function SettingsPage() {
       window.history.replaceState({}, '', '/settings');
     }
 
-    if (success === 'stripe_connected' && user?.id) {
-      // Show success message
-      setShowStripeSuccess(true);
-      setTimeout(() => setShowStripeSuccess(false), 5000);
-
-      // Refetch Stripe data after successful connection
-      setLoadingStripe(true);
-      fetch(`/api/users/${user.id}/stripe-status`)
-        .then(res => res.json())
-        .then(data => setStripeData(data))
-        .catch(err => console.error('Failed to refresh Stripe data:', err))
-        .finally(() => setLoadingStripe(false));
-
-      // Clean up URL without reloading page
-      window.history.replaceState({}, '', '/settings');
-    }
   }, [user?.id]);
   const [settings, setSettings] = useState({
     // Notification Settings
@@ -186,28 +141,6 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {/* Success Message for Stripe Connection */}
-      {showStripeSuccess && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-          <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <p className="font-medium text-green-900">Stripe Account Connected!</p>
-            <p className="text-sm text-green-700">Your Stripe account has been successfully connected. You can now generate payment links in quotes.</p>
-          </div>
-          <button
-            onClick={() => setShowStripeSuccess(false)}
-            className="text-green-600 hover:text-green-800"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      )}
 
       {/* Notification Settings */}
       <Card>
@@ -440,16 +373,6 @@ export default function SettingsPage() {
           squareLocationId={squareData?.squareLocationId}
           squareEnvironment={squareData?.squareEnvironment}
           squareConnectedAt={squareData?.squareConnectedAt ? new Date(squareData.squareConnectedAt) : null}
-        />
-      )}
-
-      {/* Stripe Integration */}
-      {!loadingStripe && (
-        <StripeIntegration
-          userId={user.id}
-          stripeConnected={stripeData?.stripeConnected || false}
-          stripeAccountId={stripeData?.stripeAccountId}
-          stripeConnectedAt={stripeData?.stripeConnectedAt ? new Date(stripeData.stripeConnectedAt) : null}
         />
       )}
 
