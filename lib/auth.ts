@@ -45,12 +45,12 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
  */
 export async function createSession(userId: string): Promise<string> {
   const sessionToken = randomUUID();
-  const expires = new Date(Date.now() + SESSION_DURATION);
+  const expiresAt = new Date(Date.now() + SESSION_DURATION);
 
   await db.insert(sessions).values({
-    sessionToken,
+    token: sessionToken,
     userId,
-    expires,
+    expiresAt,
     createdAt: new Date(),
   });
 
@@ -59,7 +59,7 @@ export async function createSession(userId: string): Promise<string> {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    expires,
+    expires: expiresAt,
     path: '/',
   });
 
@@ -82,13 +82,13 @@ export async function getUser(): Promise<AuthUser | null> {
     const sessionData = await db
       .select({
         userId: sessions.userId,
-        expires: sessions.expires,
+        expiresAt: sessions.expiresAt,
       })
       .from(sessions)
       .where(
         and(
-          eq(sessions.sessionToken, sessionToken),
-          gt(sessions.expires, new Date())
+          eq(sessions.token, sessionToken),
+          gt(sessions.expiresAt, new Date())
         )
       )
       .limit(1);
@@ -150,7 +150,7 @@ export async function deleteSession(): Promise<void> {
     // Delete session from database
     await db
       .delete(sessions)
-      .where(eq(sessions.sessionToken, sessionToken));
+      .where(eq(sessions.token, sessionToken));
 
     // Delete session cookie
     cookieStore.delete(SESSION_COOKIE_NAME);
@@ -163,7 +163,7 @@ export async function deleteSession(): Promise<void> {
 export async function cleanupExpiredSessions(): Promise<void> {
   await db
     .delete(sessions)
-    .where(lt(sessions.expires, new Date()));
+    .where(lt(sessions.expiresAt, new Date()));
 }
 
 /**

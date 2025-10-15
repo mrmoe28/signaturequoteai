@@ -192,15 +192,17 @@ export const users = pgTable('users', {
 }));
 
 export const sessions = pgTable('sessions', {
-  sessionToken: text('session_token').primaryKey(), // Primary key for NextAuth
+  id: uuid('id').defaultRandom().primaryKey(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  expires: timestamp('expires').notNull(), // For NextAuth
+  token: text('token').notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
 }, (table) => ({
   userIdIndex: index('sessions_user_id_idx').on(table.userId),
-  expiresIndex: index('sessions_expires_idx').on(table.expires),
+  tokenIndex: index('sessions_token_idx').on(table.token),
+  expiresIndex: index('sessions_expires_at_idx').on(table.expiresAt),
 }));
 
 export const accounts = pgTable('accounts', {
