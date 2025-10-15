@@ -79,8 +79,15 @@ export function SquareIntegration({
         headers: { 'Content-Type': 'application/json' },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to disconnect Square account');
+        // Show the specific error message from the API
+        const errorMessage = data.error || 'Failed to disconnect Square account';
+        alert(errorMessage);
+        console.error('Disconnect error:', data);
+        setIsDisconnecting(false);
+        return;
       }
 
       alert('Square account disconnected successfully');
@@ -88,7 +95,7 @@ export function SquareIntegration({
       window.location.href = '/settings';
     } catch (error) {
       console.error('Error disconnecting Square:', error);
-      alert('Failed to disconnect Square account. Please try again.');
+      alert('Network error occurred. Please check your connection and try again.');
       setIsDisconnecting(false);
     }
   };
