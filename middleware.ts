@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from './lib/auth';
 
+// Use Node.js runtime for bcryptjs support
+export const runtime = 'nodejs';
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -19,7 +22,7 @@ export async function middleware(request: NextRequest) {
     '/payment-error',
   ];
 
-  // Allow Stack Auth handler routes (for password reset, OAuth callbacks, etc.)
+  // Allow handler routes
   if (pathname.startsWith('/handler')) {
     return NextResponse.next();
   }

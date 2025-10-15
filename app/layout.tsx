@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Providers } from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -16,9 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="bg-background text-foreground min-h-screen">
-        <Providers>
-          {children}
-        </Providers>
+        {children}
       </body>
     </html>
   );
