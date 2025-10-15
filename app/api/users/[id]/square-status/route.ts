@@ -48,8 +48,8 @@ export async function GET(
       });
     }
 
-    // Check if Square is connected (has access token and merchant ID)
-    const squareConnected = !!(user.squareAccessToken && user.squareMerchantId);
+    // Check if Square is connected (has access token and location ID)
+    const squareConnected = !!(user.squareAccessToken && user.squareLocationId);
 
     logger.info(
       { userId, squareConnected },
