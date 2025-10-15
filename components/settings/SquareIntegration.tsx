@@ -51,13 +51,11 @@ export function SquareIntegration({
 
       if (response.ok) {
         alert('Square account connected successfully!');
-        // Use router.refresh() and then reload to ensure fresh data
-        router.refresh();
-        setTimeout(() => {
-          window.location.href = '/settings?success=square_manual_connected';
-        }, 500);
+        // Force a full page reload to refresh all data (same as disconnect)
+        window.location.href = '/settings?success=square_manual_connected';
       } else {
         alert(data.error || 'Failed to connect Square account');
+        console.error('Connect error:', data);
         setIsConnecting(false);
       }
     } catch (error) {
