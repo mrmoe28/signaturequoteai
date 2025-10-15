@@ -273,3 +273,4 @@ git commit --no-verify -m "WIP: describe why override needed"
 - Future: `assets/` for brand assets, `ui/` for design mockups
 
 When implementing this project, always reference the detailed specifications in `docs/TLDR.md` for accurate requirements and data structures.
+- Add to memory. when i prompt:acp. add, commmit, push changes to github

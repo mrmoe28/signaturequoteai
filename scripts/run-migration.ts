@@ -1,40 +1,37 @@
 #!/usr/bin/env tsx
 
-import { config } from 'dotenv';
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
-import { Pool } from 'pg';
+/**
+ * Quick script to make first_name and last_name nullable
+ */
 
-config({ path: resolve(__dirname, '../.env.local') });
+import { neon } from '@neondatabase/serverless';
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  console.error('DATABASE_URL environment variable is not set');
+  process.exit(1);
+}
+
+const sql = neon(DATABASE_URL);
 
 async function runMigration() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  console.log('Running migration: Make first_name and last_name nullable\n');
 
   try {
-    const migrationSQL = readFileSync(
-      resolve(__dirname, '../lib/db/migrations/0005_yielding_power_man.sql'),
-      'utf-8'
-    );
+    // Make first_name nullable
+    await sql`ALTER TABLE "users" ALTER COLUMN "first_name" DROP NOT NULL`;
+    console.log('✅ Made first_name nullable');
 
-    // Split by statement breakpoint and execute each statement
-    const statements = migrationSQL
-      .split('--> statement-breakpoint')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
+    // Make last_name nullable
+    await sql`ALTER TABLE "users" ALTER COLUMN "last_name" DROP NOT NULL`;
+    console.log('✅ Made last_name nullable');
 
-    console.log(`Running ${statements.length} migration statements...`);
-
-    for (const statement of statements) {
-      console.log(`Executing: ${statement.substring(0, 80)}...`);
-      await pool.query(statement);
-    }
-
-    console.log('✅ Migration completed successfully!');
+    console.log('\n✅ Migration completed successfully!');
+    process.exit(0);
   } catch (error) {
     console.error('❌ Migration failed:', error);
-    throw error;
-  } finally {
-    await pool.end();
+    process.exit(1);
   }
 }
 

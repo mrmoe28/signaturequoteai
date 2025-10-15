@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -263,10 +264,13 @@ export default function AddProductModal({ onProductAdded }: AddProductModalProps
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
                       {imagePreviews.map((preview, index) => (
                         <div key={index} className="relative group">
-                          <img
+                          <Image
                             src={preview}
                             alt={`Preview ${index + 1}`}
+                            width={200}
+                            height={128}
                             className="w-full h-32 object-cover rounded-lg"
+                            unoptimized
                           />
                           <button
                             type="button"
