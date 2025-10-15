@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -25,6 +26,7 @@ export function SquareIntegration({
   squareEnvironment,
   squareConnectedAt
 }: SquareIntegrationProps) {
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(!squareConnected);
   const [accessToken, setAccessToken] = useState('');
   const [locationId, setLocationId] = useState('');
@@ -49,14 +51,18 @@ export function SquareIntegration({
 
       if (response.ok) {
         alert('Square account connected successfully!');
-        window.location.reload();
+        // Use router.refresh() and then reload to ensure fresh data
+        router.refresh();
+        setTimeout(() => {
+          window.location.href = '/settings?success=square_manual_connected';
+        }, 500);
       } else {
         alert(data.error || 'Failed to connect Square account');
+        setIsConnecting(false);
       }
     } catch (error) {
       console.error('Error connecting Square:', error);
       alert('Network error occurred. Please try again.');
-    } finally {
       setIsConnecting(false);
     }
   };
@@ -78,11 +84,13 @@ export function SquareIntegration({
       }
 
       alert('Square account disconnected successfully');
-      window.location.reload();
+      router.refresh();
+      setTimeout(() => {
+        window.location.href = '/settings';
+      }, 500);
     } catch (error) {
       console.error('Error disconnecting Square:', error);
       alert('Failed to disconnect Square account. Please try again.');
-    } finally {
       setIsDisconnecting(false);
     }
   };

@@ -80,7 +80,7 @@ export default function SettingsPage() {
     const params = new URLSearchParams(window.location.search);
     const success = params.get('success');
 
-    if (success === 'square_connected' && user?.id) {
+    if ((success === 'square_connected' || success === 'square_manual_connected') && user?.id) {
       // Show success message
       setShowSquareSuccess(true);
       setTimeout(() => setShowSquareSuccess(false), 5000);
