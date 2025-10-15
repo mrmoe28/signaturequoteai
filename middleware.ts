@@ -19,6 +19,11 @@ export async function middleware(request: NextRequest) {
     '/payment-error',
   ];
 
+  // Allow Stack Auth handler routes (for password reset, OAuth callbacks, etc.)
+  if (pathname.startsWith('/handler')) {
+    return NextResponse.next();
+  }
+
   const isPublicRoute = publicRoutes.includes(pathname);
 
   // Check authentication
