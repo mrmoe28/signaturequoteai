@@ -104,6 +104,46 @@ When implementing authentication and external services:
 - **State Management**: Use simple client store for quote building workflow
 - **Responsive Design**: All components must work across device sizes
 
+## ⚠️ NEVER HARDCODE PAGE SETTINGS (CRITICAL)
+
+**GOLDEN RULE: ALWAYS fetch user settings, preferences, and configuration data from the database or API - NEVER hardcode them in components.**
+
+### What NOT to Hardcode:
+- ❌ User preferences (theme, language, timezone)
+- ❌ Notification settings (email, quote notifications)
+- ❌ Security settings (2FA, session timeout)
+- ❌ Integration status (Square, payment connections)
+- ❌ Quote defaults (validity period, currency)
+- ❌ Any user-specific or tenant-specific configuration
+
+### What IS OK to Hardcode:
+- ✅ UI component defaults (button variants, sizes)
+- ✅ Placeholder images/text
+- ✅ Development fallbacks (`process.env.X || 'localhost'`)
+- ✅ Empty state defaults (`''`, `[]`, `0`)
+
+### Implementation Pattern:
+```typescript
+// ❌ BAD - Hardcoded
+const [settings, setSettings] = useState({
+  emailNotifications: true,
+  theme: 'light',
+});
+
+// ✅ GOOD - Fetched from API
+const [settings, setSettings] = useState<UserSettings | null>(null);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  fetch(`/api/users/${userId}/settings`)
+    .then(res => res.json())
+    .then(data => setSettings(data))
+    .finally(() => setLoading(false));
+}, [userId]);
+```
+
+**Remember**: If a user can change it, save it, or it varies per user/tenant → fetch from database!
+
 ## TypeScript Safety Protocol (MANDATORY)
 
 **CRITICAL RULE: Never consider a task complete until `npm run build` passes with 0 TypeScript errors.**
