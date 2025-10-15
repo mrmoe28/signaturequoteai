@@ -3,16 +3,12 @@ import type { LogLevel, LogContext } from './types';
 
 const logLevel = (process.env.LOG_LEVEL as LogLevel) || 'info';
 
+// Use simpler logger configuration to prevent worker crashes in development
 export const logger = pino({
   level: logLevel,
-  transport: process.env.NODE_ENV === 'development' ? {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-      translateTime: 'HH:MM:ss Z',
-      ignore: 'pid,hostname',
-    },
-  } : undefined,
+  browser: {
+    asObject: true,
+  },
   formatters: {
     level: (label) => ({ level: label }),
   },
