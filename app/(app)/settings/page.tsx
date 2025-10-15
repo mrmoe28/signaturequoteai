@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -9,10 +9,39 @@ import { Settings, Save, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { SquareIntegration } from '@/components/settings/SquareIntegration';
 import { useUser } from '@stackframe/stack';
 
-
+interface UserSquareData {
+  squareConnected: boolean;
+  squareMerchantId?: string | null;
+  squareLocationId?: string | null;
+  squareEnvironment?: string | null;
+  squareConnectedAt?: string | null;
+}
 
 export default function SettingsPage() {
   const user = useUser({ or: 'redirect' });
+  const [squareData, setSquareData] = useState<UserSquareData | null>(null);
+  const [loadingSquare, setLoadingSquare] = useState(true);
+
+  // Fetch user's Square connection status
+  useEffect(() => {
+    const fetchSquareData = async () => {
+      try {
+        const response = await fetch(`/api/users/${user.id}/square-status`);
+        if (response.ok) {
+          const data = await response.json();
+          setSquareData(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch Square data:', error);
+      } finally {
+        setLoadingSquare(false);
+      }
+    };
+
+    if (user?.id) {
+      fetchSquareData();
+    }
+  }, [user?.id]);
   const [settings, setSettings] = useState({
     // Notification Settings
     emailNotifications: true,
@@ -285,14 +314,16 @@ export default function SettingsPage() {
       </Card>
 
       {/* Square Integration */}
-      <SquareIntegration
-        userId={user.id}
-        squareConnected={false}
-        squareMerchantId={null}
-        squareLocationId={null}
-        squareEnvironment="sandbox"
-        squareConnectedAt={null}
-      />
+      {!loadingSquare && (
+        <SquareIntegration
+          userId={user.id}
+          squareConnected={squareData?.squareConnected || false}
+          squareMerchantId={squareData?.squareMerchantId}
+          squareLocationId={squareData?.squareLocationId}
+          squareEnvironment={squareData?.squareEnvironment}
+          squareConnectedAt={squareData?.squareConnectedAt ? new Date(squareData.squareConnectedAt) : null}
+        />
+      )}
 
       <div className="flex justify-end">
         <Button
