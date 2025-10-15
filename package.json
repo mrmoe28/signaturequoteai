@@ -11,7 +11,7 @@
     "dev:type-check": "tsc --noEmit",
     "dev:format": "prettier --write .",
     "dev:watch": "npm run build -- --watch",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
     "build:prod": "next build",
     "build:analyze": "npm run build && npx @next/bundle-analyzer",
     "build:check": "npm run build -- --dry-run",

@@ -613,6 +613,7 @@ export async function getQuotes(page = 1, limit = 20) {
     db
       .select()
       .from(quotes)
+      .leftJoin(customers, eq(quotes.customerId, customers.id))
       .orderBy(desc(quotes.createdAt))
       .limit(limit)
       .offset(offset),
@@ -623,7 +624,15 @@ export async function getQuotes(page = 1, limit = 20) {
   ]);
 
   return {
-    items: quoteList.map(transformQuote),
+    items: quoteList.map(result => ({
+      ...transformQuote(result.quotes),
+      customer: {
+        company: result.customers?.company || undefined,
+        name: result.customers?.name || '',
+        email: result.customers?.email || undefined,
+        phone: result.customers?.phone || undefined,
+      },
+    })),
     pagination: {
       page,
       limit,
