@@ -8,7 +8,7 @@
 import { cookies } from 'next/headers';
 import { db } from './db';
 import { users, sessions } from './db/schema';
-import { eq, and, gt } from 'drizzle-orm';
+import { eq, and, gt, lt } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
 
@@ -163,7 +163,7 @@ export async function deleteSession(): Promise<void> {
 export async function cleanupExpiredSessions(): Promise<void> {
   await db
     .delete(sessions)
-    .where(gt(new Date(), sessions.expires));
+    .where(lt(sessions.expires, new Date()));
 }
 
 /**
