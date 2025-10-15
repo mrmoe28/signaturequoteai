@@ -21,6 +21,7 @@ export default function SettingsPage() {
   const user = useUser({ or: 'redirect' });
   const [squareData, setSquareData] = useState<UserSquareData | null>(null);
   const [loadingSquare, setLoadingSquare] = useState(true);
+  const [showSquareSuccess, setShowSquareSuccess] = useState(false);
 
   // Fetch user's Square connection status
   useEffect(() => {
@@ -40,6 +41,29 @@ export default function SettingsPage() {
 
     if (user?.id) {
       fetchSquareData();
+    }
+  }, [user?.id]);
+
+  // Refresh Square data when returning from OAuth
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const success = params.get('success');
+
+    if (success === 'square_connected' && user?.id) {
+      // Show success message
+      setShowSquareSuccess(true);
+      setTimeout(() => setShowSquareSuccess(false), 5000);
+
+      // Refetch Square data after successful connection
+      setLoadingSquare(true);
+      fetch(`/api/users/${user.id}/square-status`)
+        .then(res => res.json())
+        .then(data => setSquareData(data))
+        .catch(err => console.error('Failed to refresh Square data:', err))
+        .finally(() => setLoadingSquare(false));
+
+      // Clean up URL without reloading page
+      window.history.replaceState({}, '', '/settings');
     }
   }, [user?.id]);
   const [settings, setSettings] = useState({
@@ -90,6 +114,29 @@ export default function SettingsPage() {
         <Settings className="w-8 h-8 text-primary" />
         <h1 className="text-3xl font-bold">Settings</h1>
       </div>
+
+      {/* Success Message for Square Connection */}
+      {showSquareSuccess && (
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+          <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <p className="font-medium text-green-900">Square Account Connected!</p>
+            <p className="text-sm text-green-700">Your Square account has been successfully connected. You can now generate payment links in quotes.</p>
+          </div>
+          <button
+            onClick={() => setShowSquareSuccess(false)}
+            className="text-green-600 hover:text-green-800"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
 
       {/* Notification Settings */}
       <Card>
