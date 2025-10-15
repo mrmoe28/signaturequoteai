@@ -34,6 +34,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  console.log(`[Middleware] Path: ${pathname}, User: ${user ? user.id : 'null'}`);
+
   // If authenticated, sync user to local database (do this first, before any redirects)
   if (user) {
     try {
@@ -65,8 +67,10 @@ export async function middleware(request: NextRequest) {
       // Continue anyway - don't block the request
     }
 
-    // If authenticated and trying to access auth pages or landing page, redirect to dashboard
-    if (pathname === '/' || pathname.startsWith('/auth/')) {
+    // If authenticated and trying to access auth pages, redirect to dashboard
+    // Note: We allow '/' (landing page) for authenticated users in case they want to see marketing content
+    if (pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up')) {
+      console.log(`[Middleware] Redirecting authenticated user from ${pathname} to /dashboard`);
       return NextResponse.redirect(new URL('/dashboard', request.url));
     }
   }
