@@ -614,12 +614,14 @@ export async function getQuotes(page = 1, limit = 20) {
       .select()
       .from(quotes)
       .leftJoin(customers, eq(quotes.customerId, customers.id))
+      .where(isNull(quotes.deletedAt)) // Only fetch non-deleted quotes
       .orderBy(desc(quotes.createdAt))
       .limit(limit)
       .offset(offset),
     db
       .select({ count: drizzleSql<number>`count(*)` })
       .from(quotes)
+      .where(isNull(quotes.deletedAt)) // Only count non-deleted quotes
       .then(result => result[0]?.count || 0)
   ]);
 
