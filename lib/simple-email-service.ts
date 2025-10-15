@@ -56,15 +56,23 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
     }
 
     // Use real SMTP with Gmail App Password
-    console.log(`Sending real quote email for quote ${data.quoteId} to ${data.customerEmail}`);
-    console.log(`SMTP Email: ${process.env.GOOGLE_CLIENT_EMAIL?.substring(0, 3)}***, Password length: ${process.env.GOOGLE_APP_PASSWORD?.length}`);
+    // Remove spaces from app password (Gmail displays them with spaces but they should work without)
+    const appPassword = process.env.GOOGLE_APP_PASSWORD?.replace(/\s/g, '') || '';
+    const fromEmail = process.env.SUPPORT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL || '';
+
+    logger.info({
+      quoteId: data.quoteId,
+      customerEmail: data.customerEmail,
+      fromEmail: fromEmail?.substring(0, 3) + '***',
+      passwordLength: appPassword.length
+    }, 'Sending quote email via Gmail SMTP');
 
     // Create transporter using Gmail SMTP
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.GOOGLE_CLIENT_EMAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
+        user: fromEmail,
+        pass: appPassword,
       },
     });
 
@@ -77,7 +85,7 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
       : '30 days from receipt';
 
     const mailOptions = {
-      from: `"Signature QuoteCrawler" <${process.env.GOOGLE_CLIENT_EMAIL}>`,
+      from: `"Signature QuoteCrawler" <${fromEmail}>`,
       to: data.customerEmail,
       subject: `Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment`,
       html: await generateQuoteEmailHTML(data, validUntilText),

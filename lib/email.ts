@@ -24,43 +24,27 @@ export interface EmailQuoteData {
 
 export async function sendQuoteEmail(data: EmailQuoteData) {
   try {
-    // Try SMTP first (more reliable), fallback to Gmail API if it fails
-    try {
-      const smtpData: SimpleEmailData = {
-        quoteId: data.quoteId,
-        quoteNumber: data.quoteNumber,
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerCompany: data.customerCompany,
-        total: data.total,
-        validUntil: data.validUntil,
-        pdfBuffer: data.pdfBuffer,
-        items: data.items,
-      };
+    // Use SMTP only (Gmail OAuth API requires domain-wide delegation which we don't have)
+    const smtpData: SimpleEmailData = {
+      quoteId: data.quoteId,
+      quoteNumber: data.quoteNumber,
+      customerName: data.customerName,
+      customerEmail: data.customerEmail,
+      customerCompany: data.customerCompany,
+      total: data.total,
+      validUntil: data.validUntil,
+      pdfBuffer: data.pdfBuffer,
+      items: data.items,
+    };
 
-      return await sendQuoteEmailSimple(smtpData);
-    } catch (smtpError) {
-      logger.warn({ error: smtpError, quoteId: data.quoteId }, 'SMTP failed, trying Gmail API fallback');
-
-      // Fallback to Gmail API
-      const gmailData: GmailQuoteData = {
-        quoteId: data.quoteId,
-        quoteNumber: data.quoteNumber,
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerCompany: data.customerCompany,
-        total: data.total,
-        validUntil: data.validUntil,
-        pdfBuffer: data.pdfBuffer,
-        items: data.items,
-      };
-
-      return await sendQuoteEmailGmail(gmailData);
-    }
+    return await sendQuoteEmailSimple(smtpData);
 
   } catch (error) {
-    logger.error({ error, quoteId: data.quoteId }, 'Error sending quote email');
-    throw error;
+    logger.error({ error, quoteId: data.quoteId }, 'Failed to send quote email via SMTP');
+
+    // Provide helpful error message
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to send email: ${errorMessage}. Please check Gmail SMTP credentials (GOOGLE_CLIENT_EMAIL and GOOGLE_APP_PASSWORD).`);
   }
 }
 
