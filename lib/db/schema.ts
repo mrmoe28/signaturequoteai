@@ -172,7 +172,7 @@ export const users = pgTable('users', {
   squareRefreshToken: text('square_refresh_token'),
   squareTokenExpiresAt: timestamp('square_token_expires_at'),
   squareLocationId: text('square_location_id'),
-  squareEnvironment: text('square_environment').default('sandbox'),
+  squareEnvironment: text('square_environment'), // Set by OAuth, not defaulted
   squareConnectedAt: timestamp('square_connected_at'),
   squareScopes: text('square_scopes'), // JSON array
 }, (table) => ({

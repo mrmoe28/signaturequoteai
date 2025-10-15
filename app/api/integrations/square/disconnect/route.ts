@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         squareRefreshToken: null,
         squareTokenExpiresAt: null,
         squareLocationId: null,
-        squareEnvironment: 'sandbox',
+        squareEnvironment: null,
         squareConnectedAt: null,
         squareScopes: null,
       })
