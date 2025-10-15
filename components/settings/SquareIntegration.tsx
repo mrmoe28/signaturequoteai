@@ -204,10 +204,14 @@ export function SquareIntegration({
                   <Label htmlFor="accessToken">Square Access Token</Label>
                   <Input
                     id="accessToken"
-                    type="password"
+                    type="text"
                     placeholder="EAAAxxxxxxxxxxxxxx"
                     value={accessToken}
                     onChange={(e) => setAccessToken(e.target.value)}
+                    autoComplete="off"
+                    data-1p-ignore
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                   <p className="text-xs text-muted-foreground">
                     Get this from your Square Developer Dashboard → Applications → Your App → Credentials
@@ -221,6 +225,10 @@ export function SquareIntegration({
                     placeholder="LXXXXXXXXXXXXXXX"
                     value={locationId}
                     onChange={(e) => setLocationId(e.target.value)}
+                    autoComplete="off"
+                    data-1p-ignore
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                   <p className="text-xs text-muted-foreground">
                     Find this in Square Dashboard → Account & Settings → Locations
