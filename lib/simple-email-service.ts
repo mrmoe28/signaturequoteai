@@ -144,6 +144,22 @@ async function generateSquarePaymentLink(data: SimpleEmailData): Promise<string>
       redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/quotes/${data.quoteId}/payment-success`,
     });
 
+    // If payment link creation failed, fall back to placeholder
+    if (!paymentUrl) {
+      logger.warn(
+        { quoteId: data.quoteId, userId: data.userId },
+        'Square payment link creation returned null, using placeholder'
+      );
+      return createPlaceholderPaymentLink({
+        quoteId: data.quoteId,
+        quoteNumber: data.quoteNumber || undefined,
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        amount: data.total,
+        description: `Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment`,
+      });
+    }
+
     return paymentUrl;
   } catch (error) {
     logger.error(
