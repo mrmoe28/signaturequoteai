@@ -36,10 +36,16 @@ export async function GET(
       .limit(1);
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
+      // User doesn't exist in database yet (e.g., Stack Auth user not synced)
+      // Return default "not connected" state instead of error
+      logger.info({ userId }, 'User not found in database, returning default not connected state');
+      return NextResponse.json({
+        squareConnected: false,
+        squareMerchantId: null,
+        squareLocationId: null,
+        squareEnvironment: null,
+        squareConnectedAt: null,
+      });
     }
 
     // Check if Square is connected (has access token and merchant ID)
