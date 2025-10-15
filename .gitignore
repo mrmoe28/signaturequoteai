@@ -44,3 +44,4 @@ signaturequoteai/
 .mcp/backups/
 .mcp/reports/
 dist/
+.env.vercel.production

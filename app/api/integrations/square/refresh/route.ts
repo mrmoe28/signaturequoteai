@@ -50,8 +50,8 @@ export async function POST(request: NextRequest) {
         'Square-Version': '2024-12-18',
       },
       body: JSON.stringify({
-        client_id: process.env.SQUARE_APPLICATION_ID,
-        client_secret: process.env.SQUARE_ACCESS_TOKEN,
+        client_id: process.env.NEXT_PUBLIC_SQUARE_APPLICATION_ID,
+        client_secret: process.env.SQUARE_CLIENT_SECRET,
         refresh_token: userRecord.squareRefreshToken,
         grant_type: 'refresh_token',
       }),
