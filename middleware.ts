@@ -69,8 +69,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // If authenticated and trying to access auth pages, redirect to dashboard
-  if (user && (pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up'))) {
+  // If authenticated and trying to access auth pages or landing page, redirect to dashboard
+  if (user && (pathname === '/' || pathname.startsWith('/auth/sign-in') || pathname.startsWith('/auth/sign-up'))) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
