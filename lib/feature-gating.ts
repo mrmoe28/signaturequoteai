@@ -62,7 +62,9 @@ export function hasFeatureAccess(
 ): boolean {
   // No subscription = Free plan
   if (!subscription) {
-    return false; // Free plan has no premium features
+    // Free plan has Square payment links enabled
+    const freeFeatures: FeatureName[] = ['square_payment_links'];
+    return freeFeatures.includes(feature);
   }
 
   const planSlug = subscription.plan.slug.toLowerCase();
@@ -85,7 +87,12 @@ export function hasFeatureAccess(
     return proFeatures.includes(feature);
   }
 
-  // Free plan has no premium features
+  // Free plan features
+  if (planSlug === 'free') {
+    const freeFeatures: FeatureName[] = ['square_payment_links'];
+    return freeFeatures.includes(feature);
+  }
+
   return false;
 }
 
@@ -203,7 +210,7 @@ export function getUpgradeMessage(
   if (feature) {
     const featureMessages: Record<FeatureName, string> = {
       unlimited_quotes: 'Upgrade to Pro for unlimited quotes',
-      square_payment_links: 'Upgrade to Pro to enable Square payment links in quotes',
+      square_payment_links: 'Square payment links are available on all plans',
       advanced_analytics: 'Upgrade to Pro to access advanced analytics and reporting',
       custom_branding: 'Upgrade to Pro to customize your quote branding',
       api_access: 'Upgrade to Pro to access the API',
@@ -217,9 +224,9 @@ export function getUpgradeMessage(
   if (metric) {
     const metricMessages: Record<UsageMetric, string> = {
       quotes: 'Upgrade to Pro for unlimited quotes',
-      products: 'Upgrade to Pro for up to 1,000 products',
+      products: 'Upgrade to Pro for access to all products in our catalog',
       emails: 'Upgrade to Pro for 500 emails per month',
-      users: 'Upgrade to Pro for up to 3 team members',
+      users: 'Upgrade to Pro for more team members',
       storage: 'Upgrade to Pro for 5GB of storage',
     };
     return metricMessages[metric];

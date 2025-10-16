@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createQuote, getQuotes } from '@/lib/db/queries';
 import { createLogger } from '@/lib/logger';
+import { checkQuoteLimit } from '@/lib/subscription-middleware';
 import type { Quote } from '@/lib/types';
 
 const logger = createLogger('api-quotes');
@@ -37,8 +38,30 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check quote limit before proceeding
+    const limitCheck = await checkQuoteLimit();
+
+    if (!limitCheck.allowed) {
+      logger.warn({
+        current: limitCheck.current,
+        limit: limitCheck.limit
+      }, 'Quote limit exceeded');
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Quote limit reached',
+          message: limitCheck.message || 'You have reached your quote limit. Upgrade to Pro for unlimited quotes.',
+          current: limitCheck.current,
+          limit: limitCheck.limit,
+          upgradeUrl: '/pricing',
+        },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
-    
+
     // Validate required fields
     if (!body.customer?.name) {
       return NextResponse.json(

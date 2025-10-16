@@ -59,7 +59,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       { name: 'Email quotes to customers', included: true },
       { name: 'PDF export', included: true },
       { name: 'Product catalog access', included: true },
-      { name: 'Square payment links', included: false },
+      { name: 'Square payment links', included: true },
       { name: 'Priority support', included: false },
       { name: 'Team collaboration', included: false },
       { name: 'Advanced analytics', included: false },
