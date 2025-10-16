@@ -25,6 +25,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <a href="/products" className="text-muted-foreground hover:text-foreground">Products</a>
                 <a href="/quotes/new" className="text-muted-foreground hover:text-foreground">New Quote</a>
                 <a href="/cart" className="text-muted-foreground hover:text-foreground">Cart</a>
+                <a href="/pricing" className="text-blue-600 hover:text-blue-700 font-medium">Upgrade</a>
               </nav>
               <ProfileDropdown />
             </div>
