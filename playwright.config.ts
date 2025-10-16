@@ -11,6 +11,7 @@ export default defineConfig({
     ['list']
   ],
   use: {
+    baseURL: 'https://signaturequoteai-main.vercel.app', // Production URL
     trace: 'on-first-retry',
     screenshot: 'on',
     video: 'retain-on-failure',
