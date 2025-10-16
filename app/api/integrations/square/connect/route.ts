@@ -53,10 +53,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Determine environment based on access token prefix
-    // Production tokens start with 'EAAA', sandbox tokens start with 'EAAAl' or other prefixes
-    const environment = accessToken.startsWith('EAAAl') ? 'sandbox' :
-                       accessToken.startsWith('EAAA') ? 'production' : 'sandbox';
+    // Use SQUARE_ENVIRONMENT from environment variables
+    // This is set in Vercel dashboard and should match the credentials being used
+    const environment = process.env.SQUARE_ENVIRONMENT || 'production';
 
     logger.info({ userId: user.id, environment }, 'Updating user with Square credentials');
 
