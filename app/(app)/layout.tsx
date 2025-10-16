@@ -3,14 +3,12 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
-import QuoteHistoryLeftSidebar from '@/components/QuoteHistoryLeftSidebar';
 import { SessionGuard } from '@/components/SessionGuard';
 import QuoteLimitBlocker from '@/components/QuoteLimitBlocker';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const showSidebar = pathname === '/dashboard';
   const [isBlocked, setIsBlocked] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -72,9 +70,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Session-only auth: logout when browser closes */}
       <SessionGuard />
 
-      {/* Left Sidebar - Only show on dashboard */}
-      {showSidebar && <QuoteHistoryLeftSidebar />}
-
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="border-b border-border bg-background">
@@ -83,6 +78,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-3 md:gap-6">
               <nav className="flex items-center gap-3 md:gap-6 text-xs md:text-sm">
                 <a href="/dashboard" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+                <a href="/quotes/history" className="text-muted-foreground hover:text-foreground">Quotes</a>
                 <a href="/products" className="text-muted-foreground hover:text-foreground">Products</a>
                 <a href="/customers" className="text-muted-foreground hover:text-foreground">Customers</a>
                 <a href="/quotes/new" className="text-muted-foreground hover:text-foreground">New Quote</a>
