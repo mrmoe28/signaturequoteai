@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { useInactivityTimeout } from '@/hooks/useInactivityTimeout';
 import {
   AlertDialog,
@@ -13,7 +13,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useUser } from '@stackframe/stack';
 
 interface InactivityLogoutProps {
   /**
@@ -37,18 +36,14 @@ export function InactivityLogout({
   timeoutMinutes = 30,
   warningMinutes = 2,
 }: InactivityLogoutProps) {
-  const router = useRouter();
-  const user = useUser();
+  const { user, signOut } = useAuth();
   const [showWarning, setShowWarning] = useState(false);
 
   const handleLogout = async () => {
     try {
-      await user?.signOut();
-      router.push('/auth/sign-in');
+      await signOut();
     } catch (error) {
       console.error('Logout error:', error);
-      // Force redirect even if logout fails
-      router.push('/auth/sign-in');
     }
   };
 

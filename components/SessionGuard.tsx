@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useUser } from '@stackframe/stack';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 
 /**
  * SessionGuard component that enforces session-only authentication
@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
  * B. New browser session after closing (localStorage exists but sessionStorage cleared → log out)
  */
 export function SessionGuard() {
-  const user = useUser();
+  const { user, signOut } = useAuth();
   const router = useRouter();
   const isLoggingOut = useRef(false);
   const hasInitialized = useRef(false);
@@ -29,15 +29,15 @@ export function SessionGuard() {
     if (!user) {
       // User not logged in, clear any leftover flags
       if (typeof window !== 'undefined') {
-        sessionStorage.removeItem('stack-session-active');
-        localStorage.removeItem('stack-has-session');
+        sessionStorage.removeItem('session-active');
+        localStorage.removeItem('has-session');
       }
       return;
     }
 
     // User is logged in, check session
-    const sessionKey = 'stack-session-active';
-    const persistentKey = 'stack-has-session';
+    const sessionKey = 'session-active';
+    const persistentKey = 'has-session';
 
     const hasSessionStorage = sessionStorage.getItem(sessionKey);
     const hasLocalStorage = localStorage.getItem(persistentKey);
@@ -53,12 +53,7 @@ export function SessionGuard() {
         localStorage.removeItem(persistentKey);
         sessionStorage.removeItem(sessionKey);
 
-        user.signOut().then(() => {
-          router.push('/auth/sign-in');
-        }).catch((error) => {
-          console.error('Error signing out:', error);
-          router.push('/auth/sign-in');
-        });
+        signOut();
       }
     } else {
       // Case A: Fresh sign-in OR continuing existing session
@@ -71,7 +66,7 @@ export function SessionGuard() {
       }
       hasInitialized.current = true;
     }
-  }, [user, router]);
+  }, [user, signOut, router]);
 
   return null;
 }

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Settings, Save, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { SquareIntegration } from '@/components/settings/SquareIntegration';
-import { useUser } from '@stackframe/stack';
+import { useAuth } from '@/hooks/useAuth';
 
 interface UserSquareData {
   squareConnected: boolean;
@@ -19,10 +20,18 @@ interface UserSquareData {
 
 
 export default function SettingsPage() {
-  const user = useUser({ or: 'redirect' });
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [squareData, setSquareData] = useState<UserSquareData | null>(null);
   const [loadingSquare, setLoadingSquare] = useState(true);
   const [showSquareSuccess, setShowSquareSuccess] = useState(false);
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/auth/sign-in');
+    }
+  }, [user, isLoading, router]);
 
   // Fetch user's Square connection status
   useEffect(() => {
@@ -110,6 +119,17 @@ export default function SettingsPage() {
   const updateSetting = (key: string, value: any) => {
     setSettings(prev => ({ ...prev, [key]: value }));
   };
+
+  // Show loading state while checking authentication
+  if (isLoading || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">

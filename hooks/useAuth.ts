@@ -1,24 +1,50 @@
 "use client";
 
-import { useStackApp, useUser } from "@stackframe/stack";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import type { AuthUser } from "@/lib/auth";
 
 /**
- * Custom hook for accessing Stack Auth functionality
- * Provides easy access to current user, auth status, and auth methods
+ * Custom hook for accessing authentication functionality
+ * Uses custom bcrypt authentication system
  */
 export function useAuth() {
-  const app = useStackApp();
-  const user = useUser();
+  const [user, setUser] = useState<AuthUser | null | undefined>(undefined);
   const router = useRouter();
 
+  useEffect(() => {
+    // Fetch current user from API
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const signOut = async () => {
-    await user?.signOut();
-    router.push('/auth/sign-in');
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      setUser(null);
+      router.push('/auth/sign-in');
+    } catch (error) {
+      console.error('Logout error:', error);
+      router.push('/auth/sign-in');
+    }
   };
 
   return {
-    // User object (null if not authenticated)
+    // User object (null if not authenticated, undefined if loading)
     user,
 
     // Boolean flags
@@ -29,8 +55,8 @@ export function useAuth() {
     signOut,
 
     // User properties (with null checks)
-    email: user?.primaryEmail || null,
-    displayName: user?.displayName || null,
+    email: user?.email || null,
+    displayName: user?.name || null,
     userId: user?.id || null,
   };
 }
