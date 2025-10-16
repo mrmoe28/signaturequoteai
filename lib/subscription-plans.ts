@@ -69,7 +69,6 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       products: 50, // Up to 50 products
       storage: '100MB',
       emails: 10,
-      users: 1,
     },
   },
   {
