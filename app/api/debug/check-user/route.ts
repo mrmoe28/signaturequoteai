@@ -3,20 +3,20 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { stackServerApp } from '@/stack/server';
+import { getUser } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get Stack Auth user
-    const stackUser = await stackServerApp.getUser();
+    // Get authenticated user
+    const authUser = await getUser();
 
-    if (!stackUser) {
+    if (!authUser) {
       return NextResponse.json({
-        error: 'Not authenticated with Stack Auth',
-        stackUser: null,
+        error: 'Not authenticated',
+        user: null,
         dbUser: null,
       });
     }
@@ -25,16 +25,16 @@ export async function GET(request: NextRequest) {
     const dbUsers = await db
       .select()
       .from(users)
-      .where(eq(users.id, stackUser.id))
+      .where(eq(users.id, authUser.id))
       .limit(1);
 
     const dbUser = dbUsers[0] || null;
 
     return NextResponse.json({
-      stackUser: {
-        id: stackUser.id,
-        email: stackUser.primaryEmail,
-        displayName: stackUser.displayName,
+      user: {
+        id: authUser.id,
+        email: authUser.email,
+        name: authUser.name,
       },
       dbUser: dbUser ? {
         id: dbUser.id,
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({
       error: String(error),
-      stackUser: null,
+      user: null,
       dbUser: null,
     }, { status: 500 });
   }

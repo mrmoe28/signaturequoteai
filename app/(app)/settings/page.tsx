@@ -37,7 +37,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const fetchSquareData = async () => {
       try {
-        const response = await fetch(`/api/users/${user.id}/square-status`);
+        const response = await fetch(`/api/users/${user?.id}/square-status`);
         if (response.ok) {
           const data = await response.json();
           setSquareData(data);

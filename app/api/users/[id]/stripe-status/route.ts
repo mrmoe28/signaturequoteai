@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { stackServerApp } from '@/stack/server';
+import { getUser } from '@/lib/auth';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('stripe-status');
@@ -19,7 +19,7 @@ export async function GET(
 ) {
   try {
     // Get authenticated user
-    const currentUser = await stackServerApp.getUser();
+    const currentUser = await getUser();
 
     if (!currentUser) {
       return NextResponse.json(

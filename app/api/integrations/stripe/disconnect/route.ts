@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { stackServerApp } from '@/stack/server';
+import { getUser } from '@/lib/auth';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('stripe-disconnect');
@@ -16,7 +16,7 @@ const logger = createLogger('stripe-disconnect');
 export async function POST(request: NextRequest) {
   try {
     // Get authenticated user
-    const user = await stackServerApp.getUser();
+    const user = await getUser();
 
     if (!user) {
       return NextResponse.json(

@@ -3,7 +3,7 @@ import { createLogger } from '@/lib/logger';
 import { getQuoteById, updateQuoteStatus } from '@/lib/db/queries';
 import { sendQuoteEmail, EmailQuoteData } from '@/lib/email';
 import { generateQuotePDF } from '@/lib/pdf-generator';
-import { stackServerApp } from '@/stack/server';
+import { getUser } from '@/lib/auth';
 
 const logger = createLogger('api-quotes-send');
 
@@ -12,7 +12,7 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   // Get authenticated user
-  const user = await stackServerApp.getUser();
+  const user = await getUser();
   if (!user) {
     return NextResponse.json(
       { success: false, error: 'Unauthorized' },

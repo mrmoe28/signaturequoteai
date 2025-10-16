@@ -9,14 +9,14 @@ import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { createLogger } from '@/lib/logger';
-import { stackServerApp } from '@/stack/server';
+import { getUser } from '@/lib/auth';
 
 const logger = createLogger('square-disconnect');
 
 export async function POST(request: NextRequest) {
   try {
     // Get current user from session
-    const user = await stackServerApp.getUser();
+    const user = await getUser();
 
     if (!user) {
       logger.warn('Disconnect attempt with no authenticated user');
