@@ -29,7 +29,6 @@ interface Plan {
 export default function PricingPage() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
-  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [subscribing, setSubscribing] = useState<string | null>(null);
 
   useEffect(() => {
@@ -103,31 +102,6 @@ export default function PricingPage() {
         </p>
       </div>
 
-      {/* Billing Toggle */}
-      <div className="flex items-center justify-center gap-4 mb-12">
-        <span className={billingPeriod === 'monthly' ? 'font-semibold' : 'text-gray-600'}>
-          Monthly
-        </span>
-        <button
-          onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
-          className={`
-            relative w-14 h-8 rounded-full transition-colors
-            ${billingPeriod === 'yearly' ? 'bg-blue-600' : 'bg-gray-300'}
-          `}
-        >
-          <span
-            className={`
-              absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform
-              ${billingPeriod === 'yearly' ? 'translate-x-6' : ''}
-            `}
-          />
-        </button>
-        <span className={billingPeriod === 'yearly' ? 'font-semibold' : 'text-gray-600'}>
-          Yearly
-          <span className="ml-2 text-sm text-green-600">(Save 20%)</span>
-        </span>
-      </div>
-
       {/* Pricing Cards */}
       <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {plans.filter(plan => plan.slug !== 'enterprise').map((plan) => (
@@ -162,7 +136,7 @@ export default function PricingPage() {
                   {formatPrice(plan.price, plan.currency)}
                 </span>
                 <span className="text-gray-600 text-lg">
-                  /{billingPeriod === 'monthly' ? 'month' : 'year'}
+                  /month
                 </span>
               </div>
             </div>
