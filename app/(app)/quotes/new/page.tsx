@@ -47,21 +47,16 @@ function NewQuoteContent() {
     fetchCompanySettings();
   }, []);
 
-  // Fetch current quote count for this billing period
+  // Fetch total quote count (all time for Free plan)
   useEffect(() => {
     const fetchQuoteCount = async () => {
       try {
         const response = await fetch('/api/quotes');
         if (response.ok) {
           const data = await response.json();
-          // Count quotes from current billing period (this month)
-          const now = new Date();
-          const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-          const quotesThisMonth = data.data?.quotes?.filter((q: any) => {
-            const createdAt = new Date(q.createdAt);
-            return createdAt >= currentMonthStart;
-          }) || [];
-          setCurrentQuoteCount(quotesThisMonth.length);
+          // Count ALL quotes for Free plan (total limit, not monthly)
+          const allQuotes = data.data?.quotes || [];
+          setCurrentQuoteCount(allQuotes.length);
         }
       } catch (error) {
         console.error('Failed to fetch quote count:', error);
@@ -443,8 +438,8 @@ function NewQuoteContent() {
               </p>
               <p className={`text-sm ${hasReachedLimit ? 'text-red-700' : 'text-yellow-700'}`}>
                 {hasReachedLimit
-                  ? `You've used all ${quoteLimit} quotes this month. Upgrade to Pro for unlimited quotes.`
-                  : `You've used ${currentQuoteCount} of ${quoteLimit} quotes this month. Upgrade to Pro for unlimited quotes.`
+                  ? `You've reached your limit of ${quoteLimit} quotes. Upgrade to Pro for unlimited quotes and Square payment links.`
+                  : `You've used ${currentQuoteCount} of ${quoteLimit} quotes. Upgrade to Pro for unlimited quotes and Square payment links.`
                 }
               </p>
               <Button
@@ -453,7 +448,7 @@ function NewQuoteContent() {
                 className="mt-2"
                 onClick={() => window.location.href = '/pricing'}
               >
-                View Plans
+                Upgrade to Pro
               </Button>
             </div>
           </div>
