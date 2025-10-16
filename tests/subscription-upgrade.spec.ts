@@ -149,8 +149,8 @@ test.describe('Subscription Upgrade Flow', () => {
       await page.screenshot({ path: 'test-results/upgrade-flow/08-checkout-page.png', fullPage: true });
 
       // Verify checkout page elements
-      const planSummary = page.locator('text=Plan Summary');
-      const paymentInfo = page.locator('text=Payment Information');
+      const planSummary = page.locator('text=Plan Summary').first();
+      const paymentInfo = page.locator('h2:has-text("Payment Information")').first();
 
       await expect(planSummary).toBeVisible();
       await expect(paymentInfo).toBeVisible();

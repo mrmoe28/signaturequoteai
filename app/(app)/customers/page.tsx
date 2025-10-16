@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Badge } from '@/components/ui/Badge';
+import Link from 'next/link';
 import {
   Users,
   UserPlus,
@@ -20,7 +21,8 @@ import {
   Trash2,
   FileText,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  Eye
 } from 'lucide-react';
 
 interface Customer {
@@ -425,7 +427,12 @@ export default function CustomersPage() {
                   {customers.map((customer) => (
                     <tr key={customer.id} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-medium">{customer.name}</div>
+                        <Link
+                          href={`/customers/${customer.id}`}
+                          className="font-medium text-primary hover:underline cursor-pointer"
+                        >
+                          {customer.name}
+                        </Link>
                       </td>
                       <td className="py-3 px-4">
                         {customer.company ? (
@@ -470,6 +477,16 @@ export default function CustomersPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center justify-end gap-2">
+                          <Link href={`/customers/${customer.id}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                              title="View customer"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </Link>
                           <Button
                             variant="ghost"
                             size="sm"
