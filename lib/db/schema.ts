@@ -162,6 +162,8 @@ export const users = pgTable('users', {
   lastName: text('last_name'),
   role: text('role').default('user').notNull(), // 'admin' | 'user'
   isActive: text('is_active').default('true').notNull(),
+  registrationIp: text('registration_ip'), // IP address used during registration
+  lastLoginIp: text('last_login_ip'), // IP address of last login
   lastLoginAt: timestamp('last_login_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),

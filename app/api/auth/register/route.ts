@@ -1,8 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createUser } from '@/lib/auth';
 import { createLogger } from '@/lib/logger';
+import { db } from '@/lib/db';
+import { users, quotes } from '@/lib/db/schema';
+import { eq, and, count } from 'drizzle-orm';
 
 const logger = createLogger('auth-register');
+
+function getClientIp(request: NextRequest): string {
+  // Try to get IP from various headers (in order of preference)
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+
+  const realIp = request.headers.get('x-real-ip');
+  if (realIp) {
+    return realIp;
+  }
+
+  const cfConnectingIp = request.headers.get('cf-connecting-ip'); // Cloudflare
+  if (cfConnectingIp) {
+    return cfConnectingIp;
+  }
+
+  return 'unknown';
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,13 +56,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user
+    // Get client IP address
+    const clientIp = getClientIp(request);
+    logger.info({ ip: clientIp }, 'Registration attempt from IP');
+
+    // Check if this IP already has blocked free accounts
+    if (clientIp !== 'unknown') {
+      const existingUsers = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.registrationIp, clientIp));
+
+      if (existingUsers.length > 0) {
+        // Check if any of these users have reached their quote limit
+        for (const user of existingUsers) {
+          const userQuotes = await db
+            .select({ count: count() })
+            .from(quotes)
+            .where(eq(quotes.id, user.id));
+
+          const quoteCount = userQuotes[0]?.count || 0;
+          if (quoteCount >= 5) {
+            logger.warn({ ip: clientIp }, 'Registration blocked: IP has existing account with 5+ quotes');
+            return NextResponse.json(
+              {
+                error: 'A free account from this device has reached its quota. Please upgrade your existing account or contact support.',
+              },
+              { status: 403 }
+            );
+          }
+        }
+      }
+    }
+
+    // Create user with IP address
     const result = await createUser({
       email,
       password,
       name,
       firstName,
       lastName,
+      registrationIp: clientIp,
     });
 
     if ('error' in result) {

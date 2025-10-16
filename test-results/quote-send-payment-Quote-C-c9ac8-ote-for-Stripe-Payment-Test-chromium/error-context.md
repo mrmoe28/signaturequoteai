@@ -1,0 +1,103 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - heading "Quote History" [level=2] [ref=e5]
+        - paragraph [ref=e6]: 2 quotes
+      - generic [ref=e8]:
+        - link "#1899754f Sent Edward Harrison EKO SOLAR.LLC Oct 16 $429 1 item" [ref=e9] [cursor=pointer]:
+          - /url: /quotes/1899754f-908f-4e20-ab8a-a7146bbe2cff
+          - generic [ref=e10]:
+            - button [ref=e11]:
+              - img
+            - generic [ref=e12]:
+              - generic [ref=e13]:
+                - img [ref=e14]
+                - generic [ref=e17]: "#1899754f"
+              - generic [ref=e18]: Sent
+            - generic [ref=e19]:
+              - paragraph [ref=e20]: Edward Harrison
+              - paragraph [ref=e21]: EKO SOLAR.LLC
+            - generic [ref=e22]:
+              - generic [ref=e23]: Oct 16
+              - generic [ref=e24]: $429
+            - paragraph [ref=e26]: 1 item
+        - link "#3ddb0cf5 Sent Edward Harrison EKO SOLAR.LLC Oct 15 $429 1 item" [ref=e27] [cursor=pointer]:
+          - /url: /quotes/3ddb0cf5-c120-4b46-9a98-2d53441dd0db
+          - generic [ref=e28]:
+            - button [ref=e29]:
+              - img
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - img [ref=e32]
+                - generic [ref=e35]: "#3ddb0cf5"
+              - generic [ref=e36]: Sent
+            - generic [ref=e37]:
+              - paragraph [ref=e38]: Edward Harrison
+              - paragraph [ref=e39]: EKO SOLAR.LLC
+            - generic [ref=e40]:
+              - generic [ref=e41]: Oct 15
+              - generic [ref=e42]: $429
+            - paragraph [ref=e44]: 1 item
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - generic [ref=e47]:
+          - link "Signature QuoteCrawler" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e49]:
+            - navigation [ref=e50]:
+              - link "Dashboard" [ref=e51] [cursor=pointer]:
+                - /url: /dashboard
+              - link "Products" [ref=e52] [cursor=pointer]:
+                - /url: /products
+              - link "New Quote" [ref=e53] [cursor=pointer]:
+                - /url: /quotes/new
+              - link "Cart" [ref=e54] [cursor=pointer]:
+                - /url: /cart
+              - link "Upgrade" [ref=e55] [cursor=pointer]:
+                - /url: /pricing
+            - button "Profile" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]:
+                - img
+              - generic [ref=e59]: Profile
+              - img
+      - main [ref=e60]:
+        - generic [ref=e61]:
+          - heading "New Quote" [level=1] [ref=e63]
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66] [cursor=pointer]: 1. Customer
+              - generic [ref=e67] [cursor=pointer]: 2. Items
+              - generic [ref=e68] [cursor=pointer]: 3. Pricing
+              - generic [ref=e69] [cursor=pointer]: 4. Preview & Send
+            - generic [ref=e71]:
+              - generic [ref=e73]: Customer Information
+              - generic [ref=e74]:
+                - generic [ref=e75]:
+                  - generic [ref=e76]: Company Name
+                  - textbox "Company Name" [ref=e77]:
+                    - /placeholder: Acme Corp
+                - generic [ref=e78]:
+                  - generic [ref=e79]: Contact Name
+                  - textbox "Contact Name" [ref=e80]:
+                    - /placeholder: John Smith
+                - generic [ref=e81]:
+                  - generic [ref=e82]: Email Address
+                  - textbox "Email Address" [ref=e83]:
+                    - /placeholder: john@acme.com
+                - generic [ref=e84]:
+                  - generic [ref=e85]: Phone Number
+                  - textbox "Phone Number" [ref=e86]:
+                    - /placeholder: (555) 123-4567
+                - generic [ref=e87]:
+                  - generic [ref=e88]: Shipping Address
+                  - textbox "Shipping Address" [ref=e89]:
+                    - /placeholder: Full shipping address including city, state, zip
+            - generic [ref=e90]:
+              - button "Back" [disabled]
+              - button "Next" [ref=e91] [cursor=pointer]
+  - alert [ref=e92]
+```

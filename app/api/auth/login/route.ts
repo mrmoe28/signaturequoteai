@@ -1,8 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyCredentials, createSession } from '@/lib/auth';
 import { createLogger } from '@/lib/logger';
+import { db } from '@/lib/db';
+import { users } from '@/lib/db/schema';
+import { eq } from 'drizzle-orm';
 
 const logger = createLogger('auth-login');
+
+function getClientIp(request: NextRequest): string {
+  // Try to get IP from various headers (in order of preference)
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+
+  const realIp = request.headers.get('x-real-ip');
+  if (realIp) {
+    return realIp;
+  }
+
+  const cfConnectingIp = request.headers.get('cf-connecting-ip'); // Cloudflare
+  if (cfConnectingIp) {
+    return cfConnectingIp;
+  }
+
+  return 'unknown';
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,6 +39,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Get client IP address
+    const clientIp = getClientIp(request);
+
     // Verify credentials
     const user = await verifyCredentials(email, password);
 
@@ -27,10 +53,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Update last login IP
+    if (clientIp !== 'unknown') {
+      await db
+        .update(users)
+        .set({ lastLoginIp: clientIp })
+        .where(eq(users.id, user.id));
+    }
+
     // Create session
     await createSession(user.id);
 
-    logger.info({ userId: user.id, email: user.email }, 'User logged in successfully');
+    logger.info({ userId: user.id, email: user.email, ip: clientIp }, 'User logged in successfully');
 
     return NextResponse.json({
       success: true,

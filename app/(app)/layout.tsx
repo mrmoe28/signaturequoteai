@@ -1,13 +1,71 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import QuoteHistoryLeftSidebar from '@/components/QuoteHistoryLeftSidebar';
 import { SessionGuard } from '@/components/SessionGuard';
+import QuoteLimitBlocker from '@/components/QuoteLimitBlocker';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const showSidebar = pathname === '/dashboard';
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkQuotaLimit();
+  }, []);
+
+  const checkQuotaLimit = async () => {
+    try {
+      // Check subscription status
+      const subResponse = await fetch('/api/subscriptions/me');
+      const subData = await subResponse.json();
+
+      // If user has Pro/Enterprise subscription, they're not blocked
+      if (subData.subscription && subData.subscription.plan.slug !== 'free') {
+        setIsBlocked(false);
+        setLoading(false);
+        return;
+      }
+
+      // For Free users, check quote count
+      const quotesResponse = await fetch('/api/quotes');
+      if (quotesResponse.ok) {
+        const quotesData = await quotesResponse.json();
+        const quoteCount = quotesData.data?.quotes?.length || 0;
+
+        // Block if they've reached the limit (5 quotes)
+        if (quoteCount >= 5) {
+          setIsBlocked(true);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to check quota:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpgrade = () => {
+    router.push('/pricing');
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent" />
+        </div>
+      </div>
+    );
+  }
+
+  if (isBlocked) {
+    return <QuoteLimitBlocker onUpgrade={handleUpgrade} />;
+  }
 
   return (
     <div className="flex h-screen">

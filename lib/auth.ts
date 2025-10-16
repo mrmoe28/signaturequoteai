@@ -237,6 +237,7 @@ export async function createUser(data: {
   name?: string;
   firstName?: string;
   lastName?: string;
+  registrationIp?: string;
 }): Promise<{ user: AuthUser; sessionToken: string } | { error: string }> {
   try {
     // Check if user already exists
@@ -266,6 +267,7 @@ export async function createUser(data: {
         role: 'user',
         isActive: 'true',
         emailVerified: new Date(), // Auto-verify for now
+        registrationIp: data.registrationIp || null,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
