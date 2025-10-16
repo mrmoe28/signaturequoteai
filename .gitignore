@@ -45,3 +45,4 @@ signaturequoteai/
 .mcp/reports/
 dist/
 .env.vercel.production
+.env.test

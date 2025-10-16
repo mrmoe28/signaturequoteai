@@ -1,0 +1,244 @@
+{
+  "timestamp": "2025-10-16T01:07:57.110Z",
+  "testUrl": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app",
+  "summary": {
+    "signInPageLoaded": true,
+    "loginAttempted": true,
+    "settingsPageLoaded": true,
+    "credentialsFilled": true,
+    "connectButtonClicked": true,
+    "apiRequestCaptured": true,
+    "apiResponseCaptured": true,
+    "connectionEstablished": false
+  },
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "location": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/favicon.ico:0:0",
+      "timestamp": "2025-10-16T01:07:40.500Z"
+    }
+  ],
+  "squareApiRequest": {
+    "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/integrations/square/connect",
+    "method": "POST",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+      "content-type": "application/json",
+      "sec-ch-ua-mobile": "?0",
+      "accept-language": "en-US"
+    },
+    "postData": "{\"accessToken\":\"EAAAlwR9zgftnMNK-Wath2OeTkpqg6VHVKV_XzPcCXqUVODR58caY4BxO64Fw9dh\",\"locationId\":\"LMK858A133EV3\"}",
+    "timestamp": "2025-10-16T01:07:48.964Z"
+  },
+  "squareApiResponse": {
+    "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/integrations/square/connect",
+    "status": 200,
+    "statusText": "",
+    "headers": {
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+      "x-robots-tag": "noindex",
+      "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+      "cache-control": "public, max-age=0, must-revalidate",
+      "content-encoding": "br",
+      "x-vercel-cache": "MISS",
+      "x-matched-path": "/api/integrations/square/connect",
+      "date": "Thu, 16 Oct 2025 01:07:49 GMT",
+      "content-type": "application/json",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+      "server": "Vercel",
+      "x-vercel-id": "iad1::iad1::mjdgh-1760576868994-e1d8e77b5b7c"
+    },
+    "body": "{\"success\":true,\"message\":\"Square account connected successfully\",\"environment\":\"sandbox\",\"locationId\":\"LMK858A133EV3\"}",
+    "timestamp": "2025-10-16T01:07:49.165Z"
+  },
+  "allNetworkRequests": [
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "postData": null,
+      "timestamp": "2025-10-16T01:07:44.940Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/integrations/square/connect",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "content-type": "application/json",
+        "sec-ch-ua-mobile": "?0",
+        "accept-language": "en-US"
+      },
+      "postData": "{\"accessToken\":\"EAAAlwR9zgftnMNK-Wath2OeTkpqg6VHVKV_XzPcCXqUVODR58caY4BxO64Fw9dh\",\"locationId\":\"LMK858A133EV3\"}",
+      "timestamp": "2025-10-16T01:07:48.964Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings?success=square_manual_connected",
+      "method": "GET",
+      "headers": {
+        "accept-language": "en-US",
+        "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null,
+      "timestamp": "2025-10-16T01:07:49.164Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings?success=square_manual_connected",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "postData": null,
+      "timestamp": "2025-10-16T01:07:49.702Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings?success=square_manual_connected",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "postData": null,
+      "timestamp": "2025-10-16T01:07:49.702Z"
+    }
+  ],
+  "allNetworkResponses": [
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-robots-tag": "noindex",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "x-vercel-cache": "MISS",
+        "age": "0",
+        "x-matched-path": "/api/users/[id]/square-status",
+        "date": "Thu, 16 Oct 2025 01:07:45 GMT",
+        "content-type": "application/json",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "server": "Vercel",
+        "x-vercel-id": "iad1::iad1::mjdgh-1760576864972-6b6432281677"
+      },
+      "body": "{\"squareConnected\":false,\"squareMerchantId\":null,\"squareLocationId\":null,\"squareEnvironment\":\"sandbox\"}",
+      "timestamp": "2025-10-16T01:07:45.068Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/integrations/square/connect",
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-robots-tag": "noindex",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "x-vercel-cache": "MISS",
+        "x-matched-path": "/api/integrations/square/connect",
+        "date": "Thu, 16 Oct 2025 01:07:49 GMT",
+        "content-type": "application/json",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "server": "Vercel",
+        "x-vercel-id": "iad1::iad1::mjdgh-1760576868994-e1d8e77b5b7c"
+      },
+      "body": "{\"success\":true,\"message\":\"Square account connected successfully\",\"environment\":\"sandbox\",\"locationId\":\"LMK858A133EV3\"}",
+      "timestamp": "2025-10-16T01:07:49.165Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/settings?success=square_manual_connected",
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "age": "0",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Thu, 16 Oct 2025 01:07:49 GMT",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "x-matched-path": "/settings",
+        "x-powered-by": "Next.js",
+        "x-robots-tag": "noindex",
+        "x-vercel-cache": "MISS",
+        "x-vercel-id": "iad1::iad1::mjdgh-1760576869195-5d5af9ea1a45"
+      },
+      "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/35bf676aa9ed5e44.css?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-59784d77b92749fc.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\"/><script src=\"/_next/static/chunks/7428a856-96c6af3e0f6223a2.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/817-3db1cc431bebbc7e.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-7597355a7598933e.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/1-b41c8f643014669f.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/app/(app)/settings/page-3bd6250d420e2a3b.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/718-208dbc74fe2d75cd.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/197-ea13ab559f3d97af.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script src=\"/_next/static/chunks/app/(app)/layout-58cd10d5b90f15a6.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><title>Signature QuoteCrawler</title><meta name=\"description\" content=\"Quote builder with Signature Solar price cache\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" noModule=\"\"></script></head><body class=\"bg-background text-foreground min-h-screen\"><!--$--><div class=\"flex h-screen\"><aside class=\"w-80 border-r border-border bg-background h-screen sticky top-0 flex flex-col\"><div class=\"p-4 border-b border-border\"><h2 class=\"font-semibold text-lg\">Quote History</h2><p class=\"text-sm text-muted-foreground mt-1\">0<!-- --> <!-- -->quotes</p></div><div class=\"flex-1 overflow-y-auto p-4\"><div class=\"space-y-3\"><div data-slot=\"card\" class=\"bg-card text-card-foreground flex flex-col gap-6 rounded-xl border shadow-sm p-3 animate-pulse\"><div class=\"h-4 bg-muted rounded w-3/4 mb-2\"></div><div class=\"h-3 bg-muted rounded w-1/2\"></div></div><div data-slot=\"card\" class=\"bg-card text-card-foreground flex flex-col gap-6 rounded-xl border shadow-sm p-3 animate-pulse\"><div class=\"h-4 bg-muted rounded w-3/4 mb-2\"></div><div class=\"h-3 bg-muted rounded w-1/2\"></div></div><div data-slot=\"card\" class=\"bg-card text-card-foreground flex flex-col gap-6 rounded-xl border shadow-sm p-3 animate-pulse\"><div class=\"h-4 bg-muted rounded w-3/4 mb-2\"></div><div class=\"h-3 bg-muted rounded w-1/2\"></div></div></div></div></aside><div class=\"flex-1 flex flex-col overflow-hidden\"><header class=\"border-b border-border bg-background\"><div class=\"px-4 md:px-6 py-3 md:py-4 flex items-center justify-between\"><a href=\"/\" class=\"font-extrabold tracking-tight text-sm md:text-lg\">Signature QuoteCrawler</a><div class=\"flex items-center gap-3 md:gap-6\"><nav class=\"flex items-center gap-3 md:gap-6 text-xs md:text-sm\"><a href=\"/dashboard\" class=\"text-muted-foreground hover:text-foreground\">Dashboard</a><a href=\"/products\" class=\"text-muted-foreground hover:text-foreground\">Products</a><a href=\"/quotes/new\" class=\"text-muted-foreground hover:text-foreground\">New Quote</a><a href=\"/cart\" class=\"text-muted-foreground hover:text-foreground\">Cart</a></nav><div class=\"relative\"><button data-slot=\"button\" class=\"justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md has-[&gt;svg]:px-2.5 flex items-center gap-2 px-3 py-2 h-auto\"><div class=\"w-8 h-8 bg-primary rounded-full flex items-center justify-center\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user w-4 h-4 text-primary-foreground\" aria-hidden=\"true\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg></div><span class=\"hidden md:inline text-sm font-medium\">Profile</span><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-down w-4 h-4 transition-transform\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"></path></svg></button></div></div></div></header><main class=\"flex-1 overflow-y-auto px-4 md:px-6 py-4 md:py-8\"><div class=\"flex items-center justify-center min-h-screen\"><div class=\"text-center\"><p class=\"text-muted-foreground\">Loading...</p></div></div></main></div></div><!--/$--><script src=\"/_next/static/chunks/webpack-59784d77b92749fc.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\" async=\"\"></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,\"1:HL[\\\"/_next/static/css/35bf676aa9ed5e44.css?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"style\\\"]\\n\"])</script><script>self.__next_f.push([1,\"2:I[792,[],\\\"\\\"]\\n4:I[8979,[],\\\"ClientPageRoot\\\"]\\n5:I[2533,[\\\"1\\\",\\\"static/chunks/1-b41c8f643014669f.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"558\\\",\\\"static/chunks/app/(app)/settings/page-3bd6250d420e2a3b.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\"],\\\"default\\\",1]\\n6:I[6624,[],\\\"\\\"]\\n7:I[6180,[],\\\"\\\"]\\n8:I[8003,[\\\"1\\\",\\\"static/chunks/1-b41c8f643014669f.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"718\\\",\\\"static/chunks/718-208dbc74fe2d75cd.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"197\\\",\\\"static/chunks/197-ea13ab559f3d97af.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"814\\\",\\\"static/chunks/app/(app)/layout-58cd10d5b90f15a6.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\"],\\\"SessionGuard\\\"]\\n9:I[5254,[\\\"1\\\",\\\"static/chunks/1-b41c8f643014669f.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"718\\\",\\\"static/chunks/718-208dbc74fe2d75cd.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"197\\\",\\\"static/chunks/197-ea13ab559f3d97af.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"814\\\",\\\"static/chunks/app/(app)/layout-58cd10d5b90f15a6.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\"],\\\"default\\\"]\\na:I[2975,[\\\"1\\\",\\\"static/chunks/1-b41c8f643014669f.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"718\\\",\\\"static/chunks/718-208dbc74fe2d75cd.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"197\\\",\\\"static/chunks/197-ea13ab559f3d97af.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"814\\\",\\\"static/chunks/app/(app)/layout-58cd10d5b90f15a6.js?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\"],\\\"default\\\"]\\n10:I[6061,[],\\\"\\\"]\\nb:{\\\"fontFamily\\\":\\\"system-ui,\\\\\\\"Segoe UI\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\"Apple Color Emoji\\\\\\\",\\\\\\\"Segoe UI Emoji\\\\\\\"\\\",\\\"height\\\":\\\"100vh\\\",\\\"textAlign\\\":\\\"center\\\",\\\"display\\\":\\\"flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\"}\\nc:{\\\"display\\\":\\\"inline-block\\\",\\\"margin\\\":\\\"0 20px 0 0\\\",\\\"padding\\\":\\\"0 23px 0 0\\\",\\\"fontSize\\\":24,\\\"fontWeight\\\":500,\\\"verticalAlign\\\":\\\"top\\\",\\\"lineHeight\\\":\\\"49px\\\"}\\nd:{\\\"display\\\":\\\"inline-block\\\"}\\ne:{\\\"fontSize\\\":14,\\\"fontWeight\\\":400,\\\"lineHeight\\\":\\\"49px\\\",\\\"margin\\\":0}\\n11:[]\\n\"])</script><script>self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$L2\\\",null,{\\\"buildId\\\":\\\"oqSBy4zMWD6em79QJJOMB\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"settings?success=square_manual_connected\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"(app)\\\",{\\\"children\\\":[\\\"settings\\\",{\\\"children\\\":[\\\"__PAGE__?{\\\\\\\"success\\\\\\\":\\\\\\\"square_manual_connected\\\\\\\"}\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"(app)\\\",{\\\"children\\\":[\\\"settings\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$L3\\\",[\\\"$\\\",\\\"$L4\\\",null,{\\\"props\\\":{\\\"params\\\":{},\\\"searchParams\\\":{\\\"success\\\":\\\"square_manual_connected\\\"}},\\\"Component\\\":\\\"$5\\\"}],null],null],null]},[null,[\\\"$\\\",\\\"$L6\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"(app)\\\",\\\"children\\\",\\\"settings\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L7\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[null,[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex h-screen\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L8\\\",null,{}],[\\\"$\\\",\\\"$L9\\\",null,{}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex-1 flex flex-col overflow-hidden\\\",\\\"children\\\":[[\\\"$\\\",\\\"header\\\",null,{\\\"className\\\":\\\"border-b border-border bg-background\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"px-4 md:px-6 py-3 md:py-4 flex items-center justify-between\\\",\\\"children\\\":[[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/\\\",\\\"className\\\":\\\"font-extrabold tracking-tight text-sm md:text-lg\\\",\\\"children\\\":\\\"Signature QuoteCrawler\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex items-center gap-3 md:gap-6\\\",\\\"children\\\":[[\\\"$\\\",\\\"nav\\\",null,{\\\"className\\\":\\\"flex items-center gap-3 md:gap-6 text-xs md:text-sm\\\",\\\"children\\\":[[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/dashboard\\\",\\\"className\\\":\\\"text-muted-foreground hover:text-foreground\\\",\\\"children\\\":\\\"Dashboard\\\"}],[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/products\\\",\\\"className\\\":\\\"text-muted-foreground hover:text-foreground\\\",\\\"children\\\":\\\"Products\\\"}],[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/quotes/new\\\",\\\"className\\\":\\\"text-muted-foreground hover:text-foreground\\\",\\\"children\\\":\\\"New Quote\\\"}],[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/cart\\\",\\\"className\\\":\\\"text-muted-foreground hover:text-foreground\\\",\\\"children\\\":\\\"Cart\\\"}]]}],[\\\"$\\\",\\\"$La\\\",null,{}]]}]]}]}],[\\\"$\\\",\\\"main\\\",null,{\\\"className\\\":\\\"flex-1 overflow-y-auto px-4 md:px-6 py-4 md:py-8\\\",\\\"children\\\":[\\\"$\\\",\\\"$L6\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"(app)\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L7\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[\\\"$\\\",\\\"title\\\",null,{\\\"children\\\":\\\"404: This page could not be found.\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"fontFamily\\\":\\\"system-ui,\\\\\\\"Segoe UI\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\"Apple Color Emoji\\\\\\\",\\\\\\\"Segoe UI Emoji\\\\\\\"\\\",\\\"height\\\":\\\"100vh\\\",\\\"textAlign\\\":\\\"center\\\",\\\"display\\\":\\\"flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\"},\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"style\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\"}}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"next-error-h1\\\",\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\",\\\"margin\\\":\\\"0 20px 0 0\\\",\\\"padding\\\":\\\"0 23px 0 0\\\",\\\"fontSize\\\":24,\\\"fontWeight\\\":500,\\\"verticalAlign\\\":\\\"top\\\",\\\"lineHeight\\\":\\\"49px\\\"},\\\"children\\\":\\\"404\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\"},\\\"children\\\":[\\\"$\\\",\\\"h2\\\",null,{\\\"style\\\":{\\\"fontSize\\\":14,\\\"fontWeight\\\":400,\\\"lineHeight\\\":\\\"49px\\\",\\\"margin\\\":0},\\\"children\\\":\\\"This page could not be found.\\\"}]}]]}]}]],\\\"notFoundStyles\\\":[]}]}]]}]]}]],null],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/35bf676aa9ed5e44.css?dpl=dpl_ARy5Q5tvXBuhF6SVnAYDWj9cLBSQ\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"children\\\":[\\\"$\\\",\\\"body\\\",null,{\\\"className\\\":\\\"bg-background text-foreground min-h-screen\\\",\\\"children\\\":[\\\"$\\\",\\\"$L6\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L7\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[\\\"$\\\",\\\"title\\\",null,{\\\"children\\\":\\\"404: This page could not be found.\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":\\\"$b\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"style\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\"}}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"next-error-h1\\\",\\\"style\\\":\\\"$c\\\",\\\"children\\\":\\\"404\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":\\\"$d\\\",\\\"children\\\":[\\\"$\\\",\\\"h2\\\",null,{\\\"style\\\":\\\"$e\\\",\\\"children\\\":\\\"This page could not be found.\\\"}]}]]}]}]],\\\"notFoundStyles\\\":[]}]}]}]],null],[\\\"$undefined\\\",[],[]]],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$Lf\\\"],\\\"globalErrorComponent\\\":\\\"$10\\\",\\\"missingSlots\\\":\\\"$W11\\\"}]\\n\"])</script><script>self.__next_f.push([1,\"f:[[\\\"$\\\",\\\"meta\\\",\\\"0\\\",{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"charSet\\\":\\\"utf-8\\\"}],[\\\"$\\\",\\\"title\\\",\\\"2\\\",{\\\"children\\\":\\\"Signature QuoteCrawler\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"3\\\",{\\\"name\\\":\\\"description\\\",\\\"content\\\":\\\"Quote builder with Signature Solar price cache\\\"}]]\\n3:null\\n\"])</script></body></html>",
+      "timestamp": "2025-10-16T01:07:49.330Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-robots-tag": "noindex",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "x-vercel-cache": "MISS",
+        "age": "0",
+        "x-matched-path": "/api/users/[id]/square-status",
+        "date": "Thu, 16 Oct 2025 01:07:49 GMT",
+        "content-type": "application/json",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "server": "Vercel",
+        "x-vercel-id": "iad1::iad1::n6w5k-1760576869711-a490a35402d4"
+      },
+      "body": "{\"squareConnected\":false,\"squareMerchantId\":null,\"squareLocationId\":null,\"squareEnvironment\":\"sandbox\"}",
+      "timestamp": "2025-10-16T01:07:49.793Z"
+    },
+    {
+      "url": "https://signaturequoteai-main-it5qwudt2-ekoapps.vercel.app/api/users/60b5adbc-c082-41d6-b82b-0c1c6f4dcc52/square-status",
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-robots-tag": "noindex",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com https://cloudflareinsights.com https://js.stripe.com https://*.js.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; style-src 'self' 'unsafe-inline' https://web.squarecdn.com https://sandbox.web.squarecdn.com; img-src 'self' data: https: http:; font-src 'self' data: https://square-fonts-production-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; connect-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://pci-connect.squareup.com https://pci-connect.squareupsandbox.com https://o160250.ingest.sentry.io https://api.clerk.com https://cloudflareinsights.com https://api.stripe.com https://checkout.stripe.com https://vercel.live https://*.vercel.live; frame-src 'self' https://connect.squareup.com https://connect.squareupsandbox.com https://web.squarecdn.com https://sandbox.web.squarecdn.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://connect-js.stripe.com https://vercel.live https://*.vercel.live; form-action 'self' https://connect.squareup.com https://connect.squareupsandbox.com",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "x-vercel-cache": "MISS",
+        "age": "0",
+        "x-matched-path": "/api/users/[id]/square-status",
+        "date": "Thu, 16 Oct 2025 01:07:49 GMT",
+        "content-type": "application/json",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "server": "Vercel",
+        "x-vercel-id": "iad1::iad1::pf5qn-1760576869823-8ed27d547db0"
+      },
+      "body": "{\"squareConnected\":false,\"squareMerchantId\":null,\"squareLocationId\":null,\"squareEnvironment\":\"sandbox\"}",
+      "timestamp": "2025-10-16T01:07:49.893Z"
+    }
+  ]
+}
