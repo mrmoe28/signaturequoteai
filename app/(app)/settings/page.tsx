@@ -132,27 +132,27 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <Settings className="w-8 h-8 text-primary" />
-        <h1 className="text-3xl font-bold">Settings</h1>
+    <div className="max-w-4xl mx-auto space-y-4 md:space-y-6 p-4 md:p-6">
+      <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+        <Settings className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+        <h1 className="text-2xl md:text-3xl font-bold">Settings</h1>
       </div>
 
       {/* Success Message for Square Connection */}
       {showSquareSuccess && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+        <div className="p-3 md:p-4 bg-green-50 border border-green-200 rounded-lg flex items-start md:items-center gap-3">
           <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 md:w-5 md:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <div className="flex-1">
-            <p className="font-medium text-green-900">Square Account Connected!</p>
-            <p className="text-sm text-green-700">Your Square account has been successfully connected. You can now generate payment links in quotes.</p>
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-sm md:text-base text-green-900">Square Account Connected!</p>
+            <p className="text-xs md:text-sm text-green-700 mt-1">Your Square account has been successfully connected. You can now generate payment links in quotes.</p>
           </div>
           <button
             onClick={() => setShowSquareSuccess(false)}
-            className="text-green-600 hover:text-green-800"
+            className="text-green-600 hover:text-green-800 flex-shrink-0"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -171,45 +171,45 @@ export default function SettingsPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="emailNotifications">Email Notifications</Label>
-              <p className="text-sm text-muted-foreground">Receive email notifications for important updates</p>
+          <div className="flex items-start md:items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <Label htmlFor="emailNotifications" className="text-sm md:text-base">Email Notifications</Label>
+              <p className="text-xs md:text-sm text-muted-foreground mt-0.5">Receive email notifications for important updates</p>
             </div>
             <input
               type="checkbox"
               id="emailNotifications"
               checked={settings.emailNotifications}
               onChange={(e) => updateSetting('emailNotifications', e.target.checked)}
-              className="w-4 h-4"
+              className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 mt-1"
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="quoteNotifications">Quote Notifications</Label>
-              <p className="text-sm text-muted-foreground">Get notified when quotes are created or updated</p>
+          <div className="flex items-start md:items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <Label htmlFor="quoteNotifications" className="text-sm md:text-base">Quote Notifications</Label>
+              <p className="text-xs md:text-sm text-muted-foreground mt-0.5">Get notified when quotes are created or updated</p>
             </div>
             <input
               type="checkbox"
               id="quoteNotifications"
               checked={settings.quoteNotifications}
               onChange={(e) => updateSetting('quoteNotifications', e.target.checked)}
-              className="w-4 h-4"
+              className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 mt-1"
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="productUpdates">Product Updates</Label>
-              <p className="text-sm text-muted-foreground">Receive notifications about product price changes</p>
+          <div className="flex items-start md:items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <Label htmlFor="productUpdates" className="text-sm md:text-base">Product Updates</Label>
+              <p className="text-xs md:text-sm text-muted-foreground mt-0.5">Receive notifications about product price changes</p>
             </div>
             <input
               type="checkbox"
               id="productUpdates"
               checked={settings.productUpdates}
               onChange={(e) => updateSetting('productUpdates', e.target.checked)}
-              className="w-4 h-4"
+              className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 mt-1"
             />
           </div>
         </CardContent>

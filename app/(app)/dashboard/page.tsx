@@ -12,7 +12,7 @@ type ViewMode = 'table' | 'list';
 
 export default function Dashboard() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
-  const [viewMode, setViewMode] = useState<ViewMode>('table');
+  const [viewMode, setViewMode] = useState<ViewMode>('list'); // Default to list view for better mobile experience
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,40 +89,40 @@ export default function Dashboard() {
 
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4 md:gap-6 p-4 md:p-6">
       <div className="grid gap-2">
-        <h1 className="text-2xl font-extrabold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Quick actions and shortcuts</p>
+        <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight">Dashboard</h1>
+        <p className="text-xs md:text-sm text-muted-foreground">Quick actions and shortcuts</p>
       </div>
 
       {/* Quick Actions */}
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2">
         <a
           href="/quotes/new"
-          className="group relative rounded-xl border border-border bg-gradient-to-br from-primary/5 to-transparent p-5 shadow-lg hover:shadow-xl transition-all hover:border-ring"
+          className="group relative rounded-lg md:rounded-xl border border-border bg-gradient-to-br from-primary/5 to-transparent p-4 md:p-5 shadow-lg hover:shadow-xl transition-all hover:border-ring"
         >
           <div className="flex items-start gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
-              <FilePlus2 className="h-5 w-5" />
+            <span className="inline-flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-md bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
+              <FilePlus2 className="h-4 w-4 md:h-5 md:w-5" />
             </span>
             <div className="grid gap-1">
-              <div className="font-semibold">New Quote</div>
-              <div className="text-sm text-muted-foreground">Start a new customer quote</div>
+              <div className="font-semibold text-sm md:text-base">New Quote</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Start a new customer quote</div>
             </div>
           </div>
         </a>
 
         <a
           href="/products"
-          className="group relative rounded-xl border border-border bg-gradient-to-br from-foreground/[0.03] to-transparent p-5 shadow-lg hover:shadow-xl transition-all hover:border-ring"
+          className="group relative rounded-lg md:rounded-xl border border-border bg-gradient-to-br from-foreground/[0.03] to-transparent p-4 md:p-5 shadow-lg hover:shadow-xl transition-all hover:border-ring"
         >
           <div className="flex items-start gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-foreground/10 text-foreground ring-1 ring-inset ring-foreground/20">
-              <Boxes className="h-5 w-5" />
+            <span className="inline-flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-md bg-foreground/10 text-foreground ring-1 ring-inset ring-foreground/20">
+              <Boxes className="h-4 w-4 md:h-5 md:w-5" />
             </span>
             <div className="grid gap-1">
-              <div className="font-semibold">Products</div>
-              <div className="text-sm text-muted-foreground">Browse the latest catalog</div>
+              <div className="font-semibold text-sm md:text-base">Products</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Browse the latest catalog</div>
             </div>
           </div>
         </a>
@@ -132,11 +132,12 @@ export default function Dashboard() {
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-xl flex items-center gap-2">
+            <CardTitle className="text-lg md:text-xl flex items-center gap-2">
               <FileText className="h-5 w-5" />
               Recent Quotes
             </CardTitle>
-            <div className="flex items-center gap-2">
+            {/* Hide view toggle on mobile, show on md and above */}
+            <div className="hidden md:flex items-center gap-2">
               <Button
                 variant={viewMode === 'table' ? 'default' : 'outline'}
                 size="sm"
