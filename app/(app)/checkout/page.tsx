@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                   <ul className="text-sm text-gray-600 space-y-1">
                     {plan.limits.quotes !== undefined && (
                       <li>
-                        • {plan.limits.quotes === null ? 'Unlimited' : plan.limits.quotes} quotes/month
+                        • {plan.limits.quotes === null ? 'Unlimited quotes/month' : plan.slug === 'free' ? `${plan.limits.quotes} quotes free` : `${plan.limits.quotes} quotes/month`}
                       </li>
                     )}
                     {plan.limits.products !== undefined && (
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
 
                     <p className="text-xs text-gray-500 text-center">
                       By subscribing, you agree to our Terms of Service and Privacy Policy.
-                      You can cancel your subscription at any time.
+                      You can cancel your subscription at any time. Please note that we do not offer refunds on paid plans.
                     </p>
                   </div>
                 </div>

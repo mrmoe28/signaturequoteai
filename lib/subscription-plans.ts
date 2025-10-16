@@ -65,7 +65,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       { name: 'Advanced analytics', included: false },
     ],
     limits: {
-      quotes: 5, // 5 quotes per month
+      quotes: 5, // 5 quotes free (total, not per month)
       products: 50, // Up to 50 products
       storage: '100MB',
       emails: 10,
@@ -91,17 +91,14 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       { name: 'Product catalog access', included: true },
       { name: 'Square payment links', included: true },
       { name: 'Priority support', included: true },
-      { name: 'Team collaboration', included: false },
       { name: 'Advanced analytics', included: true },
       { name: 'Custom branding', included: true },
       { name: 'API access', included: true },
     ],
     limits: {
       quotes: null, // Unlimited
-      products: 1000,
       storage: '5GB',
       emails: 500,
-      users: 3,
       apiCalls: 10000,
     },
   },
