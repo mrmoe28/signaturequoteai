@@ -1,18 +1,21 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import QuoteHistoryLeftSidebar from '@/components/QuoteHistoryLeftSidebar';
 import { SessionGuard } from '@/components/SessionGuard';
 
-// Force dynamic rendering - this layout uses session and database queries
-export const dynamic = 'force-dynamic';
-
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const showSidebar = pathname === '/dashboard';
+
   return (
     <div className="flex h-screen">
       {/* Session-only auth: logout when browser closes */}
       <SessionGuard />
 
-      {/* Left Sidebar */}
-      <QuoteHistoryLeftSidebar />
+      {/* Left Sidebar - Only show on dashboard */}
+      {showSidebar && <QuoteHistoryLeftSidebar />}
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
