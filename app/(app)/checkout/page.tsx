@@ -87,17 +87,23 @@ export default function CheckoutPage() {
           setError(data.message || 'Failed to activate free plan');
         }
       } else {
-        // For paid plans, we need Square payment integration
-        // For now, show a message that payment integration is coming soon
-        setError(
-          'Square payment integration is being configured. Please contact support to set up your subscription.'
-        );
+        // For paid plans, create Square checkout session
+        const response = await fetch('/api/subscriptions/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            planSlug: plan.slug,
+          }),
+        });
 
-        // TODO: Implement Square payment flow
-        // This would typically:
-        // 1. Create a Square checkout session
-        // 2. Redirect to Square payment page
-        // 3. Handle callback to create subscription after payment
+        const data = await response.json();
+
+        if (data.success && data.checkoutUrl) {
+          // Redirect to Square checkout
+          window.location.href = data.checkoutUrl;
+        } else {
+          setError(data.message || 'Failed to initiate checkout');
+        }
       }
     } catch (error) {
       console.error('Subscription error:', error);
@@ -253,17 +259,6 @@ export default function CheckoutPage() {
                 </div>
               ) : (
                 <div className="space-y-6">
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <p className="text-yellow-800 font-medium flex items-center gap-2">
-                      <CreditCard className="w-5 h-5" />
-                      Payment Integration Setup
-                    </p>
-                    <p className="text-yellow-700 text-sm mt-2">
-                      Square payment processing is being configured for this application.
-                      Please contact support to complete your subscription setup.
-                    </p>
-                  </div>
-
                   {error && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                       <p className="text-red-800 text-sm">{error}</p>
