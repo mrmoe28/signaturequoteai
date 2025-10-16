@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FileText, Clock, CheckCircle2, XCircle, Trash2, Eye, Send, DollarSign } from 'lucide-react';
+import { FileText, Clock, CheckCircle2, XCircle, Trash2, Eye, Send, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -33,6 +33,20 @@ export default function QuoteHistoryLeftSidebar() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Load collapsed state from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('quoteHistorySidebarCollapsed');
+    if (saved === 'true') {
+      setIsCollapsed(true);
+    }
+  }, []);
+
+  // Save collapsed state to localStorage
+  useEffect(() => {
+    localStorage.setItem('quoteHistorySidebarCollapsed', String(isCollapsed));
+  }, [isCollapsed]);
 
   useEffect(() => {
     fetchQuoteHistory();
@@ -139,32 +153,78 @@ export default function QuoteHistoryLeftSidebar() {
   };
 
   return (
-    <aside className="w-80 border-r border-border bg-background h-screen sticky top-0 flex flex-col">
+    <aside
+      className={`border-r border-border bg-background h-screen sticky top-0 flex flex-col transition-all duration-300 ease-in-out ${
+        isCollapsed ? 'w-16' : 'w-80'
+      }`}
+    >
       {/* Header */}
-      <div className="p-4 border-b border-border">
-        <h2 className="font-semibold text-lg">Quote History</h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          {quotes.length} {quotes.length === 1 ? 'quote' : 'quotes'}
-        </p>
+      <div className="p-4 border-b border-border flex items-center justify-between">
+        {!isCollapsed && (
+          <div className="flex-1 min-w-0">
+            <h2 className="font-semibold text-lg truncate">Quote History</h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              {quotes.length} {quotes.length === 1 ? 'quote' : 'quotes'}
+            </p>
+          </div>
+        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="h-8 w-8 p-0 flex-shrink-0"
+          title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
+        </Button>
       </div>
 
       {/* Quotes List */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 overflow-x-hidden">
         {loading ? (
           <div className="space-y-3">
-            {[1, 2, 3].map(i => (
-              <Card key={i} className="p-3 animate-pulse">
-                <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                <div className="h-3 bg-muted rounded w-1/2" />
-              </Card>
-            ))}
+            {isCollapsed ? (
+              // Collapsed loading state
+              [1, 2, 3].map(i => (
+                <div key={i} className="h-12 w-12 bg-muted rounded animate-pulse mx-auto" />
+              ))
+            ) : (
+              // Expanded loading state
+              [1, 2, 3].map(i => (
+                <Card key={i} className="p-3 animate-pulse">
+                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
+                  <div className="h-3 bg-muted rounded w-1/2" />
+                </Card>
+              ))
+            )}
           </div>
         ) : quotes.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
-            <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
-            <p className="text-sm">No quotes yet</p>
+            <FileText className={`${isCollapsed ? 'w-8 h-8' : 'w-12 h-12'} mx-auto mb-3 opacity-50`} />
+            {!isCollapsed && <p className="text-sm">No quotes yet</p>}
+          </div>
+        ) : isCollapsed ? (
+          // Collapsed view - icon-only
+          <div className="space-y-3">
+            {quotes.map((quote) => (
+              <a
+                key={quote.id}
+                href={`/quotes/${quote.id}`}
+                className="block group"
+                title={`${quote.customerName} - ${formatCurrency(quote.total)}`}
+              >
+                <div className="flex items-center justify-center h-12 w-12 rounded-lg hover:bg-muted transition-colors cursor-pointer mx-auto relative">
+                  {getStatusIcon(quote.status, quote.paymentStatus)}
+                </div>
+              </a>
+            ))}
           </div>
         ) : (
+          // Expanded view - full cards
           <div className="space-y-3">
             {quotes.map((quote) => (
               <a
