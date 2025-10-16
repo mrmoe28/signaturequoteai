@@ -296,13 +296,18 @@ export async function syncSubscriptionFromSquare(squareSubscriptionId: string) {
     logger.info({ squareSubscriptionId }, 'Syncing subscription from Square');
 
     // TODO: Implement when Square SDK method is available
-    // const client = await getSquareClient();
-    // const retrieveResponse = await client.subscriptions.retrieveSubscription({ subscriptionId: squareSubscriptionId });
+    // Currently returns early as Square subscription retrieval is not yet implemented
+    logger.warn({ squareSubscriptionId }, 'Square subscription sync not yet implemented');
+    return null;
 
-    const squareSubscription = null; // retrieveResponse.subscription;
+    // The code below will be used when Square SDK integration is complete
+    /*
+    const client = await getSquareClient();
+    const retrieveResponse = await client.subscriptions.retrieveSubscription({ subscriptionId: squareSubscriptionId });
+    const squareSubscription = retrieveResponse.subscription;
 
     if (!squareSubscription) {
-      logger.warn({ squareSubscriptionId }, 'Square subscription sync not yet implemented');
+      logger.warn({ squareSubscriptionId }, 'Square subscription not found');
       return null;
     }
 
@@ -328,6 +333,7 @@ export async function syncSubscriptionFromSquare(squareSubscriptionId: string) {
     logger.info({ subscriptionId: dbSubscription.id }, 'Subscription synced successfully');
 
     return dbSubscription;
+    */
   } catch (error) {
     logger.error({ error, squareSubscriptionId }, 'Failed to sync subscription');
     throw error;
@@ -373,15 +379,16 @@ export async function handleSubscriptionInvoicePaid(invoiceData: any) {
     }
 
     // Create invoice record
+    const amountInDollars = ((invoiceData.amount_money?.amount || 0) / 100).toFixed(2);
     await createInvoice({
       subscriptionId: subscription.id,
       userId: subscription.userId,
       squareInvoiceId: invoiceData.id,
       squareOrderId: invoiceData.order_id,
       squarePaymentId: invoiceData.payment_id,
-      amount: (invoiceData.amount_money?.amount || 0) / 100, // Convert cents to dollars
+      amount: amountInDollars, // Convert cents to dollars and format as string
       currency: invoiceData.amount_money?.currency || 'USD',
-      total: (invoiceData.amount_money?.amount || 0) / 100,
+      total: amountInDollars,
       status: 'paid',
       paidAt: new Date(),
     });

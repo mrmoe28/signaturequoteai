@@ -127,7 +127,10 @@ export async function checkUsageLimit(
       const plan = await getPlanBySlug(subscription.planId);
       if (!plan) throw new Error('Plan not found');
 
-      const limits = JSON.parse(plan.limits || '{}');
+      // Parse limits if it's a string, otherwise use as-is
+      const limits = typeof plan.limits === 'string'
+        ? JSON.parse(plan.limits || '{}')
+        : (plan.limits || {});
       limit = limits[metric] !== undefined ? limits[metric] : null;
     }
 
@@ -261,8 +264,12 @@ export async function getUserSubscriptionInfo() {
         userId: user.id,
         tier: 'free' as SubscriptionTier,
         subscription: null,
-        features: freePlan ? JSON.parse(freePlan.features || '[]') : [],
-        limits: freePlan ? JSON.parse(freePlan.limits || '{}') : {},
+        features: freePlan
+          ? (typeof freePlan.features === 'string' ? JSON.parse(freePlan.features || '[]') : (freePlan.features || []))
+          : [],
+        limits: freePlan
+          ? (typeof freePlan.limits === 'string' ? JSON.parse(freePlan.limits || '{}') : (freePlan.limits || {}))
+          : {},
       };
     }
 
@@ -278,8 +285,8 @@ export async function getUserSubscriptionInfo() {
       tier: await getPlanTier(subscription.planId),
       subscription,
       plan,
-      features: JSON.parse(plan.features || '[]'),
-      limits: JSON.parse(plan.limits || '{}'),
+      features: typeof plan.features === 'string' ? JSON.parse(plan.features || '[]') : (plan.features || []),
+      limits: typeof plan.limits === 'string' ? JSON.parse(plan.limits || '{}') : (plan.limits || {}),
     };
   } catch (error) {
     logger.error({ error }, 'Failed to get subscription info');

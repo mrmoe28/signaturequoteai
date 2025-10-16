@@ -63,14 +63,16 @@ export async function POST(request: NextRequest) {
 
       case 'subscription.canceled':
         // Mark subscription as canceled
+        // TODO: Implement when syncSubscriptionFromSquare is fully implemented
         if (eventData?.id) {
-          const subscription = await syncSubscriptionFromSquare(eventData.id);
-          if (subscription) {
-            await updateSubscription(subscription.id, {
-              status: 'canceled',
-              canceledAt: new Date(),
-            });
-          }
+          logger.info({ subscriptionId: eventData.id }, 'Subscription canceled webhook received');
+          // const subscription = await syncSubscriptionFromSquare(eventData.id);
+          // if (subscription) {
+          //   await updateSubscription(subscription.id, {
+          //     status: 'canceled',
+          //     canceledAt: new Date(),
+          //   });
+          // }
         }
         break;
 
@@ -90,25 +92,29 @@ export async function POST(request: NextRequest) {
 
       case 'subscription.paused':
         // Mark subscription as paused
+        // TODO: Implement when syncSubscriptionFromSquare is fully implemented
         if (eventData?.id) {
-          const subscription = await syncSubscriptionFromSquare(eventData.id);
-          if (subscription) {
-            await updateSubscription(subscription.id, {
-              status: 'paused',
-            });
-          }
+          logger.info({ subscriptionId: eventData.id }, 'Subscription paused webhook received');
+          // const subscription = await syncSubscriptionFromSquare(eventData.id);
+          // if (subscription) {
+          //   await updateSubscription(subscription.id, {
+          //     status: 'paused',
+          //   });
+          // }
         }
         break;
 
       case 'subscription.resumed':
         // Mark subscription as active
+        // TODO: Implement when syncSubscriptionFromSquare is fully implemented
         if (eventData?.id) {
-          const subscription = await syncSubscriptionFromSquare(eventData.id);
-          if (subscription) {
-            await updateSubscription(subscription.id, {
-              status: 'active',
-            });
-          }
+          logger.info({ subscriptionId: eventData.id }, 'Subscription resumed webhook received');
+          // const subscription = await syncSubscriptionFromSquare(eventData.id);
+          // if (subscription) {
+          //   await updateSubscription(subscription.id, {
+          //     status: 'active',
+          //   });
+          // }
         }
         break;
 

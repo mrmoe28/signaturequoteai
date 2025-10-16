@@ -12,12 +12,12 @@ export interface PlanFeature {
 }
 
 export interface PlanLimits {
-  quotes?: number; // Number of quotes per month (null = unlimited)
-  products?: number; // Number of products in catalog
-  storage?: string; // Storage limit (e.g., '1GB', '10GB')
-  emails?: number; // Number of emails per month
-  users?: number; // Number of team members
-  apiCalls?: number; // API calls per month
+  quotes?: number | null; // Number of quotes per month (null = unlimited)
+  products?: number | null; // Number of products in catalog
+  storage?: string | null; // Storage limit (e.g., '1GB', '10GB')
+  emails?: number | null; // Number of emails per month
+  users?: number | null; // Number of team members
+  apiCalls?: number | null; // API calls per month
 }
 
 export interface SubscriptionPlan {
