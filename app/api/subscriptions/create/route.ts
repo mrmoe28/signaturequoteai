@@ -7,8 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getUser } from '@/lib/auth';
 import { createSquareSubscription } from '@/lib/square-subscriptions';
-import { createSubscription, getUserSubscription } from '@/lib/db/subscription-queries';
-import { getPlanBySlug } from '@/lib/subscription-plans';
+import { createSubscription, getUserSubscription, getPlanBySlug } from '@/lib/db/subscription-queries';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('api-create-subscription');
@@ -50,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the plan details
-    const plan = getPlanBySlug(planSlug);
+    const plan = await getPlanBySlug(planSlug);
 
     if (!plan) {
       return NextResponse.json(

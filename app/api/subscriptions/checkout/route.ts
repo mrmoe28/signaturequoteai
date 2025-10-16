@@ -5,8 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from '@/lib/auth';
-import { getPlanBySlug } from '@/lib/subscription-plans';
-import { getUserSubscription } from '@/lib/db/subscription-queries';
+import { getPlanBySlug, getUserSubscription } from '@/lib/db/subscription-queries';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('api-subscription-checkout');
@@ -56,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Free plan doesn't need checkout
-    if (plan.price === 0) {
+    if (parseFloat(plan.price) === 0) {
       return NextResponse.json(
         {
           error: 'Invalid plan',
@@ -115,10 +114,10 @@ export async function POST(request: NextRequest) {
             name: `${plan.name} Plan`,
             quantity: '1',
             basePriceMoney: {
-              amount: BigInt(plan.price * 100), // Convert to cents
+              amount: BigInt(Math.round(parseFloat(plan.price) * 100)), // Convert to cents
               currency: 'USD',
             },
-            note: plan.trialDays > 0 ? `Includes ${plan.trialDays}-day free trial` : undefined,
+            note: plan.trialDays && plan.trialDays > 0 ? `Includes ${plan.trialDays}-day free trial` : undefined,
           },
         ],
         referenceId: user.id, // Store user ID in order reference
