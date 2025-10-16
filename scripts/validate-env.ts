@@ -1,10 +1,16 @@
 #!/usr/bin/env tsx
 /**
  * Environment Variable Validation Script
- * 
+ *
  * Checks if all required environment variables are properly configured
  * Run this before deployment or when setting up the project
  */
+
+import { config } from 'dotenv';
+import { resolve } from 'path';
+
+// Load .env.local file
+config({ path: resolve(process.cwd(), '.env.local') });
 
 import { createLogger } from '../lib/logger';
 
