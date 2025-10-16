@@ -129,8 +129,8 @@ export default function PricingPage() {
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        {plans.map((plan) => (
+      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {plans.filter(plan => plan.slug !== 'enterprise').map((plan) => (
           <div
             key={plan.id}
             className={`
