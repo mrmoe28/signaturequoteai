@@ -116,12 +116,49 @@ export async function sendQuoteEmailSimple(data: SimpleEmailData) {
 }
 
 async function generateSquarePaymentLink(data: SimpleEmailData): Promise<string> {
-  // If no userId provided, use placeholder
+  // If no userId provided, try app-level Square credentials first
   if (!data.userId) {
-    logger.warn(
-      { quoteId: data.quoteId },
-      'No userId provided - using placeholder payment link'
-    );
+    // Check if app-level Square is configured
+    const { isSquareConfigured, createSquarePaymentLink } = await import('./square-client');
+
+    if (isSquareConfigured()) {
+      logger.info(
+        { quoteId: data.quoteId },
+        'No userId provided - using app-level Square credentials'
+      );
+
+      try {
+        const paymentUrl = await createSquarePaymentLink({
+          quoteId: data.quoteId,
+          quoteNumber: data.quoteNumber || undefined,
+          customerName: data.customerName,
+          customerEmail: data.customerEmail,
+          amount: data.total,
+          description: `Quote ${data.quoteNumber || data.quoteId} - Signature Solar Equipment`,
+          redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/quotes/${data.quoteId}/payment-success`,
+        });
+
+        logger.info(
+          { quoteId: data.quoteId, paymentUrl },
+          'App-level Square payment link created successfully'
+        );
+
+        return paymentUrl;
+      } catch (error) {
+        logger.warn(
+          { error, quoteId: data.quoteId },
+          'Failed to create app-level Square payment link, falling back to placeholder'
+        );
+        // Fall through to placeholder
+      }
+    } else {
+      logger.warn(
+        { quoteId: data.quoteId },
+        'No userId and no app-level Square configured - using placeholder payment link'
+      );
+    }
+
+    // Fallback to placeholder
     return createPlaceholderPaymentLink({
       quoteId: data.quoteId,
       quoteNumber: data.quoteNumber || undefined,

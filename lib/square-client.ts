@@ -30,13 +30,25 @@ async function getSquareClient(): Promise<SquareClient> {
       ? SquareEnvironment.Production
       : SquareEnvironment.Sandbox;
 
-    return new SquareClient({
+    logger.info({
+      environment: process.env.SQUARE_ENVIRONMENT || 'sandbox',
+      accessTokenPrefix: accessToken.substring(0, 10) + '...'
+    }, 'Initializing Square client');
+
+    const client = new SquareClient({
       token: accessToken,
       environment,
     });
+
+    logger.info('Square client initialized successfully');
+
+    return client;
   } catch (error) {
-    logger.error({ error }, 'Failed to load Square SDK - make sure to run: npm install square');
-    throw new Error('Square SDK not installed. Run: npm install square@43.1.0');
+    logger.error({
+      error: error instanceof Error ? error.message : String(error),
+      errorType: error instanceof Error ? error.constructor.name : typeof error
+    }, 'Failed to load Square SDK - make sure to run: npm install square');
+    throw error;
   }
 }
 
@@ -78,7 +90,7 @@ export async function createSquarePaymentLink(data: PaymentLinkData): Promise<st
     );
 
     // Create a checkout using Square's Checkout API
-    const response = await client.checkoutApi.createPaymentLink({
+    const response = await client.checkout.paymentLinks.create({
       idempotencyKey: `quote-${data.quoteId}-${Date.now()}`,
       order: {
         locationId,
@@ -105,19 +117,19 @@ export async function createSquarePaymentLink(data: PaymentLinkData): Promise<st
       },
     });
 
-    if (!response.result.paymentLink?.url) {
+    if (!response.paymentLink?.url) {
       throw new Error('Square API did not return a payment link URL');
     }
 
     logger.info(
       {
         quoteId: data.quoteId,
-        paymentLinkId: response.result.paymentLink.id
+        paymentLinkId: response.paymentLink.id
       },
       'Square payment link created successfully'
     );
 
-    return response.result.paymentLink.url;
+    return response.paymentLink.url;
 
   } catch (error: any) {
     // Check if it's a Square ApiError
@@ -133,7 +145,16 @@ export async function createSquarePaymentLink(data: PaymentLinkData): Promise<st
       throw new Error(`Square API error: ${error.errors?.[0]?.detail || error.message}`);
     }
 
-    logger.error({ error, quoteId: data.quoteId }, 'Failed to create Square payment link');
+    // Log detailed error information
+    logger.error({
+      quoteId: data.quoteId,
+      errorMessage: error?.message || 'Unknown error',
+      errorName: error?.name || 'Unknown',
+      errorStack: error?.stack,
+      errorString: String(error),
+      errorKeys: Object.keys(error || {})
+    }, 'Failed to create Square payment link');
+
     throw error;
   }
 }

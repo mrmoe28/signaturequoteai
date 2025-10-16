@@ -266,3 +266,153 @@ export const companySettings = pgTable('company_settings', {
 }, (table) => ({
   companyNameIndex: index('company_settings_name_idx').on(table.companyName),
 }));
+
+// Subscription Plans
+export const subscriptionPlans = pgTable('subscription_plans', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: text('name').notNull(), // 'Free', 'Pro', 'Enterprise'
+  slug: text('slug').notNull().unique(), // 'free', 'pro', 'enterprise'
+  description: text('description'),
+  price: numeric('price', { precision: 12, scale: 2 }).notNull(), // Monthly price
+  currency: text('currency').default('USD').notNull(),
+  billingPeriod: text('billing_period').default('monthly').notNull(), // 'monthly' | 'yearly'
+  trialDays: integer('trial_days').default(0),
+
+  // Square-specific fields
+  squareCatalogId: text('square_catalog_id'), // Square Subscription Plan ID
+  squareVariationId: text('square_variation_id'), // Square Plan Variation ID
+
+  // Features and Limits (stored as JSON)
+  features: text('features'), // JSON array of feature names
+  limits: text('limits'), // JSON object: { quotes: 10, products: 100, storage: '1GB' }
+
+  // Status
+  isActive: text('is_active').default('true').notNull(),
+  isPopular: text('is_popular').default('false').notNull(),
+  displayOrder: integer('display_order').default(0),
+
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+}, (table) => ({
+  slugIndex: index('subscription_plans_slug_idx').on(table.slug),
+  isActiveIndex: index('subscription_plans_active_idx').on(table.isActive),
+  displayOrderIndex: index('subscription_plans_order_idx').on(table.displayOrder),
+}));
+
+// User Subscriptions
+export const subscriptions = pgTable('subscriptions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  planId: uuid('plan_id').references(() => subscriptionPlans.id).notNull(),
+
+  // Square Subscription Info
+  squareSubscriptionId: text('square_subscription_id').unique(),
+  squareCustomerId: text('square_customer_id'),
+  squareLocationId: text('square_location_id'),
+
+  // Subscription Status
+  status: text('status').default('active').notNull(),
+  // 'active' | 'canceled' | 'past_due' | 'paused' | 'pending' | 'trialing'
+
+  // Billing Dates
+  currentPeriodStart: timestamp('current_period_start'),
+  currentPeriodEnd: timestamp('current_period_end'),
+  trialStart: timestamp('trial_start'),
+  trialEnd: timestamp('trial_end'),
+  canceledAt: timestamp('canceled_at'),
+  cancelAt: timestamp('cancel_at'), // Scheduled cancellation date
+  endedAt: timestamp('ended_at'),
+
+  // Billing Info
+  price: numeric('price', { precision: 12, scale: 2 }),
+  currency: text('currency').default('USD'),
+  billingPeriod: text('billing_period').default('monthly'),
+
+  // Metadata
+  cancelReason: text('cancel_reason'),
+  cancelFeedback: text('cancel_feedback'),
+  metadata: text('metadata'), // JSON for additional data
+
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+}, (table) => ({
+  userIdIndex: index('subscriptions_user_id_idx').on(table.userId),
+  planIdIndex: index('subscriptions_plan_id_idx').on(table.planId),
+  statusIndex: index('subscriptions_status_idx').on(table.status),
+  squareSubscriptionIndex: index('subscriptions_square_id_idx').on(table.squareSubscriptionId),
+  periodEndIndex: index('subscriptions_period_end_idx').on(table.currentPeriodEnd),
+}));
+
+// Subscription Invoices
+export const subscriptionInvoices = pgTable('subscription_invoices', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  subscriptionId: uuid('subscription_id').references(() => subscriptions.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+
+  // Square Invoice Info
+  squareInvoiceId: text('square_invoice_id').unique(),
+  squareOrderId: text('square_order_id'),
+  squarePaymentId: text('square_payment_id'),
+
+  // Invoice Details
+  invoiceNumber: text('invoice_number'),
+  amount: numeric('amount', { precision: 12, scale: 2 }).notNull(),
+  currency: text('currency').default('USD').notNull(),
+  tax: numeric('tax', { precision: 12, scale: 2 }).default('0'),
+  total: numeric('total', { precision: 12, scale: 2 }).notNull(),
+
+  // Status
+  status: text('status').default('pending').notNull(),
+  // 'pending' | 'paid' | 'failed' | 'refunded' | 'canceled'
+
+  // Dates
+  billingPeriodStart: timestamp('billing_period_start'),
+  billingPeriodEnd: timestamp('billing_period_end'),
+  dueDate: timestamp('due_date'),
+  paidAt: timestamp('paid_at'),
+  attemptedAt: timestamp('attempted_at'),
+
+  // Payment Info
+  paymentMethod: text('payment_method'), // 'card', 'ach', etc
+  lastFour: text('last_four'), // Last 4 digits of payment method
+  failureReason: text('failure_reason'),
+
+  // Metadata
+  metadata: text('metadata'), // JSON for additional data
+
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+}, (table) => ({
+  subscriptionIdIndex: index('invoices_subscription_id_idx').on(table.subscriptionId),
+  userIdIndex: index('invoices_user_id_idx').on(table.userId),
+  statusIndex: index('invoices_status_idx').on(table.status),
+  squareInvoiceIndex: index('invoices_square_id_idx').on(table.squareInvoiceId),
+  dueDateIndex: index('invoices_due_date_idx').on(table.dueDate),
+}));
+
+// Subscription Usage Tracking (for metered features)
+export const subscriptionUsage = pgTable('subscription_usage', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  subscriptionId: uuid('subscription_id').references(() => subscriptions.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+
+  // Usage Metrics
+  metric: text('metric').notNull(), // 'quotes', 'products', 'emails', 'storage', etc
+  quantity: integer('quantity').default(0).notNull(),
+  limit: integer('limit'), // null = unlimited
+
+  // Period
+  periodStart: timestamp('period_start').notNull(),
+  periodEnd: timestamp('period_end').notNull(),
+
+  // Metadata
+  metadata: text('metadata'), // JSON for additional tracking data
+
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+}, (table) => ({
+  subscriptionIdIndex: index('usage_subscription_id_idx').on(table.subscriptionId),
+  userIdIndex: index('usage_user_id_idx').on(table.userId),
+  metricIndex: index('usage_metric_idx').on(table.metric),
+  periodIndex: index('usage_period_idx').on(table.periodStart, table.periodEnd),
+}));

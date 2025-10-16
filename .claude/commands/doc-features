@@ -1,12 +1,587 @@
-# Documentation Features
+# SignatureQuoteAI - Complete Feature Documentation
 
-This file contains documentation features and commands for the SignatureQuoteAI project.
+**Version:** 1.0
+**Last Updated:** 2025-10-15
+**Tech Stack:** Next.js 15, React 19, TypeScript, NeonDB, Drizzle ORM, Vercel
 
-## Available Commands
+---
 
-- `doc-features` - This file containing documentation features
-- Additional commands can be added here as needed
+## 🎯 Core Application Features
 
-## Usage
+### 1. Authentication & User Management
+**Status:** ✅ Implemented
 
-Reference this file when working with documentation features in the project.
+**Features:**
+- Email/Password authentication with bcrypt hashing
+- Session management with secure tokens
+- Role-based access control (admin/user)
+- Password reset functionality
+- User profile management
+- Last login tracking
+- Account verification system
+
+**Routes:**
+- `/auth/sign-in` - User login
+- `/auth/sign-up` - User registration
+- `/auth/forgot-password` - Password recovery
+
+**API Endpoints:**
+- `POST /api/auth/register` - Create new user account
+- `POST /api/auth/login` - Authenticate user
+- `POST /api/auth/logout` - End user session
+- `GET /api/auth/me` - Get current user data
+- `GET /api/auth/test-login` - Debug authentication
+
+**Database Tables:**
+- `users` - User accounts with Square/Stripe integration fields
+- `sessions` - Active user sessions with expiry tracking
+- `accounts` - OAuth provider accounts
+- `verification_tokens` - Email verification tokens
+- `password_reset_tokens` - Password reset tokens
+
+---
+
+### 2. Product Catalog Management
+**Status:** ✅ Implemented
+
+**Features:**
+- Comprehensive product database
+- Enhanced product data (descriptions, images, specs)
+- Product categorization and tagging
+- SKU management
+- Stock tracking and availability
+- Price history tracking with snapshots
+- Image gallery support
+- Technical specifications storage
+- Warranty and certification tracking
+- Product search and filtering
+- Real-time price monitoring
+- Product detail pages
+
+**Routes:**
+- `/products` - Product catalog listing
+- `/products/[id]` - Individual product details
+- `/debug-images` - Image debugging tool
+
+**API Endpoints:**
+- `GET /api/products` - List all products
+- `GET /api/products/[id]` - Get product details
+- `POST /api/products/[id]/refresh` - Refresh single product data
+- `GET /api/enhanced-products` - Get products with full details
+- `GET /api/catalog` - Legacy catalog endpoint
+
+**Database Tables:**
+- `products` - Product catalog with 35+ fields including enhanced data
+- `price_snapshots` - Historical price tracking
+
+**Product Data Fields:**
+- Basic: name, SKU, category, price, vendor, unit, currency
+- Enhanced: description, images, specifications, features
+- Technical: dimensions, weight, power rating, voltage, efficiency
+- Inventory: in stock, availability, stock quantity
+- SEO: meta title, meta description, tags, categories
+- Quality: reviews, warranty, certifications
+
+---
+
+### 3. Quote Generation & Management
+**Status:** ✅ Implemented
+
+**Features:**
+- Multi-step quote creation wizard
+- Customer selection/creation
+- Line item management with product picker
+- Automatic calculations (subtotal, discount, shipping, tax, total)
+- Quote validity period tracking
+- Quote status workflow (draft → sent → viewed → accepted/declined)
+- PDF generation for quotes
+- Email delivery with custom signatures
+- Quote history and tracking
+- Quote numbering system with custom prefix
+- Ship-to address override per quote
+- Payment integration with Square
+- Quote versioning and updates
+
+**Routes:**
+- `/quotes/new` - Create new quote (5-step wizard)
+- `/quotes/[id]` - View/edit existing quote
+- `/dashboard` - Quote overview and quick stats
+
+**API Endpoints:**
+- `GET /api/quotes` - List all quotes
+- `POST /api/quotes` - Create new quote
+- `GET /api/quotes/[id]` - Get quote details
+- `PUT /api/quotes/[id]` - Update quote
+- `DELETE /api/quotes/[id]` - Delete quote
+- `POST /api/quotes/[id]/send` - Email quote to customer
+- `GET /api/quotes/[id]/pdf` - Generate quote PDF
+- `GET /api/quotes/history` - Quote audit history
+
+**Database Tables:**
+- `quotes` - Quote metadata with status and payment tracking
+- `quote_items` - Line items with product references
+- `company_settings` - Company info for quote branding
+
+**Quote Workflow:**
+1. **Draft** - Initial creation
+2. **Sent** - Emailed to customer
+3. **Viewed** - Customer opened quote
+4. **Accepted** - Customer accepted
+5. **Declined** - Customer declined
+
+**Payment Tracking:**
+- Pending → Processing → Completed/Failed
+- Payment link generation
+- Payment ID tracking
+- Payment timestamp recording
+
+---
+
+### 4. Customer Relationship Management (CRM)
+**Status:** ✅ Implemented
+
+**Features:**
+- Complete customer database
+- Company and individual customer support
+- Contact information management
+- Address and location tracking
+- Customer notes and history
+- Active/inactive customer status
+- Customer search and filtering
+- Quote history per customer
+
+**Routes:**
+- `/customers` - Customer list and management
+
+**API Endpoints:**
+- `GET /api/customers` - List all customers
+- `POST /api/customers` - Create new customer
+- `GET /api/customers/[id]` - Get customer details
+- `PUT /api/customers/[id]` - Update customer
+- `DELETE /api/customers/[id]` - Soft delete customer
+
+**Database Tables:**
+- `customers` - Customer records with full contact details
+
+**Customer Data:**
+- Identity: name, company, email, phone
+- Location: address, city, state, zip, country
+- Management: notes, active status, timestamps
+- Relations: linked quotes and payment history
+
+---
+
+### 5. Web Scraping & Price Monitoring
+**Status:** ✅ Implemented
+
+**Features:**
+- Automated Signature Solar product scraping
+- Price monitoring and change detection
+- Product data enrichment
+- Scheduled daily crawls via cron
+- Manual crawl triggering
+- Crawl job tracking and history
+- Error handling and retry logic
+- Rate limiting compliance
+- robots.txt respect
+- Fresh data indicators
+
+**API Endpoints:**
+- `POST /api/crawl` - Trigger manual crawl
+- `GET /api/signature-solar` - Legacy crawl endpoint
+- `POST /api/cron/daily` - Scheduled daily crawl
+
+**Database Tables:**
+- `crawl_jobs` - Crawl history with status tracking
+
+**Crawl Job Types:**
+- **Full** - Complete catalog refresh
+- **Category** - Specific category update
+- **Product** - Single product refresh
+
+**Crawl Status:**
+- Pending → Running → Completed/Failed
+
+**Monitoring:**
+- Products processed counter
+- Products updated counter
+- Error message logging
+- Job duration tracking
+- Metadata storage (JSON)
+
+---
+
+### 6. Payment Integration
+**Status:** ✅ Implemented
+
+**Features:**
+
+#### Square Integration
+- OAuth 2.0 authentication flow
+- Manual token entry option
+- Merchant account linking
+- Location ID configuration
+- Payment link generation
+- Webhook handling for payment events
+- Token refresh automation
+- Environment detection (sandbox/production)
+- Connection status tracking
+- Disconnect functionality
+
+#### Stripe Integration (Future)
+- OAuth 2.0 authentication flow
+- Account connection
+- Payment processing
+- Webhook handling
+
+**Routes:**
+- `/settings` - Payment integration configuration
+- `/payment-error` - Payment error handling
+
+**API Endpoints:**
+
+**Square:**
+- `POST /api/integrations/square/connect` - Manual Square connection
+- `GET /api/integrations/square/callback` - OAuth callback
+- `GET /api/integrations/square/config` - Get Square config
+- `POST /api/integrations/square/disconnect` - Disconnect Square
+- `POST /api/integrations/square/refresh` - Refresh Square token
+- `GET /api/users/[id]/square-status` - Check Square connection
+- `POST /api/webhooks/square` - Square webhook handler
+- `GET /api/debug/square-test` - Test Square integration
+
+**Stripe:**
+- `GET /api/integrations/stripe/callback` - OAuth callback
+- `GET /api/integrations/stripe/config` - Get Stripe config
+- `POST /api/integrations/stripe/disconnect` - Disconnect Stripe
+- `GET /api/users/[id]/stripe-status` - Check Stripe connection
+
+**Database Fields (in users table):**
+
+**Square:**
+- `squareMerchantId` - Merchant identifier
+- `squareAccessToken` - API access token (encrypted)
+- `squareRefreshToken` - Refresh token (encrypted)
+- `squareTokenExpiresAt` - Token expiration
+- `squareLocationId` - Default location
+- `squareEnvironment` - sandbox/production
+- `squareConnectedAt` - Connection timestamp
+- `squareScopes` - Granted permissions (JSON)
+
+**Stripe:**
+- `stripeAccountId` - Account identifier
+- `stripeAccessToken` - API access token (encrypted)
+- `stripeRefreshToken` - Refresh token (encrypted)
+- `stripeTokenExpiresAt` - Token expiration
+- `stripeConnectedAt` - Connection timestamp
+- `stripeScopes` - Granted permissions (JSON)
+
+---
+
+### 7. Email System
+**Status:** 🚧 Partial Implementation
+
+**Features:**
+- Quote delivery via email
+- Custom email signatures
+- Attachment support (PDF quotes)
+- Email templates
+- Test email functionality
+
+**API Endpoints:**
+- `POST /api/quotes/[id]/send` - Send quote via email
+- `GET /api/test-email` - Test email configuration
+
+**Integration:**
+- Resend or AWS SES (configured in env)
+- HTML email templates
+- PDF attachment support
+
+---
+
+### 8. PDF Generation
+**Status:** ✅ Implemented
+
+**Features:**
+- Professional quote PDF generation
+- Company branding on PDFs
+- Line item tables
+- Pricing breakdowns
+- Terms and conditions footer
+- PDF download and email attachment
+- Pixel-perfect styling to match reference design
+
+**API Endpoints:**
+- `GET /api/quotes/[id]/pdf` - Generate and download quote PDF
+
+**Requirements:**
+- Must match reference PDF styling exactly
+- Includes: header, customer info, line items, totals, terms
+- Supports company logo and custom branding
+
+---
+
+### 9. Company Settings & Configuration
+**Status:** ✅ Implemented
+
+**Features:**
+- Company profile management
+- Logo upload
+- Contact information
+- Address and location
+- Tax ID configuration
+- Default quote terms
+- Default lead time settings
+- Quote number prefix customization
+- Email signature configuration
+
+**Routes:**
+- `/company` - Company settings management
+- `/profile` - User profile settings
+- `/settings` - Application settings
+
+**API Endpoints:**
+- `GET /api/company` - Get company settings
+- `PUT /api/company` - Update company settings
+
+**Database Tables:**
+- `company_settings` - Company configuration
+
+---
+
+### 10. Shopping Cart (Beta)
+**Status:** 🚧 In Development
+
+**Features:**
+- Add products to cart
+- Cart management
+- Quick quote generation from cart
+
+**Routes:**
+- `/cart` - Shopping cart view
+
+---
+
+### 11. Dashboard & Analytics
+**Status:** ✅ Implemented
+
+**Features:**
+- Quote statistics
+- Recent quote activity
+- Quick actions (New Quote)
+- Customer overview
+- Payment status tracking
+- Product catalog stats
+
+**Routes:**
+- `/dashboard` - Main dashboard view
+
+---
+
+### 12. System Administration
+**Status:** ✅ Implemented
+
+**Features:**
+- Database health monitoring
+- Environment variable checking
+- User authentication debugging
+- Database fix utilities
+- Integration testing tools
+
+**API Endpoints:**
+- `GET /api/test-env` - Verify environment configuration
+- `GET /api/fix-database` - Database repair utilities
+- `GET /api/debug/check-user` - User authentication debugging
+- `GET /api/debug/square-test` - Square integration testing
+
+---
+
+## 🗄️ Database Schema Summary
+
+**11 Core Tables:**
+1. **users** - User accounts (with Square/Stripe integration)
+2. **sessions** - Active user sessions
+3. **accounts** - OAuth provider accounts
+4. **verification_tokens** - Email verification
+5. **password_reset_tokens** - Password recovery
+6. **products** - Product catalog (35+ fields)
+7. **price_snapshots** - Historical pricing
+8. **customers** - Customer database
+9. **quotes** - Quote metadata
+10. **quote_items** - Quote line items
+11. **crawl_jobs** - Scraping job history
+12. **company_settings** - Company configuration
+
+**Total Fields:** 200+ across all tables
+
+---
+
+## 🔐 Security Features
+
+- Password hashing (bcrypt)
+- Session token encryption
+- SQL injection prevention (Drizzle ORM)
+- CORS configuration
+- Environment variable security
+- API authentication middleware
+- Secure payment token storage
+- Rate limiting on crawlers
+
+---
+
+## 🚀 Deployment & DevOps
+
+**Platform:** Vercel
+**Database:** NeonDB (PostgreSQL)
+**DNS:** Vercel DNS management
+**CI/CD:** Automatic deployment on git push
+
+**Environment Variables Required:**
+- Database connection strings
+- Authentication secrets
+- Square API credentials
+- Stripe API credentials
+- OpenAI API key
+- Email service credentials
+
+---
+
+## 📱 User Interface
+
+**Design System:** ShadCN + Custom components
+**Styling:** Tailwind CSS
+**Icons:** Lucide React
+**Responsive:** Mobile, tablet, desktop support
+
+**Key UI Components:**
+- Cards, Buttons, Inputs, Labels
+- Badges, Tables, Forms
+- Modals, Dropdowns, Tooltips
+- Loading states, Error boundaries
+- Navigation menus
+
+---
+
+## 🔄 Integrations
+
+1. **Signature Solar** - Product catalog scraping
+2. **Square** - Payment processing (OAuth + Manual)
+3. **Stripe** - Payment processing (OAuth) [Future]
+4. **OpenAI** - AI features [Future]
+5. **Email Service** - Quote delivery
+6. **Vercel** - Hosting and deployment
+7. **NeonDB** - Database hosting
+
+---
+
+## 📊 Key Metrics & Tracking
+
+- Quote conversion rates (draft → sent → accepted)
+- Payment completion rates
+- Product price changes
+- Crawl job success rates
+- User activity and last login
+- Customer engagement
+
+---
+
+## 🛠️ Developer Tools
+
+**Available Commands:**
+- `/crawl-commands` - Web scraping utilities
+- `/quote-commands` - Quote management
+- `/email-commands` - Email testing
+- `/pdf-commands` - PDF generation
+- `/auth-commands` - Authentication debugging
+- `/db-commands` - Database operations
+- `/dev-commands` - Development utilities
+- `/build-commands` - Build and deployment
+- `/test-commands` - Testing utilities
+- `/vercel-commands` - Vercel management
+
+---
+
+## 📝 Usage Instructions
+
+### Creating a Quote:
+1. Navigate to `/quotes/new`
+2. Select/create customer
+3. Add line items from product catalog
+4. Configure pricing (discount, shipping, tax)
+5. Preview quote
+6. Send via email or download PDF
+
+### Connecting Square:
+1. Go to `/settings`
+2. Scroll to "Square Payment Integration"
+3. Click "Setup"
+4. Enter Access Token and Location ID
+5. Click "Connect Square Account"
+6. Verify connection status
+
+### Managing Products:
+1. View catalog at `/products`
+2. Click product for details at `/products/[id]`
+3. Trigger price refresh via API
+4. Monitor price history in database
+
+### Running Manual Crawl:
+- `POST /api/crawl` with JSON body
+- Monitor job status in `crawl_jobs` table
+- View results in products table
+
+---
+
+## 🎯 Roadmap & Future Features
+
+**In Development:**
+- Shopping cart completion
+- Advanced analytics dashboard
+- Bulk quote operations
+- Quote templates
+- Email automation
+- SMS notifications
+- Multi-currency support
+- Multi-language support
+
+**Planned:**
+- Mobile app (React Native)
+- Webhook system for external integrations
+- Advanced reporting
+- Customer portal for quote viewing
+- Electronic signature capture
+- Inventory management
+- Purchase order system
+- Vendor management
+
+---
+
+## 🐛 Known Issues & Limitations
+
+- Email signature requires manual configuration
+- PDF styling needs pixel-perfect matching
+- Cart feature incomplete
+- Stripe integration not fully activated
+- No real-time price alerts yet
+- Limited analytics dashboard
+
+---
+
+## 📖 Related Documentation
+
+- `CLAUDE.md` - Project guidelines and standards
+- `CONTEXT.md` - Current project state and decisions
+- `README.md` - Setup and installation instructions
+- `docs/TLDR.md` - Comprehensive project specification
+
+---
+
+**For Questions or Issues:**
+- Check documentation in `/docs`
+- Review API endpoints in `/app/api`
+- Inspect database schema in `/lib/db/schema.ts`
+- Use debug endpoints for troubleshooting
+
+---
+
+*Last generated by Claude Code - SignatureQuoteAI v1.0*
