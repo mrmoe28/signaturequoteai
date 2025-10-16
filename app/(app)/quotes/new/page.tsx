@@ -12,7 +12,9 @@ import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, AlertCircle } from 'lucide-react';
+import { useFeatureAccess } from '@/hooks/useFeatureAccess';
+import UpgradePrompt from '@/components/UpgradePrompt';
 
 function NewQuoteContent() {
   const searchParams = useSearchParams();
@@ -25,6 +27,10 @@ function NewQuoteContent() {
   const [addedProducts, setAddedProducts] = useState<Set<string>>(new Set());
   const [showSuccess, setShowSuccess] = useState<string | null>(null);
   const [companySettings, setCompanySettings] = useState<any>(null);
+  const [currentQuoteCount, setCurrentQuoteCount] = useState<number>(0);
+
+  // Feature gating
+  const { subscription, loading: featureLoading, canDo, showUpgradePrompt, upgradePromptProps } = useFeatureAccess();
 
   useEffect(() => {
     const fetchCompanySettings = async () => {
@@ -39,6 +45,29 @@ function NewQuoteContent() {
       }
     };
     fetchCompanySettings();
+  }, []);
+
+  // Fetch current quote count for this billing period
+  useEffect(() => {
+    const fetchQuoteCount = async () => {
+      try {
+        const response = await fetch('/api/quotes');
+        if (response.ok) {
+          const data = await response.json();
+          // Count quotes from current billing period (this month)
+          const now = new Date();
+          const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+          const quotesThisMonth = data.data?.quotes?.filter((q: any) => {
+            const createdAt = new Date(q.createdAt);
+            return createdAt >= currentMonthStart;
+          }) || [];
+          setCurrentQuoteCount(quotesThisMonth.length);
+        }
+      } catch (error) {
+        console.error('Failed to fetch quote count:', error);
+      }
+    };
+    fetchQuoteCount();
   }, []);
 
   // Load items from localStorage when coming from cart
@@ -324,13 +353,24 @@ function NewQuoteContent() {
             }}
           />
           <div style={{ display: 'flex', gap: 10 }}>
-            <Button 
+            <Button
               onClick={async () => {
+                // Check quote limit before creating
+                const accessCheck = canDo({
+                  metric: 'quotes',
+                  currentUsage: currentQuoteCount,
+                });
+
+                if (!accessCheck.allowed) {
+                  showUpgradePrompt(undefined, 'quotes');
+                  return;
+                }
+
                 if (!customer.email) {
                   alert('Customer email is required to send quote');
                   return;
                 }
-                
+
                 try {
                   // First save the quote to get an ID
                   const response = await fetch('/api/quotes', {
@@ -349,16 +389,16 @@ function NewQuoteContent() {
                       leadTimeNote: companySettings?.defaultLeadTime || 'Typical lead time 1–2 weeks',
                     }),
                   });
-                  
+
                   if (response.ok) {
                     const result = await response.json();
                     const quoteId = result.data.id;
-                    
+
                     // Send email
                     const emailResponse = await fetch(`/api/quotes/${quoteId}/send`, {
                       method: 'POST',
                     });
-                    
+
                     if (emailResponse.ok) {
                       const emailResult = await emailResponse.json();
                       alert(`Quote sent successfully to ${customer.email}!`);
@@ -384,18 +424,59 @@ function NewQuoteContent() {
     }
   ];
 
+  // Check if user is approaching their quote limit
+  const quoteLimit = subscription?.plan.limits.quotes || 5; // Free plan = 5
+  const isUnlimited = quoteLimit === null;
+  const isNearLimit = !isUnlimited && currentQuoteCount >= quoteLimit * 0.8; // 80% threshold
+  const hasReachedLimit = !isUnlimited && currentQuoteCount >= quoteLimit;
+
   return (
     <div className="w-full max-w-none px-6 py-8">
+      {/* Usage Warning Banner */}
+      {!featureLoading && !isUnlimited && isNearLimit && (
+        <div className={`mb-6 p-4 rounded-lg border ${hasReachedLimit ? 'bg-red-50 border-red-200' : 'bg-yellow-50 border-yellow-200'}`}>
+          <div className="flex items-start gap-3">
+            <AlertCircle className={`w-5 h-5 mt-0.5 ${hasReachedLimit ? 'text-red-600' : 'text-yellow-600'}`} />
+            <div className="flex-1">
+              <p className={`font-semibold ${hasReachedLimit ? 'text-red-900' : 'text-yellow-900'}`}>
+                {hasReachedLimit ? 'Quote Limit Reached' : 'Approaching Quote Limit'}
+              </p>
+              <p className={`text-sm ${hasReachedLimit ? 'text-red-700' : 'text-yellow-700'}`}>
+                {hasReachedLimit
+                  ? `You've used all ${quoteLimit} quotes this month. Upgrade to Pro for unlimited quotes.`
+                  : `You've used ${currentQuoteCount} of ${quoteLimit} quotes this month. Upgrade to Pro for unlimited quotes.`
+                }
+              </p>
+              <Button
+                size="sm"
+                variant="outline"
+                className="mt-2"
+                onClick={() => window.location.href = '/pricing'}
+              >
+                View Plans
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">New Quote</h1>
+        <div>
+          <h1 className="text-3xl font-bold">New Quote</h1>
+          {!featureLoading && !isUnlimited && (
+            <p className="text-sm text-muted-foreground mt-1">
+              {currentQuoteCount} / {quoteLimit} quotes used this month
+            </p>
+          )}
+        </div>
         <div className="flex items-center gap-4">
           {items.length > 0 && (
             <>
               <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium">
                 {items.length} item{items.length !== 1 ? 's' : ''} in quote
               </div>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => window.location.href = '/cart'}
                 className="flex items-center gap-2"
               >
@@ -416,8 +497,11 @@ function NewQuoteContent() {
           </div>
         </div>
       )}
-      
+
       <Wizard steps={steps} />
+
+      {/* Upgrade Prompt Modal */}
+      <UpgradePrompt {...upgradePromptProps} />
     </div>
   );
 }
