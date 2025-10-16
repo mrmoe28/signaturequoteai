@@ -104,20 +104,22 @@ export async function POST(request: NextRequest) {
       environment,
     });
 
-    // Create checkout link for subscription
+    // Create payment link for first payment (subscription will be created via webhook after payment)
     const checkoutResponse = await client.checkout.paymentLinks.create({
       idempotencyKey: `checkout-${user.id}-${planSlug}-${Date.now()}`,
       order: {
         locationId,
         lineItems: [
           {
-            name: `${plan.name} Plan`,
+            name: `${plan.name} Plan - Monthly Subscription`,
             quantity: '1',
             basePriceMoney: {
               amount: BigInt(Math.round(parseFloat(plan.price) * 100)), // Convert to cents
               currency: 'USD',
             },
-            note: plan.trialDays && plan.trialDays > 0 ? `Includes ${plan.trialDays}-day free trial` : undefined,
+            note: plan.trialDays && plan.trialDays > 0
+              ? `Includes ${plan.trialDays}-day free trial. Subscription begins after trial.`
+              : 'Monthly recurring subscription',
           },
         ],
         referenceId: user.id, // Store user ID in order reference
@@ -125,10 +127,10 @@ export async function POST(request: NextRequest) {
           userId: user.id,
           planSlug: planSlug,
           userEmail: user.email,
+          subscriptionSetup: 'true', // Flag to identify this as a subscription payment
         },
       },
       checkoutOptions: {
-        subscriptionPlanId: plan.squareCatalogId,
         redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/subscription?checkout=success`,
         askForShippingAddress: false,
       },
