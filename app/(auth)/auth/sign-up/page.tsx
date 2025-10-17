@@ -80,7 +80,7 @@ export default function SignUpPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold tracking-tight">Create an account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Get started with Signature QuoteCrawler
+            Get started with Signature Quote
           </p>
         </div>
 

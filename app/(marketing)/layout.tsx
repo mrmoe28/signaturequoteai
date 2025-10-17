@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Signature QuoteCrawler - Professional Quote Generation',
-  description: 'Build professional quotes in minutes with real-time pricing from Signature Solar',
+  title: 'Signature Quote - Professional Quote Generation',
+  description: 'Build professional quotes in minutes with real-time pricing',
 };
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {

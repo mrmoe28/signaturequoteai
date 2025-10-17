@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Signature QuoteCrawler',
-  description: 'Quote builder with Signature Solar price cache',
+  title: 'Signature Quote',
+  description: 'Professional quote generation and management',
 };
 
 export const viewport: Viewport = {

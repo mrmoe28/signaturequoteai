@@ -1,6 +1,6 @@
-# Signature QuoteCrawler
+# Signature Quote
 
-A Next.js application that crawls Signature Solar for current prices and generates professional PDF quotes.
+A Next.js application for professional quote generation and management with integrated payment processing.
 
 ## 🚀 Quick Start
 
