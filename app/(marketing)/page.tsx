@@ -206,12 +206,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Starter */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Free Plan */}
             <div className="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-emerald-200 transition-colors">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Free</h3>
               <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-5xl font-bold text-slate-900">$29</span>
+                <span className="text-5xl font-bold text-slate-900">$0</span>
                 <span className="text-slate-600">/month</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -219,42 +219,48 @@ export default function Home() {
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>50 quotes/month</span>
+                  <span>5 quotes free</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Real-time pricing</span>
+                  <span>Email quotes to customers</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>PDF generation</span>
+                  <span>PDF export</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Email support</span>
+                  <span>Square payment links</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-600">
+                  <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>Product catalog access</span>
                 </li>
               </ul>
-              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/sign-in">Get started</a>
+              <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white py-6" asChild>
+                <a href="/auth/sign-in">Get started free</a>
               </Button>
             </div>
 
-            {/* Professional */}
+            {/* Pro Plan */}
             <div className="bg-white rounded-2xl p-8 border-2 border-emerald-600 relative shadow-xl">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Professional</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Pro</h3>
               <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-5xl font-bold text-slate-900">$79</span>
+                <span className="text-5xl font-bold text-slate-900">$29</span>
                 <span className="text-slate-600">/month</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -268,13 +274,7 @@ export default function Home() {
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Custom branding</span>
-                </li>
-                <li className="flex items-center gap-3 text-slate-600">
-                  <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>Quote tracking</span>
+                  <span>Square payment links</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -282,31 +282,17 @@ export default function Home() {
                   </svg>
                   <span>Priority support</span>
                 </li>
-              </ul>
-              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/sign-in">Get started</a>
-              </Button>
-            </div>
-
-            {/* Enterprise */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-emerald-200 transition-colors">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-5xl font-bold text-slate-900">$199</span>
-                <span className="text-slate-600">/month</span>
-              </div>
-              <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Everything in Pro</span>
+                  <span>Advanced analytics</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Multiple users</span>
+                  <span>Custom branding</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-600">
                   <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -314,15 +300,9 @@ export default function Home() {
                   </svg>
                   <span>API access</span>
                 </li>
-                <li className="flex items-center gap-3 text-slate-600">
-                  <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>Dedicated support</span>
-                </li>
               </ul>
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6" asChild>
-                <a href="/auth/sign-in">Contact sales</a>
+                <a href="/auth/sign-in">Subscribe to Pro</a>
               </Button>
             </div>
           </div>
@@ -346,7 +326,7 @@ export default function Home() {
             <a href="/auth/sign-in">Start free trial</a>
           </Button>
           <p className="text-sm text-slate-400 mt-8">
-            No credit card required • 14-day free trial
+            Get started free • No credit card required
           </p>
         </div>
       </section>
