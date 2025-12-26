@@ -131,7 +131,7 @@
     "googleapis": "^159.0.0",
     "jsonc-parser": "^3.3.1",
     "lucide-react": "^0.543.0",
-    "next": "14.2.15",
+    "next": "14.2.35",
     "nodemailer": "^6.10.1",
     "openai": "^4.104.0",
     "optional": "^0.1.4",
